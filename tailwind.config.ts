@@ -18,6 +18,9 @@ const config = {
       },
     },
     extend: {
+      fontFamily: {
+        sans: ["var(--font-poppins)", "sans-serif"],
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -76,6 +79,9 @@ const config = {
           bio: { bg: "hsl(var(--mat-bio-bg))", text: "hsl(var(--mat-bio-text))" },
           hist: { bg: "hsl(var(--mat-hist-bg))", text: "hsl(var(--mat-hist-text))" },
           easy: { bg: "hsl(var(--mat-easy-bg))", text: "hsl(var(--mat-easy-text))" },
+          red: { bg: "hsl(var(--mat-red-bg))", text: "hsl(var(--mat-red-text))" },
+          rev: { bg: "hsl(var(--mat-rev-bg))", text: "hsl(var(--mat-rev-text))" },
+          port: { bg: "hsl(var(--mat-port-bg))", text: "hsl(var(--mat-port-text))" },
         }
       },
       backgroundImage: {

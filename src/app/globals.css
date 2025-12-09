@@ -83,6 +83,20 @@
     --mat-easy-text: 163 88% 20%;
     /* #065F46 */
 
+    --mat-red-bg: 350 89% 90%;
+    /* #FCE7F3 (Pink-100/200ish) */
+    --mat-red-text: 350 80% 40%;
+    /* #9D174D */
+
+    --mat-rev-bg: 270 50% 90%;
+    /* #F3E8FF (Purple-100) */
+    --mat-rev-text: 270 60% 40%;
+    /* #7E22CE */
+
+    /* Using Math Blue for Portugues as alias for consistency or distinct if needed */
+    --mat-port-bg: 215 80% 90%;
+    --mat-port-text: 215 70% 35%;
+
     /* Legacy Matérias (Mantidas por compatibilidade se necessário, mas idealmente substituir) */
     --mat-matematica: 217 91% 60%;
     --mat-portugues: 261 77% 65%;

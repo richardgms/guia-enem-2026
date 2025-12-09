@@ -20,9 +20,9 @@ export function LogoutButton({ className }: LogoutButtonProps) {
     }
 
     return (
-        <Button variant="ghost" size="sm" onClick={handleLogout} className={className}>
-            <LogOut className="h-4 w-4 mr-2" />
+        <button onClick={handleLogout} className={className}>
+            <span className="material-symbols-outlined text-base mr-2">logout</span>
             Sair
-        </Button>
+        </button>
     )
 }

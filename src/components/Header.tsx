@@ -24,9 +24,9 @@ export function Header({ streak = 0 }: HeaderProps) {
     ]
 
     return (
-        <header className="sticky top-0 z-50 w-full bg-header-bg text-white shadow-md">
-            <div className="container mx-auto px-4 md:px-6">
-                <div className="flex h-16 items-center justify-between">
+        <header className="w-full bg-header-bg text-white shadow-md py-4 px-6 lg:px-8">
+            <div className="max-w-7xl mx-auto flex items-center justify-between">
+                <div className="flex items-center justify-between w-full">
                     <div className="flex items-center gap-2">
                         <Link href="/dashboard" className="flex items-center gap-2">
                             <span className="text-xl font-bold text-white">
@@ -54,11 +54,11 @@ export function Header({ streak = 0 }: HeaderProps) {
                     </nav>
 
                     <div className="hidden md:flex items-center gap-4">
-                        <div className="flex items-center gap-2 bg-[#2DD4BF] text-header-bg font-semibold px-4 py-2 rounded-full hover:bg-[#28BFAA] transition-colors text-sm">
-                            <Flame className="h-4 w-4 fill-header-bg" />
+                        <button className="bg-[#2DD4BF] hover:bg-[#28BFAA] transition-colors rounded-full px-4 py-2 text-sm font-semibold flex items-center space-x-2 text-header-bg">
+                            <span className="material-symbols-outlined text-base">local_fire_department</span>
                             <span>{streak} dias</span>
-                        </div>
-                        <LogoutButton className="text-white hover:bg-white/10" />
+                        </button>
+                        <LogoutButton className="bg-transparent hover:bg-white/10 transition-colors rounded-full px-4 py-2 text-sm font-semibold flex items-center space-x-2 text-white" />
                     </div>
 
                     {/* Mobile Menu Button */}
@@ -67,9 +67,9 @@ export function Header({ streak = 0 }: HeaderProps) {
                         onClick={() => setIsMenuOpen(!isMenuOpen)}
                     >
                         {isMenuOpen ? (
-                            <X className="h-6 w-6" />
+                            <span className="material-symbols-outlined">close</span>
                         ) : (
-                            <Menu className="h-6 w-6" />
+                            <span className="material-symbols-outlined">menu</span>
                         )}
                     </button>
                 </div>
@@ -96,10 +96,10 @@ export function Header({ streak = 0 }: HeaderProps) {
                         ))}
                     </nav>
                     <div className="flex items-center justify-between pt-4 border-t border-white/10">
-                        <div className="flex items-center gap-2 bg-[#2DD4BF] text-header-bg font-semibold px-3 py-1 rounded-full text-sm">
-                            <Flame className="h-4 w-4 fill-header-bg" />
+                        <button className="flex items-center gap-2 bg-[#2DD4BF] text-header-bg font-semibold px-3 py-1 rounded-full text-sm">
+                            <span className="material-symbols-outlined text-base">local_fire_department</span>
                             <span>{streak} dias</span>
-                        </div>
+                        </button>
                         <LogoutButton className="text-white" />
                     </div>
                 </div>
