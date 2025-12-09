@@ -29,10 +29,14 @@ export function LoginForm() {
         setLoading(true)
 
         try {
+            // Força o redirecionamento sempre para a URL oficial de produção ou env configurada
+            // Isso evita problemas com Deploy Previews ou localhost enviando links quebrados
+            const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://guiaenem2026.netlify.app'
+
             const { error } = await supabase.auth.signInWithOtp({
                 email,
                 options: {
-                    emailRedirectTo: `${window.location.origin}/auth/callback`,
+                    emailRedirectTo: `${siteUrl}/auth/callback`,
                 },
             })
 
