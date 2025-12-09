@@ -1,11 +1,10 @@
+
 import { createClient } from "@/lib/supabase/server"
-import { DayCard } from "@/components/DayCard"
 import { ProgressBar } from "@/components/ProgressBar"
 import { Streak } from "@/components/Streak"
 import conteudosData from "@/data/conteudos.json"
 
 import Link from "next/link"
-import { ArrowRight, Trophy } from "lucide-react"
 import type { ConteudoDia } from "@/types"
 
 export const dynamic = 'force-dynamic'
@@ -196,15 +195,17 @@ export default async function DashboardPage() {
                                     // Format: "10/12 - Quarta-feira"
                                     const dateObj = new Date(day.data + 'T12:00:00') // prevent timezone offset issues
                                     const dateStr = dateObj.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' })
-                                    // Capitalize weekday
-                                    const weekday = dateObj.toLocaleDateString('pt-BR', { weekday: 'long' })
-                                    const weekdayCap = weekday.charAt(0).toUpperCase() + weekday.slice(1)
+                                    const weekdayCap = dateObj.toLocaleDateString('pt-BR', { weekday: 'long' }).split('-')[0]
+                                    const isCompleted = progressos[day.id]?.concluido
 
                                     return (
                                         <Link href={`/dia/${day.data}`} key={day.id} className="block group">
                                             <div className="bg-white shadow-custom rounded-2xl p-5 border border-card-border hover:shadow-lg transition-all relative group-hover:border-primary/20">
-                                                {/* Logic for check_circle can be added here if needed */}
-                                                {/* Example: <div className="absolute top-4 right-4 text-slate-400"><span className="material-symbols-outlined">check_circle</span></div> */}
+                                                {isCompleted && (
+                                                    <div className="absolute top-4 right-4 text-slate-400 z-10">
+                                                        <span className="material-symbols-outlined text-2xl" style={{ fontFamily: 'Material Symbols Outlined' }}>check_circle</span>
+                                                    </div>
+                                                )}
 
                                                 <p className="text-sm text-text-secondary font-medium group-hover:text-primary transition-colors">
                                                     {dateStr} - {weekdayCap}
@@ -287,10 +288,10 @@ export default async function DashboardPage() {
                         </div>
                     </aside>
                 </main>
-            </div >
+            </div>
 
             {/* Background SVG Waves */}
 
-        </div >
+        </div>
     )
 }
