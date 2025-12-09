@@ -5,7 +5,11 @@ import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { LogOut } from 'lucide-react'
 
-export function LogoutButton() {
+interface LogoutButtonProps {
+    className?: string
+}
+
+export function LogoutButton({ className }: LogoutButtonProps) {
     const router = useRouter()
     const supabase = createClient()
 
@@ -16,7 +20,7 @@ export function LogoutButton() {
     }
 
     return (
-        <Button variant="ghost" size="sm" onClick={handleLogout} className="text-muted-foreground hover:text-foreground">
+        <Button variant="ghost" size="sm" onClick={handleLogout} className={className}>
             <LogOut className="h-4 w-4 mr-2" />
             Sair
         </Button>

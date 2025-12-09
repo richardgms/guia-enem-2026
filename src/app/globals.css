@@ -4,37 +4,86 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Base Colors - Ocean Blue Theme */
+    --background: 195 33% 93%;
+    /* #E4F0F4 */
+    --foreground: 205 80% 16%;
+    /* #082F49 (text-primary) */
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card: 210 20% 98%;
+    /* #F8FAFC */
+    --card-foreground: 205 80% 16%;
+    /* #082F49 */
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover: 210 20% 98%;
+    --popover-foreground: 205 80% 16%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 199 89% 24%;
+    /* #0C4A6E (header-bg) */
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 215 19% 35%;
+    /* #475569 (text-secondary) - Used as secondary text color mostly */
+    --secondary-foreground: 0 0% 100%;
 
     --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted-foreground: 215 19% 35%;
+    /* #475569 */
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 177 46% 91%;
+    /* #E0F2F1 (accent-green-bg) */
+    --accent-foreground: 173 100% 24%;
+    /* #00796B (accent-green-text) */
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
     --border: 214.3 31.8% 91.4%;
+    /* Keep original gray for now or adapt? Using original for subtle borders */
     --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --ring: 199 89% 24%;
 
-    --radius: 0.5rem;
+    --radius: 0.75rem;
+    /* Rounded-xl/2xl feel */
 
-    /* Matérias - Ajustadas para HSL puro */
+    /* Custom Theme Colors */
+    --bg-start: 195 33% 93%;
+    --bg-end: 195 33% 93%;
+    /* Gradient can represent start/end */
+
+    --header-bg: 199 89% 24%;
+
+    --accent-green-button: 171 66% 50%;
+    /* #2DD4BF */
+
+    /* Streak Card Gradient Colors (used in config) */
+    --streak-start: 186 94% 82%;
+    /* #A5F3FC */
+    --streak-end: 187 92% 69%;
+    /* #67E8F9 */
+
+    /* Matérias - Cores do Design */
+    --mat-math-bg: 208 79% 89%;
+    /* #D1E5F7 */
+    --mat-math-text: 226 71% 40%;
+    /* #1E40AF */
+
+    --mat-bio-bg: 140 85% 93%;
+    /* #DCFCE7 */
+    --mat-bio-text: 142 63% 24%;
+    /* #166534 */
+
+    --mat-hist-bg: 56 100% 88%;
+    /* #FEF9C3 */
+    --mat-hist-text: 43 96% 28%;
+    /* #854D0E */
+
+    --mat-easy-bg: 148 83% 90%;
+    /* #D1FAE5 */
+    --mat-easy-text: 163 88% 20%;
+    /* #065F46 */
+
+    /* Legacy Matérias (Mantidas por compatibilidade se necessário, mas idealmente substituir) */
     --mat-matematica: 217 91% 60%;
     --mat-portugues: 261 77% 65%;
     --mat-fisica: 38 92% 50%;
@@ -46,6 +95,7 @@
   }
 
   .dark {
+    /* Dark mode not explicitly defined in prompt, keeping reasonably neutral darks or adapting logic */
     --background: 222.2 84% 4.9%;
     --foreground: 210 40% 98%;
 
@@ -82,6 +132,6 @@
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-gradient-to-b from-[hsl(var(--bg-start))] to-[hsl(var(--bg-end))] font-sans text-foreground min-h-screen;
   }
 }

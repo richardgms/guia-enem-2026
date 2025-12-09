@@ -53,6 +53,7 @@ const config = {
           foreground: "hsl(var(--card-foreground))",
         },
         // Cores de matérias customizadas
+        // Cores de matérias customizadas
         mat: {
           matematica: "hsl(var(--mat-matematica))",
           portugues: "hsl(var(--mat-portugues))",
@@ -62,7 +63,26 @@ const config = {
           historia: "hsl(var(--mat-historia))",
           geografia: "hsl(var(--mat-geografia))",
           redacao: "hsl(var(--mat-redacao))",
+        },
+        // Ocean Blue Theme Specifics
+        'header-bg': "hsl(var(--header-bg))",
+        'accent-green': {
+          bg: "hsl(var(--accent))", // maps to --accent
+          text: "hsl(var(--accent-foreground))", // maps to --accent-foreground
+          button: "hsl(var(--accent-green-button))",
+        },
+        'tag': {
+          math: { bg: "hsl(var(--mat-math-bg))", text: "hsl(var(--mat-math-text))" },
+          bio: { bg: "hsl(var(--mat-bio-bg))", text: "hsl(var(--mat-bio-text))" },
+          hist: { bg: "hsl(var(--mat-hist-bg))", text: "hsl(var(--mat-hist-text))" },
+          easy: { bg: "hsl(var(--mat-easy-bg))", text: "hsl(var(--mat-easy-text))" },
         }
+      },
+      backgroundImage: {
+        'streak-gradient': 'linear-gradient(145deg, hsl(var(--streak-start)), hsl(var(--streak-end)))',
+      },
+      boxShadow: {
+        'custom': '0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05)',
       },
       borderRadius: {
         lg: "var(--radius)",
