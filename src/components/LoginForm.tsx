@@ -1,22 +1,28 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { useToast } from '@/hooks/use-toast'
-// Nota: O hook de toast será instalado/criado a seguir caso não exista, 
-// mas assumindo shadcn padrão vamos referenciar corretamente.
-// Se falhar importação do toast, removeremos temporariamente.
+import { useRouter, useSearchParams } from 'next/navigation'
 
 export function LoginForm() {
     const [email, setEmail] = useState('')
     const [loading, setLoading] = useState(false)
     const [enviado, setEnviado] = useState(false)
     const supabase = createClient()
-    //   const { toast } = useToast() 
+    const router = useRouter()
+    const searchParams = useSearchParams()
+
+    // Recuperação de fluxo: Se cair aqui com CODE, manda para o callback certo
+    useEffect(() => {
+        const code = searchParams.get('code')
+        if (code) {
+            router.push(`/auth/callback?code=${code}`)
+        }
+    }, [searchParams, router])
 
     const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault()
@@ -33,13 +39,9 @@ export function LoginForm() {
             if (error) throw error
 
             setEnviado(true)
-            //   toast({
-            //     title: "Link enviado!",
-            //     description: "Verifique seu email para acessar.",
-            //   })
         } catch (error) {
             console.error('Erro ao fazer login:', error)
-            alert("Erro ao enviar link. Tente novamente.") // Fallback simples enquanto toast não tá 100%
+            alert("Erro ao enviar link. Tente novamente.")
         } finally {
             setLoading(false)
         }
