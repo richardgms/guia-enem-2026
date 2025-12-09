@@ -161,7 +161,7 @@ export default async function DashboardPage() {
                         {/* Next Steps Section */}
                         <section aria-labelledby="next-steps-heading">
                             <h2 className="text-2xl font-semibold mb-4" id="next-steps-heading">Próximos passos</h2>
-                            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                                 {nextDays.map((day) => {
                                     // Helper for tag styles
                                     const getTagStyle = (materia: string) => {
@@ -195,25 +195,29 @@ export default async function DashboardPage() {
                                     // Format: "10/12 - Quarta-feira"
                                     const dateObj = new Date(day.data + 'T12:00:00') // prevent timezone offset issues
                                     const dateStr = dateObj.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' })
-                                    const weekdayCap = dateObj.toLocaleDateString('pt-BR', { weekday: 'long' }).split('-')[0]
+                                    const weekdayCap = dateObj.toLocaleDateString('pt-BR', { weekday: 'long' })
                                     const isCompleted = progressos[day.id]?.concluido
 
                                     return (
-                                        <Link href={`/dia/${day.data}`} key={day.id} className="block group">
-                                            <div className="bg-white shadow-custom rounded-2xl p-5 border border-card-border hover:shadow-lg transition-all relative group-hover:border-primary/20">
-                                                {isCompleted && (
-                                                    <div className="absolute top-4 right-4 text-slate-400 z-10">
-                                                        <span className="material-symbols-outlined text-2xl" style={{ fontFamily: 'Material Symbols Outlined' }}>check_circle</span>
+                                        <Link href={`/dia/${day.data}`} key={day.id} className="block group h-full">
+                                            <div className="bg-white shadow-custom rounded-2xl p-4 border border-card-border hover:shadow-lg transition-all relative group-hover:border-primary/20 h-full flex flex-col justify-between">
+                                                <div>
+                                                    <div className="flex justify-between items-start">
+                                                        <p className="text-sm text-text-secondary font-medium group-hover:text-primary transition-colors capitalize">
+                                                            {dateStr} - {weekdayCap}
+                                                        </p>
+                                                        {isCompleted && (
+                                                            <div className="text-slate-400 z-10 -mt-1 -mr-1">
+                                                                <span className="material-symbols-outlined text-2xl" style={{ fontFamily: 'Material Symbols Outlined', fontVariationSettings: "'FILL' 1" }}>check_circle</span>
+                                                            </div>
+                                                        )}
                                                     </div>
-                                                )}
 
-                                                <p className="text-sm text-text-secondary font-medium group-hover:text-primary transition-colors">
-                                                    {dateStr} - {weekdayCap}
-                                                </p>
-                                                <h3 className="font-bold mt-2 text-lg text-[#082F49] line-clamp-2 min-h-[3.5rem] leading-tight flex items-start group-hover:text-accent-green-button transition-colors">
-                                                    {day.assunto}
-                                                </h3>
-                                                <div className="mt-4">
+                                                    <h3 className="font-bold mt-1 text-lg text-[#082F49] leading-tight group-hover:text-accent-green-button transition-colors">
+                                                        {day.assunto}
+                                                    </h3>
+                                                </div>
+                                                <div className="mt-3">
                                                     <span className={`${getTagStyle(day.materia)} px-3 py-1 rounded-full font-bold text-xs capitalize inline-block`}>
                                                         {getMateriaLabel(day.materia)}
                                                     </span>
