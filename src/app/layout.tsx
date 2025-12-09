@@ -11,6 +11,8 @@ const poppins = Poppins({
   variable: "--font-poppins",
 });
 
+import "./globals.css";
+
 export const metadata: Metadata = {
   title: "Guia ENEM 2026",
   description: "Seu cronograma completo e interativo para conquistar a aprovação.",
@@ -23,6 +25,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-BR">
+      <head>
+        <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+      </head>
       <body
         className={`${poppins.variable} font-sans antialiased`}
       >
