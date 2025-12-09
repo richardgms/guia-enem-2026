@@ -1,0 +1,670 @@
+{
+    "conteudos": [
+        {
+            "id": "2025-12-09",
+            "data": "2025-12-09",
+            "diaSemana": "Terça-feira",
+            "materia": "matematica",
+            "assunto": "Conjuntos Numéricos",
+            "dificuldade": "facil",
+            "tempoEstimado": "45min",
+            "resumo": "## Conjuntos Numéricos\n\nA base da matemática começa aqui! Entender os conjuntos é fundamental para tudo que virá depois.\n\n### Principais Conjuntos\n\n1.  **Naturais ($\\mathbb{N}$)**: Números de contagem e o zero. Ex: $0, 1, 2, 3...$\n2.  **Inteiros ($\\mathbb{Z}$)**: Inclui os negativos. Ex: $...-2, -1, 0, 1, 2...$\n3.  **Racionais ($\\mathbb{Q}$)**: Tudo que pode ser escrito como fração $a/b$ ($b \\neq 0$). Inclui dízimas periódicas. Ex: $1/2, -3.5, 0.333...$\n4.  **Irracionais ($\\mathbb{I}$)**: Dízimas não periódicas e raízes não exatas. Ex: $\\pi, \\sqrt{2}, 2.718...$\n5.  **Reais ($\\mathbb{R}$)**: A união de Racionais e Irracionais ($\\mathbb{Q} \\cup \\mathbb{I}$).\n\n> **Dica ENEM**: Fique atento a questões que pedem para classificar um número ou identificar se uma raiz é racional ou irracional.\n\n### Diagrama de Inclusão\n\nLembra daquelas 'bolinhas' umas dentro das outras? $\\mathbb{N} \\subset \\mathbb{Z} \\subset \\mathbb{Q} \\subset \\mathbb{R}$.\nOs Irracionais ($\\mathbb{I}$) ficam 'separados' dos Racionais, mas ambos estão dentro dos Reais.",
+            "videos": [
+                {
+                    "titulo": "Conjuntos Numéricos: Números Naturais e Inteiros (Aula 1)",
+                    "youtubeId": "Y_mYgLkuEl4",
+                    "canal": "Professor Ferretto"
+                }
+            ],
+            "questoes": [
+                {
+                    "id": "q1-mat-sem1",
+                    "ano": 2018,
+                    "enunciado": "Em uma escola de música, foi realizada uma pesquisa com 100 alunos para saber quais instrumentos eles tocavam. Os resultados foram os seguintes:\n\n*   40 alunos tocam violão.\n*   30 alunos tocam piano.\n*   10 alunos tocam violão e piano.\n\nCom base nesses dados, o número de alunos que **não** tocam nenhum dos dois instrumentos é:",
+                    "alternativas": [
+                        {
+                            "letra": "A",
+                            "texto": "20"
+                        },
+                        {
+                            "letra": "B",
+                            "texto": "30"
+                        },
+                        {
+                            "letra": "C",
+                            "texto": "40"
+                        },
+                        {
+                            "letra": "D",
+                            "texto": "50"
+                        },
+                        {
+                            "letra": "E",
+                            "texto": "60"
+                        }
+                    ],
+                    "gabarito": "C",
+                    "explicacao": "Total da União (A ou B) = n(A) + n(B) - n(Interseção). n(V U P) = 40 + 30 - 10 = 60 alunos tocam pelo menos um. Como o total é 100, então 100 - 60 = 40 não tocam nenhum.",
+                    "assunto": "Conjuntos",
+                    "materia": "matematica"
+                },
+                {
+                    "id": "q2-mat-sem1",
+                    "ano": 2021,
+                    "enunciado": "Um professor de matemática apresentou a seguinte sequência de números aos seus alunos:\n\nI. $3,141592...$\n\nII. $2,333...$\n\nIII. $\\sqrt{2}$\n\nIV. $\\sqrt{4}$\n\nO professor pediu que os alunos identificassem quais desses números pertencem ao conjunto dos números Irracionais ($\\mathbb{I}$). A resposta correta é:",
+                    "alternativas": [
+                        {
+                            "letra": "A",
+                            "texto": "Apenas I."
+                        },
+                        {
+                            "letra": "B",
+                            "texto": "Apenas I e III."
+                        },
+                        {
+                            "letra": "C",
+                            "texto": "Apenas I, II e III."
+                        },
+                        {
+                            "letra": "D",
+                            "texto": "Apenas II e IV."
+                        },
+                        {
+                            "letra": "E",
+                            "texto": "Todos os números listados."
+                        }
+                    ],
+                    "gabarito": "B",
+                    "explicacao": "I é o Pi (Irracional). II é dízima periódica (Racional). III é raiz não exata (Irracional). IV é 2 (Racional). Logo, I e III.",
+                    "assunto": "Conjuntos",
+                    "materia": "matematica"
+                },
+                {
+                    "id": "q3-mat-sem1",
+                    "ano": 2019,
+                    "enunciado": "Durante uma aula de lógica, foi apresentado o seguinte diagrama de Venn sobre conjuntos numéricos, onde A representa os Racionais e B representa os Irracionais. Um aluno fez a seguinte afirmação sobre a união desses dois conjuntos:\n\n'A união do conjunto dos números Racionais com o conjunto dos números Irracionais resulta no conjunto dos números Reais, e não existe nenhum número que pertença aos dois conjuntos simultaneamente.'\n\nEssa afirmação é:",
+                    "alternativas": [
+                        {
+                            "letra": "A",
+                            "texto": "Falsa, pois o zero pertence aos dois conjuntos."
+                        },
+                        {
+                            "letra": "B",
+                            "texto": "Verdadeira, pois a interseção entre Q e I é vazia e sua união é R."
+                        },
+                        {
+                            "letra": "C",
+                            "texto": "Falsa, pois as dízimas periódicas são irracionais."
+                        },
+                        {
+                            "letra": "D",
+                            "texto": "Verdadeira, mas o conjunto dos Reais não inclui o zero."
+                        },
+                        {
+                            "letra": "E",
+                            "texto": "Falsa, pois todo inteiro é irracional."
+                        }
+                    ],
+                    "gabarito": "B",
+                    "explicacao": "Correto. Racionais (Q) e Irracionais (I) são conjuntos disjuntos (interseção vazia) e sua união forma o conjunto dos Reais (R).",
+                    "assunto": "Conjuntos",
+                    "materia": "matematica"
+                }
+            ]
+        },
+        {
+            "id": "2025-12-10",
+            "data": "2025-12-10",
+            "diaSemana": "Quarta-feira",
+            "materia": "portugues",
+            "assunto": "Classes Gramaticais",
+            "dificuldade": "medio",
+            "tempoEstimado": "1h",
+            "resumo": "## As Classes de Palavras\n\nNo português, as palavras são como peças de um lego. Cada uma tem sua função!\n\n### 1. Substantivo\nNomeia tudo! Seres, objetos, sentimentos, lugares. \n*   **Concreto x Abstrato**: Mesa (concreto) x Amor (abstrato - depende de alguém para existir).\n*   **Próprio x Comum**: Brasil (próprio) x país (comum).\n\n### 2. Adjetivo\nQualifica o substantivo. Dá cor, tamanho, estado.\n*   Ex: O carro **vermelho**. A prova **difícil**.\n\n### 3. Artigo\nDefine ou indefine o substantivo.\n*   **Definidos**: o, a, os, as.\n*   **Indefinidos**: um, uma, uns, umas.\n\n> **Atenção**: No ENEM, o foco é o *efeito de sentido*. Por que o autor usou 'O' projeto e não 'UM' projeto? 'O' dá ideia de especificidade, importância.",
+            "videos": [
+                {
+                    "titulo": "CLASSES DE PALAVRAS + EXERCÍCIOS RESOLVIDOS",
+                    "youtubeId": "2tMS1O3xn24",
+                    "canal": "Professor Noslen"
+                }
+            ],
+            "questoes": [
+                {
+                    "id": "q1-port-sem1",
+                    "ano": 2016,
+                    "enunciado": "(ENEM) **Receita**\n\nTome-se um poeta não cansado,\nUma nuvem de sonho e uma flor,\nTrês gotas de tristeza, um tom dourado,\nUma veia sangrando de pavor.\n... \n(Saramago, J. Os poemas possíveis. Caminho, 1999)\n\n\nNo poema de Saramago, os substantivos 'nuvem', 'flor', 'tristeza' e 'tom' ganham novos sentidos em função de estarem associados a elementos inusitados. Do ponto de vista gramatical, essa ressignificação é construída principalmente por meio:",
+                    "alternativas": [
+                        {
+                            "letra": "A",
+                            "texto": "Do uso de artigos indefinidos que generalizam os substantivos."
+                        },
+                        {
+                            "letra": "B",
+                            "texto": "Da seleção lexical de verbos no imperativo."
+                        },
+                        {
+                            "letra": "C",
+                            "texto": "Da caracterização adjetiva que qualifica esses elementos de forma subjetiva."
+                        },
+                        {
+                            "letra": "D",
+                            "texto": "Da posição dos substantivos no início dos versos."
+                        },
+                        {
+                            "letra": "E",
+                            "texto": "De preposições que indicam posse."
+                        }
+                    ],
+                    "gabarito": "A",
+                    "explicacao": "O uso repetido do artigo indefinido 'uma'/'um' cria um tom de generalização e, ao mesmo tempo, de algo vago, onírico, essencial para a construção da 'receita' de poesia.",
+                    "assunto": "Classes Gramaticais",
+                    "materia": "portugues"
+                },
+                {
+                    "id": "q2-port-sem1",
+                    "ano": 2020,
+                    "enunciado": "Leia a manchete: 'O Brasil perdeu **um** grande artista, mas o mundo ganhou **a** lenda.'\n\nA troca do artigo indefinido 'um' pelo definido 'a' antes dos substantivos 'artista' e 'lenda' produz o seguinte efeito de sentido:",
+                    "alternativas": [
+                        {
+                            "letra": "A",
+                            "texto": "Indica que o artista era desconhecido no Brasil."
+                        },
+                        {
+                            "letra": "B",
+                            "texto": "Mostra que existem muitas lendas no mundo, e ele é apenas mais uma."
+                        },
+                        {
+                            "letra": "C",
+                            "texto": "Particulariza e engrandece o termo 'lenda', tornando-o único e superior."
+                        },
+                        {
+                            "letra": "D",
+                            "texto": "Demonstra erro gramatical de concordância."
+                        },
+                        {
+                            "letra": "E",
+                            "texto": "Não altera o sentido, pois ambos são artigos."
+                        }
+                    ],
+                    "gabarito": "C",
+                    "explicacao": "'A lenda' com artigo definido singulariza e dá notoriedade máxima, como se fosse 'A única' ou 'A maior', ao contrário de 'um' que é genérico.",
+                    "assunto": "Artigos e Sentido",
+                    "materia": "portugues"
+                },
+                {
+                    "id": "q3-port-sem1",
+                    "ano": 2018,
+                    "enunciado": "No trecho '...aquela **velha** casa de madeira...', o termo destacado é um adjetivo que qualifica 'casa'. Se alterarmos a posição para '...aquela casa **velha** de madeira...', ocorre uma mudança de sentido. Essa mudança pode ser explicada como:",
+                    "alternativas": [
+                        {
+                            "letra": "A",
+                            "texto": "De mudança de tempo verbal."
+                        },
+                        {
+                            "letra": "B",
+                            "texto": "De uma característica afetiva (antiga/conhecida) para uma característica objetiva (estado de conservação)."
+                        },
+                        {
+                            "letra": "C",
+                            "texto": "De um substantivo para um verbo."
+                        },
+                        {
+                            "letra": "D",
+                            "texto": "Apenas estilística, sem alteração semântica."
+                        },
+                        {
+                            "letra": "E",
+                            "texto": "De gênero masculino para feminino."
+                        }
+                    ],
+                    "gabarito": "B",
+                    "explicacao": "'Velha casa' sugere algo familiar, antigo, afetivo (minha velha casa). 'Casa velha' sugere algo desgastado, em ruínas, com foco na idade física.",
+                    "assunto": "Semântica dos Adjetivos",
+                    "materia": "portugues"
+                }
+            ]
+        },
+        {
+            "id": "2025-12-11",
+            "data": "2025-12-11",
+            "diaSemana": "Quinta-feira",
+            "materia": "biologia",
+            "assunto": "Introdução à Biologia",
+            "dificuldade": "facil",
+            "tempoEstimado": "50min",
+            "resumo": "## O Estudo da Vida\n\nBiologia (Bio = Vida, Logos = Estudo). Mas o que define algo como 'vivo'?\n\n### Níveis de Organização\nÁtomo -> Molécula -> Organela -> **Célula** -> Tecido -> Órgão -> Sistema -> Organismo -> População -> Comunidade -> Ecossistema -> Biosfera.\n\n### Características dos Seres Vivos (C.H.O.M.P.R.E)\n1.  **C**élula (Unidade básica)\n2.  **H**ereditariedade (DNA/RNA)\n3.  **M**etabolismo (Anabolismo + Catabolismo)\n4.  **R**eprodução (Sexuada ou Assexuada)\n5.  **E**volução (Adaptação)\n\n> **Fique Ligado**: Vírus são a exceção! Não têm célula (acelulares) e não têm metabolismo próprio. São parasitas intracelulares obrigatórios.",
+            "videos": [
+                {
+                    "titulo": "Componentes químicos dos seres vivos - Aula 01",
+                    "youtubeId": "guddNfCuAdw",
+                    "canal": "Prof. Guilherme Goulart"
+                }
+            ],
+            "questoes": [
+                {
+                    "id": "q1-bio-sem1",
+                    "ano": 2020,
+                    "enunciado": "(ENEM Digital) Os vírus são estruturas biológicas que, apesar de não serem células, possuem material genético e capacidade de evolução. No entanto, para se reproduzirem, dependem obrigatoriamente da maquinaria de uma célula hospedeira. Por essa característica, os vírus são classificados como:",
+                    "alternativas": [
+                        {
+                            "letra": "A",
+                            "texto": "Decompositores abióticos."
+                        },
+                        {
+                            "letra": "B",
+                            "texto": "Parasitas intracelulares obrigatórios."
+                        },
+                        {
+                            "letra": "C",
+                            "texto": "Simbiontes mutualísticos."
+                        },
+                        {
+                            "letra": "D",
+                            "texto": "Produtores quimiossintetizantes."
+                        },
+                        {
+                            "letra": "E",
+                            "texto": "Organismos unicelulares procariontes."
+                        }
+                    ],
+                    "gabarito": "B",
+                    "explicacao": "Vírus não têm metabolismo próprio e precisam invadir uma célula e usar seus recursos (ribossomos, enzimas) para se replicar, sendo, portanto, parasitas obrigatórios.",
+                    "assunto": "Vírus",
+                    "materia": "biologia"
+                },
+                {
+                    "id": "q2-bio-sem1",
+                    "ano": 2019,
+                    "enunciado": "A vacinação é uma das estratégias mais eficazes de saúde pública. Ao ser vacinado, o organismo é exposto a um antígeno (vírus enfraquecido, morto ou partes dele) com o objetivo de:",
+                    "alternativas": [
+                        {
+                            "letra": "A",
+                            "texto": "Curar a doença imediatamente através da introdução de anticorpos prontos."
+                        },
+                        {
+                            "letra": "B",
+                            "texto": "Estimular a produção de memória imunológica para uma defesa rápida em infecções futuras."
+                        },
+                        {
+                            "letra": "C",
+                            "texto": "Alterar o código genético do paciente para torná-lo imune."
+                        },
+                        {
+                            "letra": "D",
+                            "texto": "Matar as bactérias da microbiota intestinal."
+                        },
+                        {
+                            "letra": "E",
+                            "texto": "Fornecer antibióticos de longa duração no sangue."
+                        }
+                    ],
+                    "gabarito": "B",
+                    "explicacao": "A vacina é uma imunização ATIVA. Ela apresenta o inimigo (antígeno) ao corpo para que ele aprenda a produzir suas próprias defesas (anticorpos e células de memória).",
+                    "assunto": "Imunologia",
+                    "materia": "biologia"
+                },
+                {
+                    "id": "q3-bio-sem1",
+                    "ano": 2021,
+                    "enunciado": "A Teoria Celular, formulada no século XIX, estabelece os princípios fundamentais da biologia moderna. Qual das alternativas abaixo apresenta um postulado CORRETO dessa teoria?",
+                    "alternativas": [
+                        {
+                            "letra": "A",
+                            "texto": "Todos os seres vivos, incluindo os vírus, são formados por células."
+                        },
+                        {
+                            "letra": "B",
+                            "texto": "As células surgem espontaneamente da matéria não viva (abiogênese)."
+                        },
+                        {
+                            "letra": "C",
+                            "texto": "A célula é a unidade morfofisiológica básica de todos os seres vivos."
+                        },
+                        {
+                            "letra": "D",
+                            "texto": "As reações metabólicas ocorrem fora das células, no plasma."
+                        },
+                        {
+                            "letra": "E",
+                            "texto": "Apenas animais possuem células; plantas são formadas por fibras."
+                        }
+                    ],
+                    "gabarito": "C",
+                    "explicacao": "A teoria diz que todos os seres vivos (exceto vírus, que são a borda da definição) são compostos por células, e toda célula vem de outra preexistente.",
+                    "assunto": "Introdução à Biologia",
+                    "materia": "biologia"
+                }
+            ]
+        },
+        {
+            "id": "2025-12-12",
+            "data": "2025-12-12",
+            "diaSemana": "Sexta-feira",
+            "materia": "historia",
+            "assunto": "Pré-História",
+            "dificuldade": "facil",
+            "tempoEstimado": "40min",
+            "resumo": "## Antes da Escrita\n\nA Pré-história vai do surgimento do homem (~2 mi anos atrás) até a invenção da escrita (~4000 a.C).\n\n### Períodos Principais\n\n1.  **Paleolítico (Pedra Lascada)**\n    *   Nômades (caçadores-coletores).\n    *   Descoberta do fogo.\n    *   Pinturas rupestres.\n\n2.  **Neolítico (Pedra Polida)**\n    *   **Revolução Agrícola**: O homem aprende a plantar.\n    *   Sedentarismo (primeiras vilas).\n    *   Domesticação de animais.\n\n3.  **Idade dos Metais**\n    *   Cobre -> Bronze -> Ferro.\n    *   Melhores armas e ferramentas -> Surgimento do Estado e das Cidades.\n\n> **Conceito Chave**: 'Pré-história' é um termo preconceituoso? Sim, pois sugere que povos sem escrita não têm história. Hoje usa-se 'Povos Ágrafos', mas no vestibular o termo clássico ainda aparece.",
+            "videos": [
+                {
+                    "titulo": "HISTÓRIA GERAL - A PRÉ-HISTÓRIA",
+                    "youtubeId": "ym5aER-r2tI",
+                    "canal": "Parabólica"
+                }
+            ],
+            "questoes": [
+                {
+                    "id": "q1-hist-sem1",
+                    "ano": 2011,
+                    "enunciado": "(ENEM/PPL) Gravuras e pinturas são duas modalidades da prática gráfica rupestre, feitas com recursos técnicos diferentes. Existem vastas áreas nas quais há dominância de uma ou outra técnica no Brasil, o que não impede que ambas coexistam no mesmo espaço. Mas em todas as regiões há mãos, pés, antropomorfos e zoomorfos. Os grafismos realizados em blocos ou paredes foram gravados por meio de diversos recursos: picoteamento, entalhes e raspados.\n\n Nas figuras que representam a arte da pré-história brasileira e estão localizadas no sítio arqueológico da Serra da Capivara, estado do Piauí, e, com base no texto, identificam-se:",
+                    "alternativas": [
+                        {
+                            "letra": "A",
+                            "texto": "Imagens do cotidiano que sugerem caçadas, danças, manifestações rituais."
+                        },
+                        {
+                            "letra": "B",
+                            "texto": "Cenas nas quais prevalece o grafismo entalhado em superfícies previamente polidas."
+                        },
+                        {
+                            "letra": "C",
+                            "texto": "Aspectos recentes, cujo procedimento de datação indica o recuo das cronologias."
+                        },
+                        {
+                            "letra": "D",
+                            "texto": "Situações ilusórias na reconstituição da pré-história, pois se localizam em ambientes degradados."
+                        },
+                        {
+                            "letra": "E",
+                            "texto": "Grafismos rupestres que comprovam que foram realizados por pessoas com sensibilidade estética superior à atual."
+                        }
+                    ],
+                    "gabarito": "A",
+                    "explicacao": "A arte rupestre na Serra da Capivara é famosa por suas cenas narrativas ('Várzea Grande') que mostram grupos humanos em ação: caçando, dançando ou em rituais.",
+                    "assunto": "Pré-história no Brasil",
+                    "materia": "historia"
+                },
+                {
+                    "id": "q2-hist-sem1",
+                    "ano": 2012,
+                    "enunciado": "A pintura rupestre, presente em cavernas de todo o mundo, como em Lascaux (França) e na Serra da Capivara (Brasil), desafia a visão tradicional de que a História começa apenas com a escrita. Esses registros visuais cumprem um papel fundamental porque:",
+                    "alternativas": [
+                        {
+                            "letra": "A",
+                            "texto": "Funcionavam como moeda de troca entre tribos nômades."
+                        },
+                        {
+                            "letra": "B",
+                            "texto": "Eram simples decoração, sem qualquer significado simbólico ou comunicativo."
+                        },
+                        {
+                            "letra": "C",
+                            "texto": "Registram aspectos da vida social, cultural e crenças de povos ágrafos (sem escrita)."
+                        },
+                        {
+                            "letra": "D",
+                            "texto": "Foram feitos por viajantes do tempo, dado o seu realismo inexplicável."
+                        },
+                        {
+                            "letra": "E",
+                            "texto": "Provam que o homem conviveu pacificamente com os dinossauros."
+                        }
+                    ],
+                    "gabarito": "C",
+                    "explicacao": "Elas são documentos históricos visuais que nos permitem entender a cultura, os medos e o cotidiano de povos que não deixaram registros escritos.",
+                    "assunto": "Patrimônio Cultural",
+                    "materia": "historia"
+                },
+                {
+                    "id": "q3-hist-sem1",
+                    "ano": 2019,
+                    "enunciado": "(ENEM) A Revolução Neolítica (ou Agrícola) é considerada um dos marcos mais importantes da história humana. Ao dominar o cultivo de plantas e a domesticação de animais, os grupos humanos puderam:",
+                    "alternativas": [
+                        {
+                            "letra": "A",
+                            "texto": "Manter o estilo de vida nômade, viajando mais rápido com cavalos."
+                        },
+                        {
+                            "letra": "B",
+                            "texto": "Abandonar completamente a caça e a pesca."
+                        },
+                        {
+                            "letra": "C",
+                            "texto": "Sedentarizar-se, levando ao surgimento das primeiras aldeias e ao aumento populacional."
+                        },
+                        {
+                            "letra": "D",
+                            "texto": "Inventar a internet e a eletricidade."
+                        },
+                        {
+                            "letra": "E",
+                            "texto": "Diminuir a população devido a guerras por terras."
+                        }
+                    ],
+                    "gabarito": "C",
+                    "explicacao": "A agricultura exige que se fique no local para colheita, levando ao sedentarismo. O excedente de alimentos permitiu o crescimento demográfico.",
+                    "assunto": "Neolítico",
+                    "materia": "historia"
+                }
+            ]
+        },
+        {
+            "id": "2025-12-13",
+            "data": "2025-12-13",
+            "diaSemana": "Sábado",
+            "materia": "redacao",
+            "assunto": "Estrutura da Redação",
+            "dificuldade": "facil",
+            "tempoEstimado": "1h",
+            "resumo": "## O Texto Dissertativo-Argumentativo\n\nNo ENEM, você precisa defender uma opinião (Tese) sobre um problema.\n\n### O Esqueleto (30 linhas)\n\n1.  **Introdução (1 parágrafo)**\n    *   **Contextualização**: Apresente o tema (filme, livro, fato histórico).\n    *   **Tema**: Mostre que você entendeu a frase temática.\n    *   **Tese**: Sua opinião (sem dizer 'eu acho').\n    *   **Argumentos (A1 e A2)**: O que você vai discutir nos próximos parágrafos.\n\n2.  **Desenvolvimento (2 parágrafos)**\n    *   **D1**: Explica o Argumento 1 + Repertório + Consequência.\n    *   **D2**: Explica o Argumento 2 + Repertório + Consequência.\n\n3.  **Conclusão (1 parágrafo)**\n    *   Retomada da Tese.\n    *   **Proposta de Intervenção (GOMIF)**: Agente, Ação, Meio/Modo, Efeito e Detalhamento.\n\n> **Tarefa de Hoje**: Leia uma redação nota 1000 de anos anteriores e tente identificar essas 3 partes.",
+            "videos": [
+                {
+                    "titulo": "COMO FAZER REDAÇÃO ENEM | Redação do Zero",
+                    "youtubeId": "evneF7mhhMU",
+                    "canal": "Lucas Felpi"
+                }
+            ],
+            "questoes": [
+                {
+                    "id": "q1-red-sem1",
+                    "ano": 2024,
+                    "enunciado": "A redação do ENEM exige a estrutura Dissertativo-Argumentativa. Isso significa que o candidato deve:",
+                    "alternativas": [
+                        {
+                            "letra": "A",
+                            "texto": "Contar uma história emocionante (Narração) sobre o tema."
+                        },
+                        {
+                            "letra": "B",
+                            "texto": "Descrever detalhadamente um objeto ou cenário (Descrição)."
+                        },
+                        {
+                            "letra": "C",
+                            "texto": "Apresentar um ponto de vista (Tese) e defendê-lo com argumentos válidos, além de propor uma solução."
+                        },
+                        {
+                            "letra": "D",
+                            "texto": "Dialogar com o leitor usando gírias e informalidade."
+                        },
+                        {
+                            "letra": "E",
+                            "texto": "Fazer um poema sobre o problema social."
+                        }
+                    ],
+                    "gabarito": "C",
+                    "explicacao": "Dissertar é falar sobre algo; Argumentar é convencer. O ENEM pede defesa de tese + proposta de intervenção.",
+                    "assunto": "Tipologia Textual",
+                    "materia": "redacao"
+                },
+                {
+                    "id": "q2-red-sem1",
+                    "ano": 2024,
+                    "enunciado": "A Competência 5 da avaliação da redação do ENEM refere-se à 'Proposta de Intervenção'. Para garantir a nota máxima (200 pontos) nessa competência, a proposta deve conter, obrigatoriamente, cinco elementos. São eles:",
+                    "alternativas": [
+                        {
+                            "letra": "A",
+                            "texto": "Agente, Vítima, Local, Hora e Motivo."
+                        },
+                        {
+                            "letra": "B",
+                            "texto": "Agente, Ação, Meio/Modo, Efeito e Detalhamento."
+                        },
+                        {
+                            "letra": "C",
+                            "texto": "Governo, População, Polícia, Escola e Família."
+                        },
+                        {
+                            "letra": "D",
+                            "texto": "Título, Introdução, Desenvolvimento, Conclusão e Assinatura."
+                        },
+                        {
+                            "letra": "E",
+                            "texto": "Sujeito, Verbo, Predicado, Complemento e Adjunto."
+                        }
+                    ],
+                    "gabarito": "B",
+                    "explicacao": "São os 5 elementos de ouro: Quem faz? (Agente), O que faz? (Ação), Como faz? (Meio), Para quê? (Efeito) e uma explicação extra (Detalhamento).",
+                    "assunto": "Competências",
+                    "materia": "redacao"
+                },
+                {
+                    "id": "q3-red-sem1",
+                    "ano": 2024,
+                    "enunciado": "Na introdução de uma redação nota 1000, é comum iniciar com uma 'Contextualização'. Qual das opções abaixo é um exemplo válido de contextualização para o tema 'Caminhos para combater a intolerância religiosa'?",
+                    "alternativas": [
+                        {
+                            "letra": "A",
+                            "texto": "'Eu acho que a intolerância é muito ruim para o Brasil.'"
+                        },
+                        {
+                            "letra": "B",
+                            "texto": "Citar a Constituição de 1988 que garante a liberdade de crença, ou um filme histórico sobre perseguição religiosa."
+                        },
+                        {
+                            "letra": "C",
+                            "texto": "Começar já com a solução: 'O governo deve criar leis...'."
+                        },
+                        {
+                            "letra": "D",
+                            "texto": "Deixar em branco as primeiras linhas."
+                        },
+                        {
+                            "letra": "E",
+                            "texto": "Copiar o texto motivador I na íntegra."
+                        }
+                    ],
+                    "gabarito": "B",
+                    "explicacao": "A contextualização serve para apresentar o tema ao leitor usando um repertório sociocultural (lei, filme, livro, fato histórico) antes de apresentar a tese.",
+                    "assunto": "Repertório",
+                    "materia": "redacao"
+                }
+            ]
+        },
+        {
+            "id": "2025-12-14",
+            "data": "2025-12-14",
+            "diaSemana": "Domingo",
+            "materia": "revisao",
+            "assunto": "Revisão Semanal",
+            "dificuldade": "medio",
+            "tempoEstimado": "1h 30min",
+            "resumo": "## Hora de Verificar o Conhecimento!\n\nHoje é dia de revisar tudo que vimos na Semana 1. A revisão espaçada é o segredo da aprovação.\n\n### Tópicos da Semana\n\n1.  **Matemática**: Conjuntos (N, Z, Q, I, R).\n2.  **Português**: Classes de palavras (Substantivo, Adjetivo, Artigo).\n3.  **Biologia**: O que é vida? Célula e níveis de organização.\n4.  **História**: Paleolítico x Neolítico.\n5.  **Redação**: Introdução, D1, D2 e Conclusão.\n\n> **Dica**: Se errou alguma questão abaixo, volte no resumo do dia correspondente e releia!",
+            "videos": [],
+            "questoes": [
+                {
+                    "id": "q1-rev-sem1",
+                    "ano": 2023,
+                    "enunciado": "(Revisão Cruzada) Analise a frase histórica: 'A descoberta da agricultura no Neolítico foi vital para a humanidade'. \n\nGramaticalmente, as palavras 'agricultura', 'vital' e 'humanidade' classificam-se, respectivamente, como:",
+                    "alternativas": [
+                        {
+                            "letra": "A",
+                            "texto": "Verbo, Adjetivo, Substantivo."
+                        },
+                        {
+                            "letra": "B",
+                            "texto": "Substantivo, Substantivo, Adjetivo."
+                        },
+                        {
+                            "letra": "C",
+                            "texto": "Substantivo, Adjetivo, Substantivo."
+                        },
+                        {
+                            "letra": "D",
+                            "texto": "Adjetivo, Verbo, Advérbio."
+                        },
+                        {
+                            "letra": "E",
+                            "texto": "Artigo, Pronome, Verbo."
+                        }
+                    ],
+                    "gabarito": "C",
+                    "explicacao": "Agricultura (nome da prática = substantivo); Vital (qualidade = adjetivo); Humanidade (nome do grupo = substantivo).",
+                    "assunto": "Português + História",
+                    "materia": "portugues"
+                },
+                {
+                    "id": "q2-rev-sem1",
+                    "ano": 2023,
+                    "enunciado": "(Revisão Cruzada) Um biólogo está estudando uma cultura de células e observa que elas se multiplicam rapidamente. Se o número de células em uma cultura dobra a cada hora, e inicialmente havia 100 células, podemos modelar esse crescimento usando conceitos matemáticos. \n\nO conjunto numérico que melhor representa a quantidade exata de células em qualquer momento inteiro (1h, 2h, 3h...) é:",
+                    "alternativas": [
+                        {
+                            "letra": "A",
+                            "texto": "Números Irracionais (I), pois o crescimento é exponencial."
+                        },
+                        {
+                            "letra": "B",
+                            "texto": "Números Naturais (N), pois não existem 'meias células' vivas funcionais nesse contexto simples."
+                        },
+                        {
+                            "letra": "C",
+                            "texto": "Números Negativos, pois as células morrem."
+                        },
+                        {
+                            "letra": "D",
+                            "texto": "Apenas o zero."
+                        },
+                        {
+                            "letra": "E",
+                            "texto": "Números Complexos."
+                        }
+                    ],
+                    "gabarito": "B",
+                    "explicacao": "A contagem de seres vivos (população) é feita usando números inteiros não negativos, ou seja, os Naturais (N).",
+                    "assunto": "Matemática + Biologia",
+                    "materia": "matematica"
+                },
+                {
+                    "id": "q3-rev-sem1",
+                    "ano": 2023,
+                    "enunciado": "(Revisão de Redação) Para argumentar sobre a importância da preservação de sítios arqueológicos como a Serra da Capivara em uma Redação do ENEM, qual seria um repertório sociocultural legitimado e pertinente?",
+                    "alternativas": [
+                        {
+                            "letra": "A",
+                            "texto": "Citar que seu vizinho visitou e achou bonito."
+                        },
+                        {
+                            "letra": "B",
+                            "texto": "Mencionar o Artigo 216 da Constituição Federal, que define o patrimônio cultural brasileiro."
+                        },
+                        {
+                            "letra": "C",
+                            "texto": "Falar que pinturas rupestres são fáceis de fazer."
+                        },
+                        {
+                            "letra": "D",
+                            "texto": "Inventar um dado estatístico."
+                        },
+                        {
+                            "letra": "E",
+                            "texto": "Copiar a Wikipédia."
+                        }
+                    ],
+                    "gabarito": "B",
+                    "explicacao": "A Constituição Federal é um dos repertórios mais fortes e coringas ('legitimado') para temas sociais e culturais no ENEM.",
+                    "assunto": "Redação + História",
+                    "materia": "redacao"
+                }
+            ]
+        }
+    ]
+}
