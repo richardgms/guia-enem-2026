@@ -4,18 +4,17 @@ import conteudosData from "@/data/conteudos.json"
 import type { ConteudoDia } from "@/types"
 
 interface PageProps {
-    params: {
+    params: Promise<{
         date: string
-    }
+    }>
 }
 
-// Em Next.js 14, params é uma Promise se não for usado "use client" diretamente ou dependendo da config
-// Mas o padrão mais simples é receber como props. 
-// Para Server Components, params é um objeto.
+// Em Next.js 15+, params é uma Promise.
 
 export default async function DayPage({ params }: PageProps) {
+    const { date } = await params
     // Buscar no JSON
-    const conteudo = conteudosData.conteudos.find(c => c.data === params.date)
+    const conteudo = conteudosData.conteudos.find(c => c.data === date)
 
     if (!conteudo) {
         notFound()
