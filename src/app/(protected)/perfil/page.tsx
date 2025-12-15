@@ -13,7 +13,7 @@ interface Perfil {
     avatar_emoji: string
 }
 
-const EMOJIS = ['👨‍🎓', '👩‍🎓', '🧑‍🎓', '📚', '🎯', '🚀', '⭐', '🔥', '💪', '🧠', '📖', '✨']
+const EMOJIS = ['🐳', '🍒', '💙', '🐠', '🪸', '🌊', '🦀', '🐈', '🐈‍⬛', '👩‍🎓', '⭐', '📖']
 
 export default function PerfilPage() {
     const router = useRouter()
@@ -128,8 +128,8 @@ export default function PerfilPage() {
                                 key={emoji}
                                 onClick={() => setPerfil(p => ({ ...p, avatar_emoji: emoji }))}
                                 className={`text-4xl p-2 rounded-xl transition-all ${perfil.avatar_emoji === emoji
-                                        ? 'bg-primary/10 ring-2 ring-primary scale-110'
-                                        : 'hover:bg-slate-100'
+                                    ? 'bg-primary/10 ring-2 ring-primary scale-110'
+                                    : 'hover:bg-slate-100'
                                     }`}
                             >
                                 {emoji}

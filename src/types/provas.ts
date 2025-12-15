@@ -153,7 +153,33 @@ export interface ElegibilidadeProva {
     provaJaRealizada: boolean
     provaEmAndamento: boolean
     dentroDoHorario: boolean
+    provaAtrasada: boolean
+    semanaAtrasada: number | null
     mensagem: string
+}
+
+// =============================================
+// FOCO DO DIA
+// =============================================
+
+export type TipoFocoDoDia =
+    | 'prova_atrasada'
+    | 'dia_atrasado'
+    | 'conteudo_hoje'
+    | 'prova_disponivel'
+    | 'proximo_dia'
+    | 'semana_completa'
+
+export interface FocoDoDia {
+    tipo: TipoFocoDoDia
+    semana?: number
+    data?: string
+    diasAtraso?: number
+    proximaData?: string
+    conteudo?: {
+        materia: string
+        assunto: string
+    }
 }
 
 // =============================================

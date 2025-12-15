@@ -11,6 +11,7 @@ import {
     podeConcluirTarefa,
     formatarDataExibicao
 } from "@/lib/studyProgress"
+import { calcularSemanaAtual, getDomingoDaSemana, SEMANAS_COM_PROVA } from "@/lib/provaUtils"
 
 import Link from "next/link"
 import type { ConteudoDia } from "@/types"
@@ -97,6 +98,37 @@ export default async function DashboardPage() {
                 atrasados: presencaData.filter(p => p.status === 'atrasado').length,
                 total: presencaData.length,
                 taxa: Math.round((presencaData.filter(p => p.status === 'presenca').length / presencaData.length) * 100)
+            }
+        }
+    }
+
+    // ===== VERIFICAR PROVA ATRASADA =====
+    let provaAtrasada: { semana: number; diasAtraso: number } | null = null
+    if (user) {
+        const agora = new Date()
+        const semanaAtual = calcularSemanaAtual(agora)
+        const anoAtual = agora.getFullYear()
+
+        // Buscar provas finalizadas
+        const { data: provasRealizadas } = await supabase
+            .from('provas_semanais')
+            .select('semana')
+            .eq('user_id', user.id)
+            .eq('ano', anoAtual)
+            .eq('status', 'finalizada')
+
+        const semanasFeitas = new Set(provasRealizadas?.map(p => p.semana) || [])
+
+        // Verificar cada semana com prova
+        for (const s of SEMANAS_COM_PROVA) {
+            const domingoDaSemana = getDomingoDaSemana(s)
+            const passou = agora > domingoDaSemana
+
+            if (passou && !semanasFeitas.has(s)) {
+                const diffMs = agora.getTime() - domingoDaSemana.getTime()
+                const diasAtraso = Math.ceil(diffMs / (1000 * 60 * 60 * 24))
+                provaAtrasada = { semana: s, diasAtraso }
+                break
             }
         }
     }
@@ -222,12 +254,51 @@ export default async function DashboardPage() {
                             <div className="flex justify-between items-baseline mb-4">
                                 <div className="flex items-center gap-3">
                                     <h2 className="text-2xl font-semibold" id="today-focus-heading">Seu foco de hoje</h2>
-                                    <TaskBadge tipo={getTipoTarefaPrioritaria()} />
+                                    {provaAtrasada ? (
+                                        <span className="bg-red-500 text-white text-xs px-3 py-1 rounded-full font-bold">
+                                            Prova Atrasada
+                                        </span>
+                                    ) : (
+                                        <TaskBadge tipo={getTipoTarefaPrioritaria()} />
+                                    )}
                                 </div>
-                                <span className="text-sm text-text-secondary font-medium">Dia {tarefaPrioritariaIndex + 1} de {totalDias}</span>
+                                {!provaAtrasada && (
+                                    <span className="text-sm text-text-secondary font-medium">Dia {tarefaPrioritariaIndex + 1} de {totalDias}</span>
+                                )}
                             </div>
 
-                            {tarefaPrioritaria ? (
+                            {/* PROVA ATRASADA - PRIORIDADE MÁXIMA */}
+                            {provaAtrasada ? (
+                                <div className="bg-red-50 shadow-custom rounded-2xl p-6 border-2 border-red-200 flex flex-col md:flex-row items-start md:items-center justify-between relative overflow-hidden gap-4">
+                                    <div className="border-l-4 border-red-500 pl-4">
+                                        <div className="flex items-center gap-2">
+                                            <span className="text-2xl">⚠️</span>
+                                            <span className="bg-red-500 text-white text-xs px-2 py-0.5 rounded-full font-bold">
+                                                {provaAtrasada.diasAtraso} {provaAtrasada.diasAtraso === 1 ? 'dia' : 'dias'} atrasado
+                                            </span>
+                                        </div>
+                                        <h3 className="text-2xl font-bold mt-2 text-red-700">Prova Semanal - Semana {provaAtrasada.semana}</h3>
+                                        <div className="flex items-center space-x-3 mt-3 text-sm flex-wrap gap-y-2">
+                                            <span className="bg-red-100 text-red-700 px-3 py-1 rounded-full font-medium">
+                                                📝 10 questões
+                                            </span>
+                                            <span className="flex items-center text-red-600 font-medium">
+                                                <span className="material-symbols-outlined text-base mr-1.5" style={{ fontFamily: 'Material Symbols Outlined' }}>timer</span>
+                                                50 minutos
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <Link href="/prova" className="w-full md:w-auto">
+                                        <button className="w-full md:w-auto bg-red-600 hover:bg-red-700 text-white font-semibold px-6 py-3 rounded-full flex items-center justify-center space-x-2 transition-colors h-auto">
+                                            <span className="material-symbols-outlined text-xl" style={{ fontFamily: 'Material Symbols Outlined' }}>
+                                                edit_note
+                                            </span>
+                                            <span>Fazer Prova Agora</span>
+                                        </button>
+                                    </Link>
+                                </div>
+                            ) : tarefaPrioritaria ? (
                                 <div className={`${analiseEstudante.status === 'atrasado' ? 'bg-red-50 border-red-200' : 'bg-accent-green-bg'} shadow-custom rounded-2xl p-6 border border-card-border flex flex-col md:flex-row items-start md:items-center justify-between relative overflow-hidden gap-4`}>
                                     <div className={`border-l-4 ${analiseEstudante.status === 'atrasado' ? 'border-red-500' : 'border-accent-green-button'} pl-4`}>
                                         <p className="text-sm text-text-secondary capitalize">

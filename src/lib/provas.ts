@@ -10,12 +10,19 @@ import type {
     MetricasProvasDB,
     Alternativa,
     DesempenhoMateria,
-    HistoricoNota
+    HistoricoNota,
+    FocoDoDia
 } from '@/types/provas'
 
 // =============================================
 // HELPERS
 // =============================================
+
+// Data de início do cronograma (09/12/2025 = Terça-feira)
+const INICIO_CRONOGRAMA = new Date('2025-12-09T00:00:00')
+
+// Primeiro domingo do cronograma (14/12/2025)
+const PRIMEIRO_DOMINGO = new Date('2025-12-14T23:59:59')
 
 function gerarSessionToken(): string {
     const array = new Uint8Array(32)
@@ -23,11 +30,30 @@ function gerarSessionToken(): string {
     return Array.from(array, byte => byte.toString(16).padStart(2, '0')).join('')
 }
 
-function getSemanaDoAno(data: Date): number {
-    const inicio = new Date(data.getFullYear(), 0, 1)
-    const diff = data.getTime() - inicio.getTime()
-    const umaSemana = 7 * 24 * 60 * 60 * 1000
-    return Math.ceil((diff + inicio.getDay() * 24 * 60 * 60 * 1000) / umaSemana)
+// Calcula a semana do cronograma baseada no domingo
+// Se passou o domingo da semana N, estamos na semana N+1
+export function calcularSemanaAtual(data?: Date): number {
+    const hoje = data || new Date()
+
+    // Se ainda não passou o primeiro domingo, semana 1
+    if (hoje <= PRIMEIRO_DOMINGO) {
+        return 1
+    }
+
+    // Quantos domingos passaram desde o primeiro?
+    const diffMs = hoje.getTime() - PRIMEIRO_DOMINGO.getTime()
+    const diffDias = Math.floor(diffMs / (1000 * 60 * 60 * 24))
+    const semanas = Math.floor(diffDias / 7) + 2 // +2 porque já passamos a semana 1
+
+    return semanas
+}
+
+// Retorna o domingo de uma semana específica (fim do prazo da prova)
+export function getDomingoDaSemana(semana: number): Date {
+    // Semana 1 = 14/12, Semana 2 = 21/12, etc
+    const domingo = new Date(PRIMEIRO_DOMINGO)
+    domingo.setDate(domingo.getDate() + (semana - 1) * 7)
+    return domingo
 }
 
 function converterProvaDB(db: ProvaSemanelDB): ProvaSemanal {
@@ -57,70 +83,112 @@ export async function verificarElegibilidade(): Promise<ElegibilidadeProva> {
     const supabase = createClient()
     const { data: { user } } = await supabase.auth.getUser()
 
+    const resultadoPadrao: ElegibilidadeProva = {
+        elegivel: false,
+        diasEstudados: 0,
+        diasNecessarios: 4,
+        semanaAtual: 0,
+        provaJaRealizada: false,
+        provaEmAndamento: false,
+        dentroDoHorario: false,
+        provaAtrasada: false,
+        semanaAtrasada: null,
+        mensagem: ''
+    }
+
     if (!user) {
-        return {
-            elegivel: false,
-            diasEstudados: 0,
-            diasNecessarios: 4,
-            semanaAtual: 0,
-            provaJaRealizada: false,
-            provaEmAndamento: false,
-            dentroDoHorario: false,
-            mensagem: 'Usuário não autenticado'
-        }
+        return { ...resultadoPadrao, mensagem: 'Usuário não autenticado' }
     }
 
     const agora = new Date()
-    const semanaAtual = getSemanaDoAno(agora)
+    const semanaAtual = calcularSemanaAtual(agora)
     const anoAtual = agora.getFullYear()
     const diaSemana = agora.getDay() // 0 = domingo, 6 = sábado
 
     // Verificar se está dentro do horário (sábado 00:00 até domingo 23:59)
     const dentroDoHorario = diaSemana === 6 || diaSemana === 0
 
-    // Verificar se já fez a prova desta semana
-    const { data: provaExistente } = await supabase
+    // Buscar TODAS as provas do usuário para verificar atrasos
+    const { data: todasProvas } = await supabase
         .from('provas_semanais')
-        .select('status')
+        .select('semana, ano, status')
         .eq('user_id', user.id)
-        .eq('semana', semanaAtual)
         .eq('ano', anoAtual)
-        .single()
 
-    const provaJaRealizada = provaExistente?.status === 'finalizada'
-    const provaEmAndamento = provaExistente?.status === 'em_andamento'
+    const provasRealizadas = new Set(
+        todasProvas?.filter(p => p.status === 'finalizada').map(p => p.semana) || []
+    )
+    const provasEmAndamento = todasProvas?.find(p => p.status === 'em_andamento')
 
-    if (provaJaRealizada) {
+    // Verificar prova em andamento (prioridade máxima)
+    if (provasEmAndamento) {
         return {
-            elegivel: false,
-            diasEstudados: 0,
-            diasNecessarios: 4,
+            ...resultadoPadrao,
+            elegivel: true,
+            diasEstudados: 4,
+            semanaAtual,
+            provaEmAndamento: true,
+            dentroDoHorario,
+            provaAtrasada: provasEmAndamento.semana < semanaAtual,
+            semanaAtrasada: provasEmAndamento.semana < semanaAtual ? provasEmAndamento.semana : null,
+            mensagem: 'Você tem uma prova em andamento'
+        }
+    }
+
+    // Verificar provas atrasadas (semanas anteriores sem prova finalizada)
+    // IMPORTANTE: Só verificar semanas que TÊM questões cadastradas (por enquanto só semana 1)
+    const SEMANAS_COM_PROVA = [1] // Atualizar quando adicionar mais provas
+
+    let semanaAtrasada: number | null = null
+    for (const s of SEMANAS_COM_PROVA) {
+        if (s >= semanaAtual) continue // Só verificar semanas anteriores
+
+        // Verificar se o domingo dessa semana já passou
+        const domingoDaSemana = getDomingoDaSemana(s)
+        if (agora > domingoDaSemana && !provasRealizadas.has(s)) {
+            semanaAtrasada = s
+            break // Pegar a mais antiga
+        }
+    }
+
+    // Se tem prova atrasada, permitir fazer em qualquer dia
+    if (semanaAtrasada !== null) {
+        return {
+            ...resultadoPadrao,
+            elegivel: true,
+            diasEstudados: 4, // Assume que estudou (prova atrasada)
+            semanaAtual,
+            dentroDoHorario: true, // Pode fazer qualquer dia
+            provaAtrasada: true,
+            semanaAtrasada,
+            mensagem: `Você tem a prova da Semana ${semanaAtrasada} pendente`
+        }
+    }
+
+    // Verificar se já fez a prova da semana atual
+    if (provasRealizadas.has(semanaAtual)) {
+        return {
+            ...resultadoPadrao,
             semanaAtual,
             provaJaRealizada: true,
-            provaEmAndamento: false,
             dentroDoHorario,
             mensagem: 'Você já realizou a prova desta semana'
         }
     }
 
-    if (provaEmAndamento) {
+    // Não está no horário permitido (sábado/domingo) e não tem atraso
+    if (!dentroDoHorario) {
         return {
-            elegivel: true,
-            diasEstudados: 4,
-            diasNecessarios: 4,
+            ...resultadoPadrao,
             semanaAtual,
-            provaJaRealizada: false,
-            provaEmAndamento: true,
-            dentroDoHorario,
-            mensagem: 'Você tem uma prova em andamento'
+            dentroDoHorario: false,
+            mensagem: 'A prova está disponível aos domingos'
         }
     }
 
     // Buscar dias estudados na semana atual
-    // Primeira segunda-feira da semana
-    const inicioSemana = new Date(agora)
-    inicioSemana.setDate(agora.getDate() - agora.getDay() + 1)
-    inicioSemana.setHours(0, 0, 0, 0)
+    const inicioSemana = new Date(INICIO_CRONOGRAMA)
+    inicioSemana.setDate(inicioSemana.getDate() + (semanaAtual - 1) * 7)
 
     const { data: progressos } = await supabase
         .from('progresso')
@@ -129,51 +197,33 @@ export async function verificarElegibilidade(): Promise<ElegibilidadeProva> {
         .eq('concluido', true)
         .gte('first_completed_at', inicioSemana.toISOString())
 
-    // Contar dias únicos estudados
     const diasUnicos = new Set<string>()
     progressos?.forEach(p => {
         if (p.first_completed_at) {
-            const data = new Date(p.first_completed_at)
-            diasUnicos.add(data.toISOString().split('T')[0])
+            diasUnicos.add(new Date(p.first_completed_at).toISOString().split('T')[0])
         }
     })
 
     const diasEstudados = diasUnicos.size
     const diasNecessarios = 4
 
-    if (!dentroDoHorario) {
-        return {
-            elegivel: false,
-            diasEstudados,
-            diasNecessarios,
-            semanaAtual,
-            provaJaRealizada: false,
-            provaEmAndamento: false,
-            dentroDoHorario: false,
-            mensagem: 'A prova só está disponível de sábado até domingo'
-        }
-    }
-
     if (diasEstudados < diasNecessarios) {
         return {
-            elegivel: false,
+            ...resultadoPadrao,
             diasEstudados,
             diasNecessarios,
             semanaAtual,
-            provaJaRealizada: false,
-            provaEmAndamento: false,
             dentroDoHorario: true,
-            mensagem: `Você precisa estudar pelo menos ${diasNecessarios} dias na semana. Você estudou ${diasEstudados}.`
+            mensagem: `Você precisa estudar pelo menos ${diasNecessarios} dias. Você estudou ${diasEstudados}.`
         }
     }
 
     return {
+        ...resultadoPadrao,
         elegivel: true,
         diasEstudados,
         diasNecessarios,
         semanaAtual,
-        provaJaRealizada: false,
-        provaEmAndamento: false,
         dentroDoHorario: true,
         mensagem: 'Você está apto a realizar a prova!'
     }
@@ -202,14 +252,15 @@ export async function iniciarProva(): Promise<ProvaSemanal> {
     }
 
     const agora = new Date()
-    const semanaAtual = getSemanaDoAno(agora)
+    // Usar semana atrasada se houver, senão usar semana atual
+    const semanaParaProva = elegibilidade.semanaAtrasada || calcularSemanaAtual(agora)
     const anoAtual = agora.getFullYear()
 
     // Buscar questões da semana
     const { data: questoes, error: questoesError } = await supabase
         .from('questoes_prova_public')
         .select('id')
-        .eq('semana', semanaAtual)
+        .eq('semana', semanaParaProva)
 
     if (questoesError || !questoes || questoes.length === 0) {
         throw new Error('Não há questões disponíveis para esta semana')
@@ -223,7 +274,7 @@ export async function iniciarProva(): Promise<ProvaSemanal> {
         .from('provas_semanais')
         .insert({
             user_id: user.id,
-            semana: semanaAtual,
+            semana: semanaParaProva,
             ano: anoAtual,
             status: 'em_andamento',
             iniciada_em: agora.toISOString(),

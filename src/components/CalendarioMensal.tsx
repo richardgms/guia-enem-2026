@@ -102,6 +102,7 @@ export function CalendarioMensal({ conteudos, progressos }: CalendarioMensalProp
                     const dateStr = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`
 
                     const isToday = dateStr === todayStr
+                    const isSunday = date.getDay() === 0
 
                     return (
                         <div key={date.toISOString()} className={cn("min-h-[100px] p-2 relative group transition-colors", colorClass)}>
@@ -121,8 +122,30 @@ export function CalendarioMensal({ conteudos, progressos }: CalendarioMensalProp
                                 )}
                             </div>
 
+                            {/* Prova indicator - only on first prova date (Dec 14) */}
+                            {isSunday && date.getDate() === 14 && date.getMonth() === 11 && date.getFullYear() === 2025 && (() => {
+                                const sundayDateStr = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`
+                                const isOverdue = sundayDateStr < todayStr
+
+                                return (
+                                    <Link href="/prova" className="block mt-1">
+                                        <Badge
+                                            variant="secondary"
+                                            className={cn(
+                                                "w-full justify-start text-[10px] px-1 mb-1",
+                                                isOverdue
+                                                    ? "bg-red-100 text-red-700 hover:bg-red-200"
+                                                    : "bg-slate-100 text-slate-700 hover:bg-slate-200"
+                                            )}
+                                        >
+                                            {isOverdue ? "⚠️ Prova Atrasada" : "📝 Prova Semanal"}
+                                        </Badge>
+                                    </Link>
+                                )
+                            })()}
+
                             {conteudo ? (
-                                <Link href={`/dia/${conteudo.data}`} className="block mt-2">
+                                <Link href={`/dia/${conteudo.data}`} className="block mt-1">
                                     <Badge variant="secondary" className={cn(
                                         "w-full justify-start text-[10px] px-1 overflow-hidden whitespace-nowrap text-ellipsis mb-1",
                                         materiaColors[conteudo.materia]
@@ -133,7 +156,7 @@ export function CalendarioMensal({ conteudos, progressos }: CalendarioMensalProp
                                         {conteudo.assunto}
                                     </p>
                                 </Link>
-                            ) : (
+                            ) : !isSunday && (
                                 <div className="h-full w-full flex items-center justify-center opacity-20">
                                     -
                                 </div>
