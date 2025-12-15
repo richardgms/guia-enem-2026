@@ -8,6 +8,20 @@ export async function salvarProgresso(dataId: string, progresso: ProgressoDia) {
 
     if (!user) throw new Error('Usuário não autenticado')
 
+    // Verifica se já existe um progresso concluído para esta data
+    const { data: progressoExistente } = await supabase
+        .from('progresso')
+        .select('concluido, first_completed_at')
+        .eq('user_id', user.id)
+        .eq('data_id', dataId)
+        .single()
+
+    // Só define first_completed_at se for a primeira vez que está sendo concluído
+    const isFirstCompletion = progresso.concluido && (!progressoExistente || !progressoExistente.concluido)
+    const firstCompletedAt = isFirstCompletion
+        ? new Date().toISOString()
+        : progressoExistente?.first_completed_at || null
+
     const { error } = await supabase
         .from('progresso')
         .upsert({
@@ -19,15 +33,21 @@ export async function salvarProgresso(dataId: string, progresso: ProgressoDia) {
             questoes_total: progresso.questoesTotal,
             data_revisao: progresso.dataRevisao,
             anotacoes: progresso.anotacoes,
+            first_completed_at: firstCompletedAt,
             updated_at: new Date().toISOString()
         }, {
             onConflict: 'user_id,data_id'
         })
 
-    if (error) throw error
+    if (error) {
+        console.error('Supabase upsert error:', error.message, error.code, error.details)
+        throw error
+    }
 
-    // Atualiza estatísticas
-    await atualizarEstatisticas()
+    // Atualiza estatísticas apenas se for primeira conclusão
+    if (isFirstCompletion) {
+        await atualizarEstatisticas()
+    }
 }
 
 export async function getProgresso(dataId: string): Promise<ProgressoDia | null> {
@@ -122,59 +142,94 @@ async function atualizarEstatisticas() {
 
     if (!user) return
 
-    // Busca todos os progressos para calcular estatísticas
+    // Busca todos os progressos concluídos
     const { data: progressos } = await supabase
         .from('progresso')
         .select('*')
         .eq('user_id', user.id)
         .eq('concluido', true)
-        .order('data_id', { ascending: false })
+        .not('first_completed_at', 'is', null)
+        .order('first_completed_at', { ascending: false })
 
-    if (!progressos) return
-
-    const diasConcluidos = progressos.length
-    const xpTotal = diasConcluidos * 50 // 50 XP por dia
-
-    // Calcula streak
-    let streakAtual = 0
-    // Ordena progressos por data decrescente
-    const datasConcluidas = progressos.map(p => p.data_id).sort((a, b) => new Date(b).getTime() - new Date(a).getTime())
-
-    if (datasConcluidas.length > 0) {
-        const hoje = new Date()
-        // Normaliza para meia-noite para comparação de dias apenas
-        hoje.setHours(0, 0, 0, 0);
-
-        const ultimaData = new Date(datasConcluidas[0])
-        ultimaData.setHours(0, 0, 0, 0);
-
-        const diffTime = Math.abs(hoje.getTime() - ultimaData.getTime());
-        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-
-        // Se estudou hoje ou ontem, o streak está vivo
-        if (diffDays <= 1) {
-            streakAtual = 1
-            let currentDate = ultimaData
-
-            for (let i = 1; i < datasConcluidas.length; i++) {
-                const prevDate = new Date(datasConcluidas[i])
-                prevDate.setHours(0, 0, 0, 0);
-
-                const diffStreak = Math.abs(currentDate.getTime() - prevDate.getTime());
-                const diffDaysStreak = Math.ceil(diffStreak / (1000 * 60 * 60 * 24));
-
-                if (diffDaysStreak === 1) {
-                    streakAtual++
-                    currentDate = prevDate
-                } else {
-                    break
-                }
-            }
-        } else {
-            streakAtual = 0
-        }
+    if (!progressos || progressos.length === 0) {
+        // Sem progressos, zera tudo
+        await supabase
+            .from('estatisticas')
+            .upsert({
+                user_id: user.id,
+                dias_concluidos: 0,
+                streak_atual: 0,
+                maior_streak: 0,
+                xp_total: 0,
+                ultimo_dia_estudo: null,
+                updated_at: new Date().toISOString()
+            }, {
+                onConflict: 'user_id'
+            })
+        return
     }
 
+    // Pega dias únicos em que houve estudo (baseado em first_completed_at)
+    const diasUnicos = new Set<string>()
+    progressos.forEach(p => {
+        if (p.first_completed_at) {
+            const dataEstudo = new Date(p.first_completed_at)
+            const diaStr = `${dataEstudo.getFullYear()}-${String(dataEstudo.getMonth() + 1).padStart(2, '0')}-${String(dataEstudo.getDate()).padStart(2, '0')}`
+            diasUnicos.add(diaStr)
+        }
+    })
+
+    const diasConcluidos = diasUnicos.size
+    const xpTotal = diasConcluidos * 50 // 50 XP por dia único
+
+    // Ordena os dias de estudo do mais recente ao mais antigo
+    const diasOrdenados = Array.from(diasUnicos).sort((a, b) => new Date(b).getTime() - new Date(a).getTime())
+
+    // Calcula streak baseado em dias consecutivos de atividade
+    let streakAtual = 0
+    const hoje = new Date()
+    hoje.setHours(0, 0, 0, 0)
+
+    const hojeStr = `${hoje.getFullYear()}-${String(hoje.getMonth() + 1).padStart(2, '0')}-${String(hoje.getDate()).padStart(2, '0')}`
+
+    // Ontem
+    const ontem = new Date(hoje)
+    ontem.setDate(ontem.getDate() - 1)
+    const ontemStr = `${ontem.getFullYear()}-${String(ontem.getMonth() + 1).padStart(2, '0')}-${String(ontem.getDate()).padStart(2, '0')}`
+
+    // O streak só está ativo se estudou HOJE ou ONTEM
+    const ultimoDiaEstudo = diasOrdenados[0]
+    const estudouHoje = ultimoDiaEstudo === hojeStr
+    const estudouOntem = ultimoDiaEstudo === ontemStr
+
+    if (estudouHoje || estudouOntem) {
+        // Streak está vivo, conta dias consecutivos
+        streakAtual = 1
+        let dataAtual = new Date(diasOrdenados[0])
+        dataAtual.setHours(0, 0, 0, 0)
+
+        for (let i = 1; i < diasOrdenados.length; i++) {
+            const dataAnterior = new Date(diasOrdenados[i])
+            dataAnterior.setHours(0, 0, 0, 0)
+
+            const diffTime = dataAtual.getTime() - dataAnterior.getTime()
+            const diffDays = diffTime / (1000 * 60 * 60 * 24)
+
+            if (diffDays === 1) {
+                // Dia consecutivo
+                streakAtual++
+                dataAtual = dataAnterior
+            } else {
+                // Quebra na sequência
+                break
+            }
+        }
+    } else {
+        // Mais de 24h sem estudar, streak zera
+        streakAtual = 0
+    }
+
+    // Busca maior streak anterior
     const { data: statsExistente } = await supabase
         .from('estatisticas')
         .select('maior_streak')
@@ -191,7 +246,7 @@ async function atualizarEstatisticas() {
             streak_atual: streakAtual,
             maior_streak: maiorStreak,
             xp_total: xpTotal,
-            ultimo_dia_estudo: progressos[0]?.data_id || null,
+            ultimo_dia_estudo: ultimoDiaEstudo,
             updated_at: new Date().toISOString()
         }, {
             onConflict: 'user_id'

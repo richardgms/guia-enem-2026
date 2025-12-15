@@ -665,6 +665,381 @@
                     "materia": "redacao"
                 }
             ]
+        },
+        {
+            "id": "2025-12-15",
+            "data": "2025-12-15",
+            "diaSemana": "Segunda-feira",
+            "materia": "matematica",
+            "assunto": "Razão e Proporção",
+            "dificuldade": "facil",
+            "tempoEstimado": "45min",
+            "resumo": "## Razão e Proporção\n\nConceitos fundamentais que aparecem em TUDO: regra de três, escalas, porcentagem!\n\n### Razão\nComparação entre duas grandezas através de uma divisão.\n- Ex: Se tenho 4 meninas e 6 meninos, a razão é 4/6 = 2/3.\n\n### Proporção\nIgualdade entre duas razões.\n- Ex: 2/3 = 4/6 (mesma proporção)\n\n### Propriedade Fundamental\nEm a/b = c/d, temos: **a × d = b × c** (produto dos extremos = produto dos meios)\n\n> **Dica ENEM**: Fique atento a problemas de escala em mapas! Se a escala é 1:100.000, cada 1cm no mapa = 100.000cm (1km) na realidade.",
+            "videos": [
+                {
+                    "titulo": "RAZÃO E PROPORÇÃO | COMPLETO",
+                    "youtubeId": "mJKeDmj_hEQ",
+                    "canal": "Professor Ferretto"
+                }
+            ],
+            "questoes": [
+                {
+                    "id": "q1-mat-sem2",
+                    "ano": 2019,
+                    "enunciado": "Um mapa está na escala 1:250.000. Se duas cidades estão separadas por 4cm no mapa, qual é a distância real entre elas?",
+                    "alternativas": [
+                        {
+                            "letra": "A",
+                            "texto": "10 km"
+                        },
+                        {
+                            "letra": "B",
+                            "texto": "25 km"
+                        },
+                        {
+                            "letra": "C",
+                            "texto": "100 km"
+                        },
+                        {
+                            "letra": "D",
+                            "texto": "1.000 km"
+                        },
+                        {
+                            "letra": "E",
+                            "texto": "2.500 km"
+                        }
+                    ],
+                    "gabarito": "A",
+                    "explicacao": "4cm × 250.000 = 1.000.000 cm = 10.000 m = 10 km.",
+                    "assunto": "Escalas",
+                    "materia": "matematica"
+                }
+            ]
+        },
+        {
+            "id": "2025-12-16",
+            "data": "2025-12-16",
+            "diaSemana": "Terça-feira",
+            "materia": "portugues",
+            "assunto": "Verbos e Tempos Verbais",
+            "dificuldade": "medio",
+            "tempoEstimado": "1h",
+            "resumo": "## Verbos: O Motor da Frase\n\nVerbos indicam ação, estado ou fenômeno da natureza.\n\n### Tempos Verbais\n1. **Presente**: Acontece agora. 'Eu estudo.'\n2. **Pretérito Perfeito**: Ação concluída. 'Eu estudei.'\n3. **Pretérito Imperfeito**: Ação contínua no passado. 'Eu estudava.'\n4. **Futuro do Presente**: Vai acontecer. 'Eu estudarei.'\n5. **Futuro do Pretérito**: Condição. 'Eu estudaria (se pudesse).'\n\n### Modos Verbais\n- **Indicativo**: Certeza.\n- **Subjuntivo**: Dúvida, hipótese.\n- **Imperativo**: Ordem, pedido.\n\n> **ENEM**: Foco nos efeitos de sentido! Por que o autor usou 'seria' em vez de 'é'?",
+            "videos": [
+                {
+                    "titulo": "VERBOS - Modos e Tempos Verbais",
+                    "youtubeId": "K_Dx1gLLLjg",
+                    "canal": "Professor Noslen"
+                }
+            ],
+            "questoes": [
+                {
+                    "id": "q1-port-sem2",
+                    "ano": 2020,
+                    "enunciado": "No trecho 'Se eu pudesse, viajaria para o exterior', os verbos estão, respectivamente, nos modos:",
+                    "alternativas": [
+                        {
+                            "letra": "A",
+                            "texto": "Indicativo e Indicativo"
+                        },
+                        {
+                            "letra": "B",
+                            "texto": "Subjuntivo e Indicativo"
+                        },
+                        {
+                            "letra": "C",
+                            "texto": "Imperativo e Subjuntivo"
+                        },
+                        {
+                            "letra": "D",
+                            "texto": "Subjuntivo e Indicativo (Futuro do Pretérito)"
+                        },
+                        {
+                            "letra": "E",
+                            "texto": "Indicativo e Imperativo"
+                        }
+                    ],
+                    "gabarito": "D",
+                    "explicacao": "'Pudesse' está no Pretérito Imperfeito do Subjuntivo (hipótese). 'Viajaria' está no Futuro do Pretérito do Indicativo (consequência da condição).",
+                    "assunto": "Verbos",
+                    "materia": "portugues"
+                }
+            ]
+        },
+        {
+            "id": "2025-12-17",
+            "data": "2025-12-17",
+            "diaSemana": "Quarta-feira",
+            "materia": "fisica",
+            "assunto": "Cinemática: Movimento Uniforme",
+            "dificuldade": "medio",
+            "tempoEstimado": "50min",
+            "resumo": "## Movimento Uniforme (MU)\n\nQuando a velocidade é constante (v = constante).\n\n### Fórmula Principal\n**S = S₀ + v·t**\n- S = posição final\n- S₀ = posição inicial\n- v = velocidade (constante)\n- t = tempo\n\n### Gráficos\n- **S × t**: Reta inclinada (v > 0 sobe, v < 0 desce)\n- **v × t**: Linha horizontal\n\n### Velocidade Média\n**Vm = ΔS / Δt** (variação de espaço / variação de tempo)\n\n> **Atenção**: Não confunda velocidade média com a média das velocidades! São coisas diferentes.",
+            "videos": [
+                {
+                    "titulo": "CINEMÁTICA - Movimento Uniforme (MU)",
+                    "youtubeId": "QP7a1K8EHGQ",
+                    "canal": "Professor Boaro"
+                }
+            ],
+            "questoes": [
+                {
+                    "id": "q1-fis-sem2",
+                    "ano": 2018,
+                    "enunciado": "Um carro parte de uma cidade A às 8h e chega à cidade B às 11h, tendo percorrido 180 km. Qual foi a velocidade média do carro?",
+                    "alternativas": [
+                        {
+                            "letra": "A",
+                            "texto": "40 km/h"
+                        },
+                        {
+                            "letra": "B",
+                            "texto": "50 km/h"
+                        },
+                        {
+                            "letra": "C",
+                            "texto": "60 km/h"
+                        },
+                        {
+                            "letra": "D",
+                            "texto": "70 km/h"
+                        },
+                        {
+                            "letra": "E",
+                            "texto": "80 km/h"
+                        }
+                    ],
+                    "gabarito": "C",
+                    "explicacao": "Vm = ΔS/Δt = 180 km / 3h = 60 km/h.",
+                    "assunto": "MU",
+                    "materia": "fisica"
+                }
+            ]
+        },
+        {
+            "id": "2025-12-18",
+            "data": "2025-12-18",
+            "diaSemana": "Quinta-feira",
+            "materia": "quimica",
+            "assunto": "Estrutura Atômica",
+            "dificuldade": "medio",
+            "tempoEstimado": "50min",
+            "resumo": "## O Átomo\n\nTudo começa aqui: a menor unidade da matéria que mantém as propriedades de um elemento.\n\n### Partículas Subatômicas\n- **Próton (p⁺)**: Carga positiva, no núcleo. Define o elemento (Z).\n- **Nêutron (n)**: Sem carga, no núcleo. Estabiliza.\n- **Elétron (e⁻)**: Carga negativa, na eletrosfera.\n\n### Números Atômicos\n- **Z (Número Atômico)** = nº de prótons\n- **A (Número de Massa)** = prótons + nêutrons (A = Z + N)\n\n### Isótopos, Isóbaros, Isótonos\n- **Isótopos**: Mesmo Z, diferente A (ex: C-12 e C-14)\n- **Isóbaros**: Mesmo A, diferente Z\n- **Isótonos**: Mesmo número de nêutrons\n\n> **Lembrete**: Átomo neutro → nº de prótons = nº de elétrons.",
+            "videos": [
+                {
+                    "titulo": "ESTRUTURA ATÔMICA | COMPLETO",
+                    "youtubeId": "7GmLJp3P8Wg",
+                    "canal": "Prof. Gabriel Cabral"
+                }
+            ],
+            "questoes": [
+                {
+                    "id": "q1-qui-sem2",
+                    "ano": 2021,
+                    "enunciado": "O átomo de Sódio (Na) possui número atômico Z = 11 e número de massa A = 23. Qual é o número de nêutrons nesse átomo?",
+                    "alternativas": [
+                        {
+                            "letra": "A",
+                            "texto": "11"
+                        },
+                        {
+                            "letra": "B",
+                            "texto": "12"
+                        },
+                        {
+                            "letra": "C",
+                            "texto": "23"
+                        },
+                        {
+                            "letra": "D",
+                            "texto": "34"
+                        },
+                        {
+                            "letra": "E",
+                            "texto": "22"
+                        }
+                    ],
+                    "gabarito": "B",
+                    "explicacao": "N = A - Z = 23 - 11 = 12 nêutrons.",
+                    "assunto": "Estrutura Atômica",
+                    "materia": "quimica"
+                }
+            ]
+        },
+        {
+            "id": "2025-12-19",
+            "data": "2025-12-19",
+            "diaSemana": "Sexta-feira",
+            "materia": "geografia",
+            "assunto": "Cartografia: Projeções e Escalas",
+            "dificuldade": "medio",
+            "tempoEstimado": "45min",
+            "resumo": "## Cartografia\n\nA arte de representar a Terra em mapas planos.\n\n### Principais Projeções\n1. **Cilíndrica (Mercator)**: Distorce áreas perto dos polos, mas mantém ângulos (navegação).\n2. **Cônica**: Boa para latitudes médias.\n3. **Azimutal/Plana**: Centrada em um ponto (usada em mapas polares ou de rotas aéreas).\n\n### Escalas\n- **Grande Escala** (ex: 1:1.000): Área pequena, muito detalhe.\n- **Pequena Escala** (ex: 1:10.000.000): Área grande, pouco detalhe.\n\n> **Cuidado**: Escala 'grande' mostra área 'pequena' e vice-versa! É contraintuitivo.\n\n### Curvas de Nível\nLinhas que conectam pontos de mesma altitude. Quanto mais juntas, mais íngreme o terreno.",
+            "videos": [
+                {
+                    "titulo": "CARTOGRAFIA | PROJEÇÕES CARTOGRÁFICAS",
+                    "youtubeId": "qKNvxaC_s3M",
+                    "canal": "Prof. Silvester"
+                }
+            ],
+            "questoes": [
+                {
+                    "id": "q1-geo-sem2",
+                    "ano": 2019,
+                    "enunciado": "A projeção de Mercator, amplamente utilizada em mapas náuticos, apresenta como principal característica:",
+                    "alternativas": [
+                        {
+                            "letra": "A",
+                            "texto": "Representar fielmente as áreas de todos os continentes."
+                        },
+                        {
+                            "letra": "B",
+                            "texto": "Distorcer as áreas próximas aos polos, aumentando-as."
+                        },
+                        {
+                            "letra": "C",
+                            "texto": "Mostrar a Terra como ela é vista do espaço."
+                        },
+                        {
+                            "letra": "D",
+                            "texto": "Ser centrada no polo sul."
+                        },
+                        {
+                            "letra": "E",
+                            "texto": "Representar apenas oceanos."
+                        }
+                    ],
+                    "gabarito": "B",
+                    "explicacao": "Mercator é cilíndrica e mantém os ângulos (conforme), mas distorce áreas perto dos polos, fazendo a Groenlândia parecer maior que a África, por exemplo.",
+                    "assunto": "Projeções",
+                    "materia": "geografia"
+                }
+            ]
+        },
+        {
+            "id": "2025-12-20",
+            "data": "2025-12-20",
+            "diaSemana": "Sábado",
+            "materia": "redacao",
+            "assunto": "Repertório Sociocultural",
+            "dificuldade": "medio",
+            "tempoEstimado": "1h",
+            "resumo": "## Repertório: A Arma Secreta\n\nRepertório sociocultural é qualquer referência externa que você usa para embasar seu argumento.\n\n### Tipos de Repertório\n1. **Filosófico**: Citações de filósofos (Kant, Platão, Hannah Arendt).\n2. **Histórico**: Eventos do passado (Revolução Industrial, Ditadura).\n3. **Literário**: Livros, poemas (1984, Dom Casmurro).\n4. **Cinematográfico**: Filmes e séries (Coringa, Black Mirror).\n5. **Legal**: Constituição, Declaração Universal dos Direitos Humanos.\n6. **Dados**: Estatísticas de fontes confiáveis (IBGE, OMS).\n\n### Repertório Legitimado\nDeve ser:\n- **Pertinente**: Relacionado ao tema.\n- **Produtivo**: Ajuda a construir o argumento.\n- **Legitimado**: Reconhecido socialmente (nada de 'meu vizinho disse').\n\n> **Dica**: Monte um banco de repertórios coringas que funcionam para vários temas!",
+            "videos": [
+                {
+                    "titulo": "REPERTÓRIO SOCIOCULTURAL - Como usar na Redação do ENEM",
+                    "youtubeId": "Tn9W2J5bOOE",
+                    "canal": "Lucas Felpi"
+                }
+            ],
+            "questoes": [
+                {
+                    "id": "q1-red-sem2",
+                    "ano": 2022,
+                    "enunciado": "Para um tema sobre 'Desafios para a valorização de comunidades tradicionais', qual repertório seria mais pertinente e legitimado?",
+                    "alternativas": [
+                        {
+                            "letra": "A",
+                            "texto": "Uma história pessoal sobre sua avó."
+                        },
+                        {
+                            "letra": "B",
+                            "texto": "Um comentário de rede social."
+                        },
+                        {
+                            "letra": "C",
+                            "texto": "O Artigo 231 da Constituição, que trata dos direitos indígenas."
+                        },
+                        {
+                            "letra": "D",
+                            "texto": "Uma estatística inventada."
+                        },
+                        {
+                            "letra": "E",
+                            "texto": "O nome de um influenciador famoso."
+                        }
+                    ],
+                    "gabarito": "C",
+                    "explicacao": "A Constituição Federal é uma fonte legitimada e extremamente relevante para temas sociais e de direitos de comunidades tradicionais.",
+                    "assunto": "Repertório",
+                    "materia": "redacao"
+                }
+            ]
+        },
+        {
+            "id": "2025-12-21",
+            "data": "2025-12-21",
+            "diaSemana": "Domingo",
+            "materia": "revisao",
+            "assunto": "Revisão Semanal 2",
+            "dificuldade": "medio",
+            "tempoEstimado": "1h 30min",
+            "resumo": "## Revisão da Semana 2\n\nHora de consolidar o conhecimento!\n\n### Tópicos Revisados\n1. **Matemática**: Razão, Proporção e Escalas.\n2. **Português**: Verbos e Tempos Verbais.\n3. **Física**: Movimento Uniforme (S = S₀ + vt).\n4. **Química**: Estrutura Atômica (Z, A, isótopos).\n5. **Geografia**: Projeções Cartográficas e Escalas.\n6. **Redação**: Repertório Sociocultural.\n\n> **Desafio**: Tente escrever um parágrafo de desenvolvimento sobre qualquer tema usando um repertório filosófico e um dado estatístico fictício (só para praticar a estrutura).",
+            "videos": [],
+            "questoes": [
+                {
+                    "id": "q1-rev-sem2",
+                    "ano": 2023,
+                    "enunciado": "(Revisão Cruzada) Um químico está analisando um isótopo do Carbono usado em datação arqueológica (C-14). Se o Carbono tem Z = 6, quantos nêutrons tem o C-14?",
+                    "alternativas": [
+                        {
+                            "letra": "A",
+                            "texto": "6"
+                        },
+                        {
+                            "letra": "B",
+                            "texto": "8"
+                        },
+                        {
+                            "letra": "C",
+                            "texto": "12"
+                        },
+                        {
+                            "letra": "D",
+                            "texto": "14"
+                        },
+                        {
+                            "letra": "E",
+                            "texto": "20"
+                        }
+                    ],
+                    "gabarito": "B",
+                    "explicacao": "N = A - Z = 14 - 6 = 8 nêutrons. O C-14 é usado para datar fósseis e objetos antigos.",
+                    "assunto": "Química",
+                    "materia": "quimica"
+                },
+                {
+                    "id": "q2-rev-sem2",
+                    "ano": 2023,
+                    "enunciado": "(Revisão Cruzada) Em um mapa na escala 1:500.000, a distância real de 50 km corresponde a quantos centímetros no mapa?",
+                    "alternativas": [
+                        {
+                            "letra": "A",
+                            "texto": "1 cm"
+                        },
+                        {
+                            "letra": "B",
+                            "texto": "5 cm"
+                        },
+                        {
+                            "letra": "C",
+                            "texto": "10 cm"
+                        },
+                        {
+                            "letra": "D",
+                            "texto": "50 cm"
+                        },
+                        {
+                            "letra": "E",
+                            "texto": "100 cm"
+                        }
+                    ],
+                    "gabarito": "C",
+                    "explicacao": "50 km = 5.000.000 cm. No mapa: 5.000.000 / 500.000 = 10 cm.",
+                    "assunto": "Geografia + Matemática",
+                    "materia": "geografia"
+                }
+            ]
         }
     ]
 }

@@ -23,6 +23,7 @@ interface DayContentProps {
 }
 
 import { materiaColors, materiaLabels, dificuldadeColors, dificuldadeLabels } from "@/lib/constants"
+import { podeConcluirTarefa, getHojeBrasil } from "@/lib/studyProgress"
 
 export function DayContent({ conteudo }: DayContentProps) {
     const router = useRouter()
@@ -30,6 +31,11 @@ export function DayContent({ conteudo }: DayContentProps) {
 
     const [loading, setLoading] = useState(true)
     const [saving, setSaving] = useState(false)
+
+    // Verificar restrição de revisão
+    const hoje = getHojeBrasil()
+    const permissaoTarefa = podeConcluirTarefa(conteudo, hoje)
+
     const [progresso, setProgresso] = useState<ProgressoDia>({
         dataId: conteudo.data,
         concluido: false,
@@ -87,12 +93,14 @@ export function DayContent({ conteudo }: DayContentProps) {
             toast({
                 title: "Progresso salvo!",
                 description: "Continue assim 🔥",
-                variant: "default", // success não existe no default, usar default ou criar variant
+                variant: "default",
                 className: "bg-green-600 text-white"
             })
 
-            router.refresh() // Atualiza dados server-side (streak etc)
+            // Hard redirect para forçar atualização do layout e header
+            window.location.href = '/dashboard'
         } catch (error) {
+            console.error("Erro ao salvar progresso:", error)
             toast({
                 title: "Erro ao salvar",
                 description: "Tente novamente.",
@@ -258,13 +266,29 @@ export function DayContent({ conteudo }: DayContentProps) {
                     </div>
                 </div>
 
+                {/* Aviso de revisão bloqueada */}
+                {!permissaoTarefa.permitido && (
+                    <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 flex items-start gap-3">
+                        <span className="text-amber-600 text-xl">🔒</span>
+                        <div>
+                            <p className="font-medium text-amber-800">Revisão Bloqueada</p>
+                            <p className="text-sm text-amber-700 mt-1">{permissaoTarefa.motivo}</p>
+                        </div>
+                    </div>
+                )}
+
                 <Button
                     size="lg"
                     className="w-full text-lg h-14 gap-2"
                     onClick={handleSalvar}
-                    disabled={saving}
+                    disabled={saving || !permissaoTarefa.permitido}
                 >
-                    {saving ? "Salvando..." : (
+                    {saving ? "Salvando..." : !permissaoTarefa.permitido ? (
+                        <>
+                            <span>🔒</span>
+                            Aguarde o dia da revisão
+                        </>
+                    ) : (
                         <>
                             <CheckCircle className="h-6 w-6" />
                             {progresso.concluido ? "Atualizar Progresso" : "MARCAR COMO CONCLUÍDO"}

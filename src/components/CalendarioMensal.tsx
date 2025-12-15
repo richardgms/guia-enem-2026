@@ -49,22 +49,23 @@ export function CalendarioMensal({ conteudos, progressos }: CalendarioMensalProp
     const nextMonth = () => setCurrentDate(new Date(year, month + 1))
 
     const getContentForDate = (date: Date) => {
-        const dateStr = date.toISOString().split('T')[0]
+        const dateStr = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`
         return conteudos.find(c => c.data === dateStr)
     }
 
     const getStatusColor = (conteudo?: ConteudoDia) => {
-        if (!conteudo) return "bg-gray-50 dark:bg-gray-900 border-transparent"
+        if (!conteudo) return "bg-card"
 
         const progresso = progressos[conteudo.data]
-        if (progresso?.concluido) return "bg-green-100 dark:bg-green-900/30 border-green-200 dark:border-green-800"
-        if (progresso) return "bg-yellow-100 dark:bg-yellow-900/30 border-yellow-200 dark:border-yellow-800"
+        if (progresso?.concluido) return "bg-green-100 dark:bg-green-900/30"
+        if (progresso) return "bg-yellow-100 dark:bg-yellow-900/30"
 
         // Passado e não feito?
-        const today = new Date().toISOString().split('T')[0]
-        if (conteudo.data < today) return "bg-red-50 dark:bg-red-950/30 border-red-200 dark:border-red-900"
+        const today = new Date()
+        const todayStr = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`
+        if (conteudo.data < todayStr) return "bg-red-50 dark:bg-red-950/30"
 
-        return "bg-white dark:bg-gray-950 border-gray-200 dark:border-gray-800"
+        return "bg-card"
     }
 
     return (
@@ -83,7 +84,7 @@ export function CalendarioMensal({ conteudos, progressos }: CalendarioMensalProp
                 </div>
             </div>
 
-            <div className="grid grid-cols-7 gap-px bg-muted rounded-lg overflow-hidden border">
+            <div className="grid grid-cols-7 gap-px bg-border rounded-lg overflow-hidden border">
                 {DAYS_OF_WEEK.map(day => (
                     <div key={day} className="bg-muted p-2 text-center text-xs font-bold text-muted-foreground uppercase">
                         {day}
@@ -95,10 +96,15 @@ export function CalendarioMensal({ conteudos, progressos }: CalendarioMensalProp
 
                     const conteudo = getContentForDate(date)
                     const colorClass = getStatusColor(conteudo)
-                    const isToday = date.toISOString().split('T')[0] === new Date().toISOString().split('T')[0]
+
+                    const today = new Date()
+                    const todayStr = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`
+                    const dateStr = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`
+
+                    const isToday = dateStr === todayStr
 
                     return (
-                        <div key={date.toISOString()} className={cn("bg-card min-h-[100px] p-2 border-t relative group transition-colors", colorClass)}>
+                        <div key={date.toISOString()} className={cn("min-h-[100px] p-2 relative group transition-colors", colorClass)}>
                             <div className="flex justify-between items-start">
                                 <span className={cn(
                                     "text-sm font-medium h-6 w-6 flex items-center justify-center rounded-full",
@@ -139,3 +145,4 @@ export function CalendarioMensal({ conteudos, progressos }: CalendarioMensalProp
         </div>
     )
 }
+

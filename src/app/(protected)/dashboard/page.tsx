@@ -1,13 +1,53 @@
 
 import { createClient } from "@/lib/supabase/server"
-import { ProgressBar } from "@/components/ProgressBar"
 import { Streak } from "@/components/Streak"
+import { StatusFeedback } from "@/components/StatusFeedback"
+import { TaskBadge } from "@/components/TaskBadge"
 import conteudosData from "@/data/conteudos.json"
+import {
+    calcularStatusEstudante,
+    getTarefaPrioritaria,
+    getHojeBrasil,
+    podeConcluirTarefa,
+    formatarDataExibicao
+} from "@/lib/studyProgress"
 
 import Link from "next/link"
 import type { ConteudoDia } from "@/types"
 
 export const dynamic = 'force-dynamic'
+
+// Helper for display names
+const getMateriaLabel = (materia: string) => {
+    const labels: Record<string, string> = {
+        'matematica': 'Matemática',
+        'portugues': 'Português',
+        'biologia': 'Biologia',
+        'historia': 'História',
+        'fisica': 'Física',
+        'quimica': 'Química',
+        'geografia': 'Geografia',
+        'redacao': 'Redação',
+        'revisao': 'Revisão'
+    }
+    return labels[materia] || materia
+}
+
+// Helper for tag styles
+const getTagStyle = (materia: string) => {
+    switch (materia) {
+        case 'matematica': return 'bg-blue-100 text-blue-700'
+        case 'portugues': return 'bg-purple-100 text-purple-700'
+        case 'biologia': return 'bg-cyan-100 text-cyan-700'
+        case 'historia': return 'bg-red-100 text-red-700'
+        case 'redacao': return 'bg-pink-100 text-pink-700'
+        case 'revisao': return 'bg-slate-100 text-slate-700'
+        case 'fisica': return 'bg-orange-100 text-orange-700'
+        case 'quimica': return 'bg-green-100 text-green-700'
+        case 'geografia': return 'bg-lime-100 text-lime-700'
+        default: return 'bg-gray-100 text-gray-700'
+    }
+}
 
 export default async function DashboardPage() {
     const supabase = await createClient()
@@ -44,7 +84,7 @@ export default async function DashboardPage() {
 
     // Buscar todos os progressos
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const progressos: Record<string, any> = {}
+    const progressos: Record<string, { concluido: boolean }> = {}
     if (user) {
         const { data: progressoDB } = await supabase
             .from('progresso')
@@ -60,30 +100,58 @@ export default async function DashboardPage() {
     }
 
     // Calcular progresso geral
-    const totalDias = conteudosData.conteudos.length
+    const conteudos = conteudosData.conteudos as ConteudoDia[]
+    const totalDias = conteudos.length
     const diasConcluidos = stats.diasConcluidos
 
-    // Encontrar dia atual e próximos
-    const hoje = new Date().toISOString().split('T')[0]
+    // ===== NOVA LÓGICA DE PRIORIZAÇÃO =====
+    const hoje = getHojeBrasil()
 
-    let todaysIndex = conteudosData.conteudos.findIndex(c => c.data === hoje)
+    // Calcular status do estudante
+    const analiseEstudante = calcularStatusEstudante(conteudos, progressos, hoje)
 
-    if (todaysIndex === -1) {
-        todaysIndex = conteudosData.conteudos.findIndex(c => !progressos[c.id]?.concluido)
+    // Obter tarefa prioritária
+    const tarefaPrioritaria = getTarefaPrioritaria(conteudos, progressos, hoje)
+
+    // Encontrar índice da tarefa prioritária para exibir "Dia X de Y"
+    const tarefaPrioritariaIndex = tarefaPrioritaria
+        ? conteudos.findIndex(c => c.id === tarefaPrioritaria.id)
+        : 0
+
+    // Determinar tipo de badge para a tarefa prioritária
+    const getTipoTarefaPrioritaria = (): 'atrasado' | 'hoje' | 'adiantado' | null => {
+        if (!tarefaPrioritaria) return null
+        if (analiseEstudante.tarefasAtrasadas.some(t => t.id === tarefaPrioritaria.id)) {
+            return 'atrasado'
+        }
+        if (tarefaPrioritaria.data === hoje) {
+            return 'hoje'
+        }
+        return null
     }
 
-    if (todaysIndex === -1 && diasConcluidos > 0) {
-        todaysIndex = conteudosData.conteudos.length - 1
+    // Próximos dias (excluindo a tarefa prioritária)
+    const getProximosDiasParaExibir = () => {
+        if (!tarefaPrioritaria) return []
+
+        const tarefaIndex = conteudos.findIndex(c => c.id === tarefaPrioritaria.id)
+        const proximosDias: ConteudoDia[] = []
+
+        // Pegar os próximos 3 após a tarefa prioritária
+        for (let i = tarefaIndex + 1; i < conteudos.length && proximosDias.length < 3; i++) {
+            proximosDias.push(conteudos[i])
+        }
+
+        return proximosDias
     }
 
-    if (todaysIndex === -1) todaysIndex = 0
-
-
-
-    const todayContent = conteudosData.conteudos[todaysIndex]
-    const nextDays = conteudosData.conteudos.slice(todaysIndex + 1, todaysIndex + 4)
-
+    const nextDays = getProximosDiasParaExibir()
     const nomeUsuario = user?.email?.split('@')[0] || "Visitante (Dev)"
+
+    // Verificar se a tarefa prioritária pode ser iniciada
+    const permissaoTarefa = tarefaPrioritaria
+        ? podeConcluirTarefa(tarefaPrioritaria, hoje)
+        : { permitido: true }
 
     return (
         <div className="relative min-h-screen" id="dashboard-container">
@@ -100,55 +168,70 @@ export default async function DashboardPage() {
                             <p className="text-text-secondary mt-2">
                                 Pronto para dominar o ENEM 2026? Vamos lá!
                             </p>
+                            {/* Status Feedback */}
+                            <StatusFeedback
+                                status={analiseEstudante.status}
+                                diasAtrasados={analiseEstudante.diasAtrasados}
+                                diasAdiantados={analiseEstudante.diasAdiantados}
+                            />
                         </section>
 
                         {/* Today Focus Section */}
                         <section aria-labelledby="today-focus-heading">
                             <div className="flex justify-between items-baseline mb-4">
-                                <h2 className="text-2xl font-semibold" id="today-focus-heading">Seu foco de hoje</h2>
-                                <span className="text-sm text-text-secondary font-medium">Dia {todaysIndex + 1} de {totalDias}</span>
+                                <div className="flex items-center gap-3">
+                                    <h2 className="text-2xl font-semibold" id="today-focus-heading">Seu foco de hoje</h2>
+                                    <TaskBadge tipo={getTipoTarefaPrioritaria()} />
+                                </div>
+                                <span className="text-sm text-text-secondary font-medium">Dia {tarefaPrioritariaIndex + 1} de {totalDias}</span>
                             </div>
 
-                            {todayContent ? (
-                                <div className="bg-accent-green-bg shadow-custom rounded-2xl p-6 border border-card-border flex flex-col md:flex-row items-start md:items-center justify-between relative overflow-hidden gap-4">
-                                    <div className="border-l-4 border-accent-green-button pl-4">
+                            {tarefaPrioritaria ? (
+                                <div className={`${analiseEstudante.status === 'atrasado' ? 'bg-red-50 border-red-200' : 'bg-accent-green-bg'} shadow-custom rounded-2xl p-6 border border-card-border flex flex-col md:flex-row items-start md:items-center justify-between relative overflow-hidden gap-4`}>
+                                    <div className={`border-l-4 ${analiseEstudante.status === 'atrasado' ? 'border-red-500' : 'border-accent-green-button'} pl-4`}>
                                         <p className="text-sm text-text-secondary capitalize">
-                                            {new Date().toLocaleDateString('pt-BR', { weekday: 'long', day: '2-digit', month: '2-digit', year: 'numeric' })}
+                                            {formatarDataExibicao(tarefaPrioritaria.data)}
                                         </p>
-                                        <h3 className="text-2xl font-bold mt-1 text-primary">{todayContent.assunto}</h3>
+                                        <h3 className="text-2xl font-bold mt-1 text-primary">{tarefaPrioritaria.assunto}</h3>
                                         <div className="flex items-center space-x-3 mt-3 text-sm flex-wrap gap-y-2">
-                                            <span className="bg-tag-math-bg text-tag-math-text px-3 py-1 rounded-full font-medium capitalize">
-                                                {(() => {
-                                                    const labels: Record<string, string> = {
-                                                        'matematica': 'Matemática',
-                                                        'portugues': 'Português',
-                                                        'biologia': 'Biologia',
-                                                        'historia': 'História',
-                                                        'fisica': 'Física',
-                                                        'quimica': 'Química',
-                                                        'geografia': 'Geografia',
-                                                        'redacao': 'Redação',
-                                                        'revisao': 'Revisão'
-                                                    }
-                                                    return labels[todayContent.materia] || todayContent.materia
-                                                })()}
+                                            <span className={`${getTagStyle(tarefaPrioritaria.materia)} px-3 py-1 rounded-full font-medium capitalize`}>
+                                                {getMateriaLabel(tarefaPrioritaria.materia)}
                                             </span>
                                             <span className="bg-tag-easy-bg text-tag-easy-text px-3 py-1 rounded-full font-medium">
                                                 Essencial
                                             </span>
                                             <span className="flex items-center text-text-secondary font-medium">
                                                 <span className="material-symbols-outlined text-base mr-1.5" style={{ fontFamily: 'Material Symbols Outlined' }}>timer</span>
-                                                45min
+                                                {tarefaPrioritaria.tempoEstimado}
                                             </span>
                                         </div>
                                     </div>
 
-                                    <Link href={`/dia/${todayContent.data}`} className="w-full md:w-auto">
-                                        <button className="w-full md:w-auto bg-accent-green-button text-header-bg font-semibold px-4 py-2 rounded-full flex items-center space-x-2 hover:bg-[#28BFAA] transition-colors h-auto">
-                                            <span className="material-symbols-outlined text-xl" style={{ fontFamily: 'Material Symbols Outlined' }}>check</span>
-                                            <span>Concluído</span>
-                                        </button>
-                                    </Link>
+                                    {permissaoTarefa.permitido ? (
+                                        <Link href={`/dia/${tarefaPrioritaria.data}`} className="w-full md:w-auto">
+                                            <button className={`w-full md:w-auto ${progressos[tarefaPrioritaria.id]?.concluido ? 'bg-green-600' : analiseEstudante.status === 'atrasado' ? 'bg-red-600' : 'bg-accent-green-button'} text-white font-semibold px-4 py-2 rounded-full flex items-center justify-center space-x-2 hover:opacity-90 transition-colors h-auto`}>
+                                                <span className="material-symbols-outlined text-xl" style={{ fontFamily: 'Material Symbols Outlined' }}>
+                                                    {progressos[tarefaPrioritaria.id]?.concluido ? 'check' : 'play_arrow'}
+                                                </span>
+                                                <span>
+                                                    {progressos[tarefaPrioritaria.id]?.concluido ? 'Concluído' : analiseEstudante.status === 'atrasado' ? 'Recuperar' : 'Começar'}
+                                                </span>
+                                            </button>
+                                        </Link>
+                                    ) : (
+                                        <div className="w-full md:w-auto text-center">
+                                            <button
+                                                disabled
+                                                className="w-full md:w-auto bg-slate-300 text-slate-600 font-semibold px-4 py-2 rounded-full flex items-center justify-center space-x-2 cursor-not-allowed h-auto"
+                                            >
+                                                <span className="material-symbols-outlined text-xl" style={{ fontFamily: 'Material Symbols Outlined' }}>
+                                                    lock
+                                                </span>
+                                                <span>Bloqueado</span>
+                                            </button>
+                                            <p className="text-xs text-slate-500 mt-2 max-w-48">{permissaoTarefa.motivo}</p>
+                                        </div>
+                                    )}
                                 </div>
                             ) : (
                                 <div className="bg-accent-green-bg shadow-custom rounded-2xl p-8 border border-card-border text-center">
@@ -163,64 +246,50 @@ export default async function DashboardPage() {
                             <h2 className="text-2xl font-semibold mb-4" id="next-steps-heading">Próximos passos</h2>
                             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                                 {nextDays.map((day) => {
-                                    // Helper for tag styles
-                                    const getTagStyle = (materia: string) => {
-                                        switch (materia) {
-                                            case 'matematica': return 'bg-tag-math-bg text-tag-math-text'
-                                            case 'portugues': return 'bg-tag-port-bg text-tag-port-text'
-                                            case 'biologia': return 'bg-tag-bio-bg text-tag-bio-text'
-                                            case 'historia': return 'bg-tag-hist-bg text-tag-hist-text'
-                                            case 'redacao': return 'bg-tag-red-bg text-tag-red-text'
-                                            case 'revisao': return 'bg-tag-rev-bg text-tag-rev-text'
-                                            default: return 'bg-tag-math-bg text-tag-math-text'
-                                        }
-                                    }
-
-                                    // Helper for display names
-                                    const getMateriaLabel = (materia: string) => {
-                                        const labels: Record<string, string> = {
-                                            'matematica': 'Matemática',
-                                            'portugues': 'Português',
-                                            'biologia': 'Biologia',
-                                            'historia': 'História',
-                                            'fisica': 'Física',
-                                            'quimica': 'Química',
-                                            'geografia': 'Geografia',
-                                            'redacao': 'Redação',
-                                            'revisao': 'Revisão'
-                                        }
-                                        return labels[materia] || materia
-                                    }
-
                                     // Format: "10/12 - Quarta-feira"
                                     const dateObj = new Date(day.data + 'T12:00:00') // prevent timezone offset issues
                                     const dateStr = dateObj.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' })
                                     const weekdayCap = dateObj.toLocaleDateString('pt-BR', { weekday: 'long' })
                                     const isCompleted = progressos[day.id]?.concluido
+                                    const permissao = podeConcluirTarefa(day, hoje)
+                                    const isRevisaoBloqueada = !permissao.permitido
 
                                     return (
-                                        <Link href={`/dia/${day.data}`} key={day.id} className="block group h-full">
-                                            <div className="bg-white shadow-custom rounded-2xl p-4 border border-card-border hover:shadow-lg transition-all relative group-hover:border-primary/20 h-full flex flex-col justify-between">
+                                        <Link
+                                            href={isRevisaoBloqueada ? '#' : `/dia/${day.data}`}
+                                            key={day.id}
+                                            className={`block group h-full ${isRevisaoBloqueada ? 'cursor-not-allowed' : ''}`}
+                                            onClick={isRevisaoBloqueada ? (e) => e.preventDefault() : undefined}
+                                        >
+                                            <div className={`bg-white shadow-custom rounded-2xl p-4 border border-card-border ${isRevisaoBloqueada ? 'opacity-60' : 'hover:shadow-lg group-hover:border-primary/20'} transition-all relative h-full flex flex-col justify-between`}>
                                                 <div>
                                                     <div className="flex justify-between items-start">
-                                                        <p className="text-sm text-text-secondary font-medium group-hover:text-primary transition-colors capitalize">
+                                                        <p className={`text-sm text-text-secondary font-medium ${!isRevisaoBloqueada ? 'group-hover:text-primary' : ''} transition-colors capitalize`}>
                                                             {dateStr} - {weekdayCap}
                                                         </p>
                                                         {isCompleted && (
-                                                            <div className="text-slate-400 z-10 -mt-1 -mr-1">
+                                                            <div className="text-green-500 z-10 -mt-1 -mr-1">
                                                                 <span className="material-symbols-outlined text-2xl" style={{ fontFamily: 'Material Symbols Outlined', fontVariationSettings: "'FILL' 1" }}>check_circle</span>
+                                                            </div>
+                                                        )}
+                                                        {isRevisaoBloqueada && !isCompleted && (
+                                                            <div className="text-slate-400 z-10 -mt-1 -mr-1">
+                                                                <span className="material-symbols-outlined text-xl" style={{ fontFamily: 'Material Symbols Outlined' }}>lock</span>
                                                             </div>
                                                         )}
                                                     </div>
 
-                                                    <h3 className="font-bold mt-1 text-lg text-[#082F49] leading-tight group-hover:text-accent-green-button transition-colors">
+                                                    <h3 className={`font-bold mt-1 text-lg text-[#082F49] leading-tight ${!isRevisaoBloqueada ? 'group-hover:text-accent-green-button' : ''} transition-colors`}>
                                                         {day.assunto}
                                                     </h3>
                                                 </div>
-                                                <div className="mt-3">
+                                                <div className="mt-3 flex items-center gap-2">
                                                     <span className={`${getTagStyle(day.materia)} px-3 py-1 rounded-full font-bold text-xs capitalize inline-block`}>
                                                         {getMateriaLabel(day.materia)}
                                                     </span>
+                                                    {isRevisaoBloqueada && (
+                                                        <span className="text-xs text-slate-500">Só no dia</span>
+                                                    )}
                                                 </div>
                                             </div>
                                         </Link>
@@ -239,14 +308,14 @@ export default async function DashboardPage() {
                     <aside className="space-y-6">
                         {/* Stats Grid */}
                         <div className="grid grid-cols-2 gap-6">
-                            <div className="bg-card-bg shadow-custom rounded-2xl p-4 border border-card-border flex items-center space-x-4">
+                            <div className="bg-white shadow-custom rounded-2xl p-4 border border-card-border flex items-center space-x-4">
                                 <span className="material-symbols-outlined text-3xl text-slate-500" style={{ fontFamily: 'Material Symbols Outlined' }}>military_tech</span>
                                 <div>
                                     <p className="text-xs text-text-secondary font-medium">NÍVEL</p>
                                     <p className="font-bold text-lg text-primary">Iniciante</p>
                                 </div>
                             </div>
-                            <div className="bg-card-bg shadow-custom rounded-2xl p-4 border border-card-border">
+                            <div className="bg-white shadow-custom rounded-2xl p-4 border border-card-border">
                                 <p className="text-xs text-text-secondary font-medium">XP TOTAL</p>
                                 <p className="font-bold text-lg mt-1 text-primary">{stats.xpTotal} XP</p>
                             </div>
@@ -256,7 +325,7 @@ export default async function DashboardPage() {
                         <Streak dias={stats.streakAtual} maiorStreak={stats.maiorStreak} />
 
                         {/* Progress Card */}
-                        <div className="bg-card-bg shadow-custom rounded-2xl p-5 border border-card-border">
+                        <div className="bg-white shadow-custom rounded-2xl p-5 border border-card-border">
                             <div className="flex items-center justify-between mb-3">
                                 <div className="flex items-center space-x-2">
                                     <span className="material-symbols-outlined text-2xl text-slate-500" style={{ fontFamily: 'Material Symbols Outlined' }}>monitoring</span>
