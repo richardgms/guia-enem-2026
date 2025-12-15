@@ -1,0 +1,595 @@
+import { createClient } from '@/lib/supabase/client'
+import type {
+    ProvaSemanal,
+    ProvaSemanelDB,
+    QuestaoProvaPublica,
+    RespostaQuestao,
+    ResultadoVerificacao,
+    ElegibilidadeProva,
+    MetricasProvas,
+    MetricasProvasDB,
+    Alternativa,
+    DesempenhoMateria,
+    HistoricoNota
+} from '@/types/provas'
+
+// =============================================
+// HELPERS
+// =============================================
+
+function gerarSessionToken(): string {
+    const array = new Uint8Array(32)
+    crypto.getRandomValues(array)
+    return Array.from(array, byte => byte.toString(16).padStart(2, '0')).join('')
+}
+
+function getSemanaDoAno(data: Date): number {
+    const inicio = new Date(data.getFullYear(), 0, 1)
+    const diff = data.getTime() - inicio.getTime()
+    const umaSemana = 7 * 24 * 60 * 60 * 1000
+    return Math.ceil((diff + inicio.getDay() * 24 * 60 * 60 * 1000) / umaSemana)
+}
+
+function converterProvaDB(db: ProvaSemanelDB): ProvaSemanal {
+    return {
+        id: db.id,
+        semana: db.semana,
+        ano: db.ano,
+        status: db.status,
+        iniciadaEm: db.iniciada_em ? new Date(db.iniciada_em) : undefined,
+        finalizadaEm: db.finalizada_em ? new Date(db.finalizada_em) : undefined,
+        tempoLimite: db.tempo_limite ? new Date(db.tempo_limite) : undefined,
+        totalQuestoes: db.total_questoes,
+        acertos: db.acertos,
+        nota: db.nota,
+        tempoGastoSegundos: db.tempo_gasto_segundos,
+        questaoAtual: db.questao_atual,
+        respostas: db.respostas || [],
+        sessionToken: db.session_token || undefined
+    }
+}
+
+// =============================================
+// ELEGIBILIDADE
+// =============================================
+
+export async function verificarElegibilidade(): Promise<ElegibilidadeProva> {
+    const supabase = createClient()
+    const { data: { user } } = await supabase.auth.getUser()
+
+    if (!user) {
+        return {
+            elegivel: false,
+            diasEstudados: 0,
+            diasNecessarios: 4,
+            semanaAtual: 0,
+            provaJaRealizada: false,
+            provaEmAndamento: false,
+            dentroDoHorario: false,
+            mensagem: 'Usuário não autenticado'
+        }
+    }
+
+    const agora = new Date()
+    const semanaAtual = getSemanaDoAno(agora)
+    const anoAtual = agora.getFullYear()
+    const diaSemana = agora.getDay() // 0 = domingo, 6 = sábado
+
+    // Verificar se está dentro do horário (sábado 00:00 até domingo 23:59)
+    const dentroDoHorario = diaSemana === 6 || diaSemana === 0
+
+    // Verificar se já fez a prova desta semana
+    const { data: provaExistente } = await supabase
+        .from('provas_semanais')
+        .select('status')
+        .eq('user_id', user.id)
+        .eq('semana', semanaAtual)
+        .eq('ano', anoAtual)
+        .single()
+
+    const provaJaRealizada = provaExistente?.status === 'finalizada'
+    const provaEmAndamento = provaExistente?.status === 'em_andamento'
+
+    if (provaJaRealizada) {
+        return {
+            elegivel: false,
+            diasEstudados: 0,
+            diasNecessarios: 4,
+            semanaAtual,
+            provaJaRealizada: true,
+            provaEmAndamento: false,
+            dentroDoHorario,
+            mensagem: 'Você já realizou a prova desta semana'
+        }
+    }
+
+    if (provaEmAndamento) {
+        return {
+            elegivel: true,
+            diasEstudados: 4,
+            diasNecessarios: 4,
+            semanaAtual,
+            provaJaRealizada: false,
+            provaEmAndamento: true,
+            dentroDoHorario,
+            mensagem: 'Você tem uma prova em andamento'
+        }
+    }
+
+    // Buscar dias estudados na semana atual
+    // Primeira segunda-feira da semana
+    const inicioSemana = new Date(agora)
+    inicioSemana.setDate(agora.getDate() - agora.getDay() + 1)
+    inicioSemana.setHours(0, 0, 0, 0)
+
+    const { data: progressos } = await supabase
+        .from('progresso')
+        .select('data_id, first_completed_at')
+        .eq('user_id', user.id)
+        .eq('concluido', true)
+        .gte('first_completed_at', inicioSemana.toISOString())
+
+    // Contar dias únicos estudados
+    const diasUnicos = new Set<string>()
+    progressos?.forEach(p => {
+        if (p.first_completed_at) {
+            const data = new Date(p.first_completed_at)
+            diasUnicos.add(data.toISOString().split('T')[0])
+        }
+    })
+
+    const diasEstudados = diasUnicos.size
+    const diasNecessarios = 4
+
+    if (!dentroDoHorario) {
+        return {
+            elegivel: false,
+            diasEstudados,
+            diasNecessarios,
+            semanaAtual,
+            provaJaRealizada: false,
+            provaEmAndamento: false,
+            dentroDoHorario: false,
+            mensagem: 'A prova só está disponível de sábado até domingo'
+        }
+    }
+
+    if (diasEstudados < diasNecessarios) {
+        return {
+            elegivel: false,
+            diasEstudados,
+            diasNecessarios,
+            semanaAtual,
+            provaJaRealizada: false,
+            provaEmAndamento: false,
+            dentroDoHorario: true,
+            mensagem: `Você precisa estudar pelo menos ${diasNecessarios} dias na semana. Você estudou ${diasEstudados}.`
+        }
+    }
+
+    return {
+        elegivel: true,
+        diasEstudados,
+        diasNecessarios,
+        semanaAtual,
+        provaJaRealizada: false,
+        provaEmAndamento: false,
+        dentroDoHorario: true,
+        mensagem: 'Você está apto a realizar a prova!'
+    }
+}
+
+// =============================================
+// INICIAR PROVA
+// =============================================
+
+export async function iniciarProva(): Promise<ProvaSemanal> {
+    const supabase = createClient()
+    const { data: { user } } = await supabase.auth.getUser()
+
+    if (!user) throw new Error('Usuário não autenticado')
+
+    const elegibilidade = await verificarElegibilidade()
+
+    // Se já tem prova em andamento, retorna ela
+    if (elegibilidade.provaEmAndamento) {
+        const provaAtual = await getProvaAtual()
+        if (provaAtual) return provaAtual
+    }
+
+    if (!elegibilidade.elegivel) {
+        throw new Error(elegibilidade.mensagem)
+    }
+
+    const agora = new Date()
+    const semanaAtual = getSemanaDoAno(agora)
+    const anoAtual = agora.getFullYear()
+
+    // Buscar questões da semana
+    const { data: questoes, error: questoesError } = await supabase
+        .from('questoes_prova_public')
+        .select('id')
+        .eq('semana', semanaAtual)
+
+    if (questoesError || !questoes || questoes.length === 0) {
+        throw new Error('Não há questões disponíveis para esta semana')
+    }
+
+    // Tempo limite: 50 minutos
+    const tempoLimite = new Date(agora.getTime() + 50 * 60 * 1000)
+    const sessionToken = gerarSessionToken()
+
+    const { data, error } = await supabase
+        .from('provas_semanais')
+        .insert({
+            user_id: user.id,
+            semana: semanaAtual,
+            ano: anoAtual,
+            status: 'em_andamento',
+            iniciada_em: agora.toISOString(),
+            tempo_limite: tempoLimite.toISOString(),
+            total_questoes: questoes.length,
+            questao_atual: 0,
+            respostas: [],
+            session_token: sessionToken,
+            ultima_atividade: agora.toISOString()
+        })
+        .select()
+        .single()
+
+    if (error) throw error
+
+    return converterProvaDB(data)
+}
+
+// =============================================
+// BUSCAR QUESTÕES
+// =============================================
+
+export async function getQuestoesProva(semana: number): Promise<QuestaoProvaPublica[]> {
+    const supabase = createClient()
+
+    const { data, error } = await supabase
+        .from('questoes_prova_public')
+        .select('*')
+        .eq('semana', semana)
+        .order('materia')
+
+    if (error) throw error
+
+    return data || []
+}
+
+// =============================================
+// RESPONDER QUESTÃO
+// =============================================
+
+export async function responderQuestao(
+    provaId: string,
+    questaoId: string,
+    resposta: Alternativa,
+    tempoSegundos: number
+): Promise<ResultadoVerificacao> {
+    const supabase = createClient()
+    const { data: { user } } = await supabase.auth.getUser()
+
+    if (!user) throw new Error('Usuário não autenticado')
+
+    // Verificar resposta via RPC (server-side)
+    const { data: resultadoRaw, error: rpcError } = await supabase
+        .rpc('verificar_resposta', {
+            p_questao_id: questaoId,
+            p_resposta: resposta
+        })
+        .single()
+
+    if (rpcError) throw rpcError
+
+    // Type assertion for RPC result
+    const resultado = resultadoRaw as {
+        correta: boolean
+        gabarito_correto: Alternativa
+        explicacao: string | null
+    }
+
+    // Buscar prova atual
+    const { data: prova, error: provaError } = await supabase
+        .from('provas_semanais')
+        .select('*')
+        .eq('id', provaId)
+        .eq('user_id', user.id)
+        .single()
+
+    if (provaError || !prova) throw new Error('Prova não encontrada')
+
+    // Adicionar resposta ao array
+    const novaResposta: RespostaQuestao = {
+        questao_id: questaoId,
+        resposta,
+        correta: resultado.correta,
+        tempo_segundos: tempoSegundos
+    }
+
+    const respostasAtualizadas = [...(prova.respostas || []), novaResposta]
+    const novoAcertos = respostasAtualizadas.filter(r => r.correta).length
+
+    // Atualizar prova
+    const { error: updateError } = await supabase
+        .from('provas_semanais')
+        .update({
+            questao_atual: prova.questao_atual + 1,
+            respostas: respostasAtualizadas,
+            acertos: novoAcertos,
+            ultima_atividade: new Date().toISOString()
+        })
+        .eq('id', provaId)
+
+    if (updateError) throw updateError
+
+    return {
+        correta: resultado.correta,
+        gabarito_correto: resultado.gabarito_correto,
+        explicacao: resultado.explicacao || undefined
+    }
+}
+
+// =============================================
+// FINALIZAR PROVA
+// =============================================
+
+export async function finalizarProva(provaId: string): Promise<ProvaSemanal> {
+    const supabase = createClient()
+    const { data: { user } } = await supabase.auth.getUser()
+
+    if (!user) throw new Error('Usuário não autenticado')
+
+    // Buscar prova
+    const { data: prova, error: provaError } = await supabase
+        .from('provas_semanais')
+        .select('*')
+        .eq('id', provaId)
+        .eq('user_id', user.id)
+        .single()
+
+    if (provaError || !prova) throw new Error('Prova não encontrada')
+
+    const agora = new Date()
+    const iniciadaEm = new Date(prova.iniciada_em)
+    const tempoGasto = Math.floor((agora.getTime() - iniciadaEm.getTime()) / 1000)
+
+    // Calcular nota (escala ENEM: 0-1000)
+    const percentualAcerto = prova.total_questoes > 0
+        ? prova.acertos / prova.total_questoes
+        : 0
+    // Nota ENEM simplificada: 200 + (percentual * 800)
+    // Mínimo 200, máximo 1000
+    const nota = Math.round(200 + (percentualAcerto * 800))
+
+    // Atualizar prova como finalizada
+    const { data: provaFinalizada, error: updateError } = await supabase
+        .from('provas_semanais')
+        .update({
+            status: 'finalizada',
+            finalizada_em: agora.toISOString(),
+            tempo_gasto_segundos: tempoGasto,
+            nota
+        })
+        .select()
+        .single()
+
+    if (updateError) throw updateError
+
+    // Atualizar métricas
+    await atualizarMetricasProva(user.id, provaFinalizada)
+
+    return converterProvaDB(provaFinalizada)
+}
+
+// =============================================
+// ATUALIZAR MÉTRICAS
+// =============================================
+
+async function atualizarMetricasProva(userId: string, prova: ProvaSemanelDB) {
+    const supabase = createClient()
+
+    // Buscar métricas existentes
+    const { data: metricas } = await supabase
+        .from('metricas_provas')
+        .select('*')
+        .eq('user_id', userId)
+        .single()
+
+    // Buscar questões para saber matéria de cada resposta
+    const questaoIds = prova.respostas.map(r => r.questao_id)
+    const { data: questoes } = await supabase
+        .from('questoes_prova')
+        .select('id, materia')
+        .in('id', questaoIds)
+
+    const questoesMap = new Map(questoes?.map(q => [q.id, q.materia]) || [])
+
+    // Calcular desempenho por matéria
+    const desempenhoPorMateria: Record<string, DesempenhoMateria> = metricas?.desempenho_por_materia || {}
+
+    prova.respostas.forEach(r => {
+        const materia = questoesMap.get(r.questao_id) || 'outro'
+        if (!desempenhoPorMateria[materia]) {
+            desempenhoPorMateria[materia] = { acertos: 0, total: 0, percentual: 0 }
+        }
+        desempenhoPorMateria[materia].total++
+        if (r.correta) desempenhoPorMateria[materia].acertos++
+        desempenhoPorMateria[materia].percentual =
+            (desempenhoPorMateria[materia].acertos / desempenhoPorMateria[materia].total) * 100
+    })
+
+    // Histórico de notas
+    const historicoNotas: HistoricoNota[] = metricas?.historico_notas || []
+    historicoNotas.push({
+        semana: prova.semana,
+        nota: prova.nota,
+        data: new Date().toISOString().split('T')[0]
+    })
+
+    // Calcular médias
+    const totalProvas = (metricas?.total_provas_realizadas || 0) + 1
+    const totalQuestoes = (metricas?.total_questoes_respondidas || 0) + prova.total_questoes
+    const totalAcertos = (metricas?.total_acertos || 0) + prova.acertos
+    const somaTempo = prova.respostas.reduce((acc, r) => acc + r.tempo_segundos, 0)
+    const mediaTempo = totalQuestoes > 0
+        ? Math.round(((metricas?.media_tempo_por_questao || 0) * (totalQuestoes - prova.total_questoes) + somaTempo) / totalQuestoes)
+        : 0
+
+    const somaNotas = historicoNotas.reduce((acc, h) => acc + h.nota, 0)
+    const mediaNota = somaNotas / historicoNotas.length
+
+    const maiorNota = Math.max(metricas?.maior_nota || 0, prova.nota)
+
+    await supabase
+        .from('metricas_provas')
+        .upsert({
+            user_id: userId,
+            total_provas_realizadas: totalProvas,
+            total_questoes_respondidas: totalQuestoes,
+            total_acertos: totalAcertos,
+            media_nota: mediaNota,
+            media_tempo_por_questao: mediaTempo,
+            desempenho_por_materia: desempenhoPorMateria,
+            historico_notas: historicoNotas,
+            maior_nota: maiorNota,
+            updated_at: new Date().toISOString()
+        }, {
+            onConflict: 'user_id'
+        })
+}
+
+// =============================================
+// QUERIES
+// =============================================
+
+export async function getProvaAtual(): Promise<ProvaSemanal | null> {
+    const supabase = createClient()
+    const { data: { user } } = await supabase.auth.getUser()
+
+    if (!user) return null
+
+    const { data, error } = await supabase
+        .from('provas_semanais')
+        .select('*')
+        .eq('user_id', user.id)
+        .eq('status', 'em_andamento')
+        .single()
+
+    if (error || !data) return null
+
+    // Verificar se tempo expirou
+    if (data.tempo_limite && new Date(data.tempo_limite) < new Date()) {
+        // Finalizar automaticamente
+        return await finalizarProva(data.id)
+    }
+
+    return converterProvaDB(data)
+}
+
+export async function getProvaPorId(provaId: string): Promise<ProvaSemanal | null> {
+    const supabase = createClient()
+    const { data: { user } } = await supabase.auth.getUser()
+
+    if (!user) return null
+
+    const { data, error } = await supabase
+        .from('provas_semanais')
+        .select('*')
+        .eq('id', provaId)
+        .eq('user_id', user.id)
+        .single()
+
+    if (error || !data) return null
+
+    return converterProvaDB(data)
+}
+
+export async function getHistoricoProvas(): Promise<ProvaSemanal[]> {
+    const supabase = createClient()
+    const { data: { user } } = await supabase.auth.getUser()
+
+    if (!user) return []
+
+    const { data, error } = await supabase
+        .from('provas_semanais')
+        .select('*')
+        .eq('user_id', user.id)
+        .in('status', ['finalizada', 'expirada'])
+        .order('finalizada_em', { ascending: false })
+
+    if (error || !data) return []
+
+    return data.map(converterProvaDB)
+}
+
+export async function getMetricasProvas(): Promise<MetricasProvas | null> {
+    const supabase = createClient()
+    const { data: { user } } = await supabase.auth.getUser()
+
+    if (!user) return null
+
+    const { data, error } = await supabase
+        .from('metricas_provas')
+        .select('*')
+        .eq('user_id', user.id)
+        .single()
+
+    if (error || !data) return null
+
+    const db = data as MetricasProvasDB
+
+    return {
+        totalProvasRealizadas: db.total_provas_realizadas,
+        totalQuestoesRespondidas: db.total_questoes_respondidas,
+        totalAcertos: db.total_acertos,
+        mediaNota: db.media_nota,
+        mediaTempoPorQuestao: db.media_tempo_por_questao,
+        desempenhoPorMateria: db.desempenho_por_materia,
+        historicoNotas: db.historico_notas,
+        maiorNota: db.maior_nota,
+        maiorSequenciaAcertos: db.maior_sequencia_acertos
+    }
+}
+
+// =============================================
+// VALIDAÇÃO DE SESSÃO
+// =============================================
+
+export async function validarSessaoProva(provaId: string, sessionToken: string): Promise<boolean> {
+    const supabase = createClient()
+    const { data: { user } } = await supabase.auth.getUser()
+
+    if (!user) return false
+
+    const { data } = await supabase
+        .from('provas_semanais')
+        .select('session_token, status')
+        .eq('id', provaId)
+        .eq('user_id', user.id)
+        .single()
+
+    if (!data) return false
+    if (data.status !== 'em_andamento') return false
+    if (data.session_token !== sessionToken) return false
+
+    // Atualizar última atividade
+    await supabase
+        .from('provas_semanais')
+        .update({ ultima_atividade: new Date().toISOString() })
+        .eq('id', provaId)
+
+    return true
+}
+
+export async function atualizarAtividadeProva(provaId: string): Promise<void> {
+    const supabase = createClient()
+
+    await supabase
+        .from('provas_semanais')
+        .update({ ultima_atividade: new Date().toISOString() })
+        .eq('id', provaId)
+}

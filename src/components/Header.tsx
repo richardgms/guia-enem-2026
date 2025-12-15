@@ -20,6 +20,7 @@ export function Header({ streak = 0 }: HeaderProps) {
         { href: "/dashboard", label: "Dashboard" },
         { href: "/calendario", label: "Calendário" },
         { href: "/presenca", label: "Presença" },
+        { href: "/prova", label: "Provas" },
         { href: "/estatisticas", label: "Estatísticas" },
     ]
 

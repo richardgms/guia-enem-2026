@@ -82,6 +82,25 @@ export default async function DashboardPage() {
         }
     }
 
+    // Buscar métricas de presença
+    let presencaStats = { presencas: 0, faltas: 0, atrasados: 0, total: 0, taxa: 0 }
+    if (user) {
+        const { data: presencaData } = await supabase
+            .from('presenca')
+            .select('status')
+            .eq('user_id', user.id)
+
+        if (presencaData && presencaData.length > 0) {
+            presencaStats = {
+                presencas: presencaData.filter(p => p.status === 'presenca').length,
+                faltas: presencaData.filter(p => p.status === 'falta').length,
+                atrasados: presencaData.filter(p => p.status === 'atrasado').length,
+                total: presencaData.length,
+                taxa: Math.round((presencaData.filter(p => p.status === 'presenca').length / presencaData.length) * 100)
+            }
+        }
+    }
+
     // Buscar todos os progressos
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const progressos: Record<string, { concluido: boolean }> = {}
@@ -182,9 +201,9 @@ export default async function DashboardPage() {
                                 <h1 className="text-4xl font-normal text-primary" id="welcome-heading">
                                     Olá, <span className="font-bold">{nomeUsuario}!</span> {avatarEmoji}
                                 </h1>
-                                <Link href="/perfil" className="text-sm text-text-secondary hover:text-primary transition-colors flex items-center gap-1">
-                                    <span className="material-symbols-outlined text-base" style={{ fontFamily: 'Material Symbols Outlined' }}>edit</span>
-                                    Editar perfil
+                                <Link href="/perfil" className="text-sm text-text-secondary hover:text-primary transition-colors flex items-center gap-1 p-2 -mr-2" title="Editar perfil">
+                                    <span className="material-symbols-outlined text-xl" style={{ fontFamily: 'Material Symbols Outlined' }}>edit</span>
+                                    <span className="hidden md:inline">Editar perfil</span>
                                 </Link>
                             </div>
                             <p className="text-text-secondary mt-2">
@@ -372,6 +391,36 @@ export default async function DashboardPage() {
                                 </div>
                             </div>
                         </div>
+
+                        {/* Presença Card */}
+                        <Link href="/presenca" className="block">
+                            <div className="bg-white shadow-custom rounded-2xl p-5 border border-card-border hover:shadow-lg transition-all">
+                                <div className="flex items-center justify-between mb-3">
+                                    <div className="flex items-center space-x-2">
+                                        <span className="material-symbols-outlined text-2xl text-slate-500" style={{ fontFamily: 'Material Symbols Outlined' }}>event_available</span>
+                                        <h3 className="font-semibold text-primary">Presença</h3>
+                                    </div>
+                                    <span className="font-bold text-sm text-primary">{presencaStats.taxa}%</span>
+                                </div>
+                                <div className="w-full bg-slate-200 rounded-full h-2">
+                                    <div className="bg-gradient-to-r from-green-400 to-emerald-500 h-2 rounded-full" style={{ width: `${presencaStats.taxa}%` }}></div>
+                                </div>
+                                <div className="grid grid-cols-3 gap-2 mt-3">
+                                    <div className="text-center">
+                                        <p className="font-bold text-lg text-green-600">{presencaStats.presencas}</p>
+                                        <p className="text-xs text-text-secondary">✅</p>
+                                    </div>
+                                    <div className="text-center">
+                                        <p className="font-bold text-lg text-amber-600">{presencaStats.atrasados}</p>
+                                        <p className="text-xs text-text-secondary">⚠️</p>
+                                    </div>
+                                    <div className="text-center">
+                                        <p className="font-bold text-lg text-red-600">{presencaStats.faltas}</p>
+                                        <p className="text-xs text-text-secondary">❌</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </Link>
 
                         {/* Visão Geral CTA */}
                         <div className="bg-header-bg text-white rounded-2xl p-6 shadow-lg">
