@@ -146,7 +146,23 @@ export default async function DashboardPage() {
     }
 
     const nextDays = getProximosDiasParaExibir()
-    const nomeUsuario = user?.email?.split('@')[0] || "Visitante (Dev)"
+
+    // Buscar perfil do usuário
+    let nomeUsuario = user?.email?.split('@')[0] || "Visitante"
+    let avatarEmoji = "👋"
+
+    if (user) {
+        const { data: perfil } = await supabase
+            .from('perfil')
+            .select('nome, avatar_emoji')
+            .eq('user_id', user.id)
+            .single()
+
+        if (perfil?.nome) {
+            nomeUsuario = perfil.nome
+            avatarEmoji = perfil.avatar_emoji || "👋"
+        }
+    }
 
     // Verificar se a tarefa prioritária pode ser iniciada
     const permissaoTarefa = tarefaPrioritaria
@@ -162,9 +178,15 @@ export default async function DashboardPage() {
 
                         {/* Welcome Section */}
                         <section aria-labelledby="welcome-heading">
-                            <h1 className="text-4xl font-normal text-primary" id="welcome-heading">
-                                Olá, <span className="font-bold capitalize">{nomeUsuario}!</span> 👋
-                            </h1>
+                            <div className="flex items-center justify-between">
+                                <h1 className="text-4xl font-normal text-primary" id="welcome-heading">
+                                    Olá, <span className="font-bold">{nomeUsuario}!</span> {avatarEmoji}
+                                </h1>
+                                <Link href="/perfil" className="text-sm text-text-secondary hover:text-primary transition-colors flex items-center gap-1">
+                                    <span className="material-symbols-outlined text-base" style={{ fontFamily: 'Material Symbols Outlined' }}>edit</span>
+                                    Editar perfil
+                                </Link>
+                            </div>
                             <p className="text-text-secondary mt-2">
                                 Pronto para dominar o ENEM 2026? Vamos lá!
                             </p>
