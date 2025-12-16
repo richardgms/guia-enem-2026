@@ -91,6 +91,17 @@ export default function RealizarProvaPage() {
         setMostrarConfirmacaoSaida(false)
     }
 
+    // Redirecionar para /provas quando a prova é finalizada
+    useEffect(() => {
+        if (provaFinalizada && prova) {
+            // Pequeno delay para mostrar feedback visual
+            const timer = setTimeout(() => {
+                router.push(`/provas/${prova.id}`)
+            }, 1500)
+            return () => clearTimeout(timer)
+        }
+    }, [provaFinalizada, prova, router])
+
     // Loading
     if (carregando && !prova) {
         return (
@@ -120,15 +131,15 @@ export default function RealizarProvaPage() {
         )
     }
 
-    // Prova finalizada - mostrar resultado
+    // Prova finalizada - mostrar feedback antes de redirecionar
     if (provaFinalizada) {
         return (
-            <div className="py-4">
-                <div className="max-w-xl mx-auto">
-                    <h1 className="text-2xl font-bold text-primary text-center mb-8">
-                        Prova Finalizada!
-                    </h1>
-                    <ResultadoProva prova={prova} />
+            <div className="flex items-center justify-center py-20">
+                <div className="text-center">
+                    <div className="text-6xl mb-4">🎉</div>
+                    <h1 className="text-2xl font-bold text-primary mb-2">Prova Finalizada!</h1>
+                    <p className="text-text-secondary mb-4">Redirecionando para o gabarito...</p>
+                    <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-brand-primary mx-auto" />
                 </div>
             </div>
         )
