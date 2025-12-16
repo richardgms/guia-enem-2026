@@ -19,6 +19,7 @@ export function Header({ streak = 0 }: HeaderProps) {
     const links = [
         { href: "/dashboard", label: "Dashboard" },
         { href: "/calendario", label: "Calendário" },
+        { href: "/provas", label: "Provas" },
         { href: "/presenca", label: "Presença" },
         { href: "/estatisticas", label: "Estatísticas" },
     ]
