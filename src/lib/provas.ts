@@ -1,4 +1,5 @@
 import { createClient } from '@/lib/supabase/client'
+import { getQuestoesPorSemana, verificarRespostaLocal } from '@/data/questoesProva'
 import type {
     ProvaSemanal,
     ProvaSemanelDB,
@@ -256,13 +257,10 @@ export async function iniciarProva(): Promise<ProvaSemanal> {
     const semanaParaProva = elegibilidade.semanaAtrasada || calcularSemanaAtual(agora)
     const anoAtual = agora.getFullYear()
 
-    // Buscar questões da semana
-    const { data: questoes, error: questoesError } = await supabase
-        .from('questoes_prova_public')
-        .select('id')
-        .eq('semana', semanaParaProva)
+    // Buscar questões da semana (LOCALMENTE)
+    const questoesLocais = getQuestoesPorSemana(semanaParaProva)
 
-    if (questoesError || !questoes || questoes.length === 0) {
+    if (questoesLocais.length === 0) {
         throw new Error('Não há questões disponíveis para esta semana')
     }
 
@@ -279,7 +277,7 @@ export async function iniciarProva(): Promise<ProvaSemanal> {
             status: 'em_andamento',
             iniciada_em: agora.toISOString(),
             tempo_limite: tempoLimite.toISOString(),
-            total_questoes: questoes.length,
+            total_questoes: questoesLocais.length,
             questao_atual: 0,
             respostas: [],
             session_token: sessionToken,
@@ -298,17 +296,23 @@ export async function iniciarProva(): Promise<ProvaSemanal> {
 // =============================================
 
 export async function getQuestoesProva(semana: number): Promise<QuestaoProvaPublica[]> {
-    const supabase = createClient()
+    // Buscar questões LOCALMENTE em vez do Supabase
+    const questoesLocais = getQuestoesPorSemana(semana)
 
-    const { data, error } = await supabase
-        .from('questoes_prova_public')
-        .select('*')
-        .eq('semana', semana)
-        .order('materia')
-
-    if (error) throw error
-
-    return data || []
+    // Converter para o formato QuestaoProvaPublica (sem gabarito)
+    return questoesLocais.map(q => ({
+        id: q.id,
+        semana: q.semana,
+        materia: q.materia,
+        assunto: q.assunto,
+        enunciado: q.enunciado,
+        alternativa_a: q.alternativa_a,
+        alternativa_b: q.alternativa_b,
+        alternativa_c: q.alternativa_c,
+        alternativa_d: q.alternativa_d,
+        alternativa_e: q.alternativa_e,
+        dificuldade: q.dificuldade
+    }))
 }
 
 // =============================================
@@ -326,21 +330,13 @@ export async function responderQuestao(
 
     if (!user) throw new Error('Usuário não autenticado')
 
-    // Verificar resposta via RPC (server-side)
-    const { data: resultadoRaw, error: rpcError } = await supabase
-        .rpc('verificar_resposta', {
-            p_questao_id: questaoId,
-            p_resposta: resposta
-        })
-        .single()
+    // Verificar resposta LOCALMENTE
+    const resultadoLocal = verificarRespostaLocal(questaoId, resposta)
 
-    if (rpcError) throw rpcError
-
-    // Type assertion for RPC result
-    const resultado = resultadoRaw as {
-        correta: boolean
-        gabarito_correto: Alternativa
-        explicacao: string | null
+    const resultado = {
+        correta: resultadoLocal.correta,
+        gabarito_correto: resultadoLocal.gabarito as Alternativa,
+        explicacao: resultadoLocal.explicacao
     }
 
     // Buscar prova atual
@@ -425,6 +421,7 @@ export async function finalizarProva(provaId: string): Promise<ProvaSemanal> {
             tempo_gasto_segundos: tempoGasto,
             nota
         })
+        .eq('id', provaId)
         .select()
         .single()
 
