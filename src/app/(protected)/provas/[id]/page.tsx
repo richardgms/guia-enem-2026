@@ -186,7 +186,7 @@ export default function ProvaDetalhePage({ params }: ProvaDetalhePageProps) {
                 </div>
 
                 {/* Resumo */}
-                <div className="bg-surface rounded-xl p-6 border border-border mb-8">
+                <div className="bg-white rounded-xl p-6 border border-border mb-8 shadow-sm">
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
                         {/* Nota */}
                         <div className="text-center">
