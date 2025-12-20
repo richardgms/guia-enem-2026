@@ -16,14 +16,22 @@ const MONTHS = [
 
 const DAYS_OF_WEEK = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"]
 
+// Interface para provas realizadas
+interface ProvaRealizada {
+    semana: number
+    finalizadaEm: string
+}
+
 interface CalendarioMensalProps {
     conteudos: ConteudoDia[]
     progressos: Record<string, ProgressoDia>
+    provasRealizadas?: ProvaRealizada[]
 }
 
 import { materiaColors, materiaLabels } from "@/lib/constants"
+import { getDomingoDaSemana } from "@/lib/provaUtils"
 
-export function CalendarioMensal({ conteudos, progressos }: CalendarioMensalProps) {
+export function CalendarioMensal({ conteudos, progressos, provasRealizadas = [] }: CalendarioMensalProps) {
     const [currentDate, setCurrentDate] = useState(new Date(2025, 11)) // Dezembro 2025
 
     const year = currentDate.getFullYear()
@@ -122,10 +130,26 @@ export function CalendarioMensal({ conteudos, progressos }: CalendarioMensalProp
                                 )}
                             </div>
 
-                            {/* Prova indicator - only on first prova date (Dec 14) */}
+                            {/* Prova indicator - verifica se foi realizada */}
                             {isSunday && date.getDate() === 14 && date.getMonth() === 11 && date.getFullYear() === 2025 && (() => {
                                 const sundayDateStr = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`
                                 const isOverdue = sundayDateStr < todayStr
+                                // Verificar se a prova da semana 1 foi realizada
+                                const provaRealizada = provasRealizadas.find(p => p.semana === 1)
+                                const foiRealizada = !!provaRealizada
+
+                                if (foiRealizada) {
+                                    return (
+                                        <div className="block mt-1">
+                                            <Badge
+                                                variant="secondary"
+                                                className="w-full justify-start text-[10px] px-1 mb-1 bg-green-100 text-green-700"
+                                            >
+                                                ✓ Prova Realizada
+                                            </Badge>
+                                        </div>
+                                    )
+                                }
 
                                 return (
                                     <Link href="/prova" className="block mt-1">
@@ -142,6 +166,37 @@ export function CalendarioMensal({ conteudos, progressos }: CalendarioMensalProp
                                         </Badge>
                                     </Link>
                                 )
+                            })()}
+
+                            {/* Indicador de dia recuperado - dias entre a prova e quando foi feita */}
+                            {!isSunday && (() => {
+                                // Verificar se este dia está entre o domingo da prova e a data de finalização
+                                const prova = provasRealizadas.find(p => {
+                                    if (!p.finalizadaEm) return false
+                                    const domingoDaProva = getDomingoDaSemana(p.semana)
+                                    const dataFinalizacao = new Date(p.finalizadaEm)
+                                    const dataAtual = new Date(dateStr + 'T12:00:00')
+
+                                    // Verifica se a data está entre o domingo+1 e a data de finalização
+                                    const diaAposProva = new Date(domingoDaProva)
+                                    diaAposProva.setDate(diaAposProva.getDate() + 1)
+
+                                    return dataAtual >= diaAposProva && dataAtual <= dataFinalizacao
+                                })
+
+                                if (prova && !conteudo) {
+                                    return (
+                                        <div className="mt-1">
+                                            <Badge
+                                                variant="secondary"
+                                                className="w-full justify-start text-[10px] px-1 mb-1 bg-emerald-50 text-emerald-600"
+                                            >
+                                                ✓ Recuperado
+                                            </Badge>
+                                        </div>
+                                    )
+                                }
+                                return null
                             })()}
 
                             {conteudo ? (

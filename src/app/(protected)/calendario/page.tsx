@@ -6,12 +6,21 @@ import type { ProgressoDia } from "@/types/database"
 
 export const dynamic = 'force-dynamic'
 
+// Interface para provas realizadas
+interface ProvaRealizada {
+    semana: number
+    finalizadaEm: string
+}
+
 export default async function CalendarioPage() {
     const supabase = await createClient()
     const { data: { user } } = await supabase.auth.getUser()
 
     const progressos: Record<string, ProgressoDia> = {}
+    const provasRealizadas: ProvaRealizada[] = []
+
     if (user) {
+        // Buscar progressos
         const { data: progressoDB } = await supabase
             .from('progresso')
             .select('*')
@@ -28,6 +37,20 @@ export default async function CalendarioPage() {
                 anotacoes: p.anotacoes
             }
         })
+
+        // Buscar provas finalizadas
+        const { data: provasDB } = await supabase
+            .from('provas_semanais')
+            .select('semana, finalizada_em')
+            .eq('user_id', user.id)
+            .eq('status', 'finalizada')
+
+        provasDB?.forEach((p) => {
+            provasRealizadas.push({
+                semana: p.semana,
+                finalizadaEm: p.finalizada_em
+            })
+        })
     }
 
     return (
@@ -43,6 +66,7 @@ export default async function CalendarioPage() {
                 <CalendarioMensal
                     conteudos={conteudosData.conteudos as ConteudoDia[]}
                     progressos={progressos}
+                    provasRealizadas={provasRealizadas}
                 />
             </div>
         </div>

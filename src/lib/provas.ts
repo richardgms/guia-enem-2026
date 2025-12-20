@@ -427,8 +427,13 @@ export async function finalizarProva(provaId: string): Promise<ProvaSemanal> {
 
     if (updateError) throw updateError
 
-    // Atualizar métricas
+    // Atualizar métricas da prova
     await atualizarMetricasProva(user.id, provaFinalizada)
+
+    // Atualizar estatísticas gerais (streak, dias concluídos, etc)
+    // Isso inclui os dias recuperados de provas atrasadas
+    const { atualizarEstatisticas } = await import('@/lib/database')
+    await atualizarEstatisticas()
 
     return converterProvaDB(provaFinalizada)
 }

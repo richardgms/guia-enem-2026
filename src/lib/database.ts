@@ -136,7 +136,7 @@ export async function getEstatisticas(): Promise<Estatisticas> {
     }
 }
 
-async function atualizarEstatisticas() {
+export async function atualizarEstatisticas() {
     const supabase = createClient()
     const { data: { user } } = await supabase.auth.getUser()
 
@@ -151,7 +151,61 @@ async function atualizarEstatisticas() {
         .not('first_completed_at', 'is', null)
         .order('first_completed_at', { ascending: false })
 
-    if (!progressos || progressos.length === 0) {
+    // Busca provas finalizadas para contabilizar dias recuperados
+    const { data: provasFinalizadas } = await supabase
+        .from('provas_semanais')
+        .select('semana, finalizada_em')
+        .eq('user_id', user.id)
+        .eq('status', 'finalizada')
+
+    // Pega dias únicos em que houve estudo (baseado em first_completed_at)
+    const diasUnicos = new Set<string>()
+
+    // Adiciona dias de estudo normal
+    progressos?.forEach(p => {
+        if (p.first_completed_at) {
+            const dataEstudo = new Date(p.first_completed_at)
+            const diaStr = `${dataEstudo.getFullYear()}-${String(dataEstudo.getMonth() + 1).padStart(2, '0')}-${String(dataEstudo.getDate()).padStart(2, '0')}`
+            diasUnicos.add(diaStr)
+        }
+    })
+
+    // NOVO: Adiciona dias recuperados de provas atrasadas
+    // Para cada prova finalizada, adiciona os dias entre o domingo da prova e a data de finalização
+    const PRIMEIRO_DOMINGO = new Date('2025-12-14T12:00:00')
+
+    provasFinalizadas?.forEach(prova => {
+        if (prova.finalizada_em) {
+            // Calcular o domingo da semana dessa prova
+            const domingoDaProva = new Date(PRIMEIRO_DOMINGO)
+            domingoDaProva.setDate(domingoDaProva.getDate() + (prova.semana - 1) * 7)
+
+            const dataFinalizacao = new Date(prova.finalizada_em)
+
+            // Verificar se a prova foi feita após o domingo (atrasada)
+            if (dataFinalizacao > domingoDaProva) {
+                // Adiciona o dia da prova (domingo)
+                const domingoStr = `${domingoDaProva.getFullYear()}-${String(domingoDaProva.getMonth() + 1).padStart(2, '0')}-${String(domingoDaProva.getDate()).padStart(2, '0')}`
+                diasUnicos.add(domingoStr)
+
+                // Adiciona todos os dias entre o domingo+1 e a data de finalização
+                const diaAtual = new Date(domingoDaProva)
+                diaAtual.setDate(diaAtual.getDate() + 1) // Começa no dia seguinte ao domingo
+
+                while (diaAtual <= dataFinalizacao) {
+                    const diaStr = `${diaAtual.getFullYear()}-${String(diaAtual.getMonth() + 1).padStart(2, '0')}-${String(diaAtual.getDate()).padStart(2, '0')}`
+                    diasUnicos.add(diaStr)
+                    diaAtual.setDate(diaAtual.getDate() + 1)
+                }
+            } else {
+                // Prova foi feita no próprio domingo - só adiciona o domingo
+                const domingoStr = `${domingoDaProva.getFullYear()}-${String(domingoDaProva.getMonth() + 1).padStart(2, '0')}-${String(domingoDaProva.getDate()).padStart(2, '0')}`
+                diasUnicos.add(domingoStr)
+            }
+        }
+    })
+
+    if (diasUnicos.size === 0) {
         // Sem progressos, zera tudo
         await supabase
             .from('estatisticas')
@@ -168,16 +222,6 @@ async function atualizarEstatisticas() {
             })
         return
     }
-
-    // Pega dias únicos em que houve estudo (baseado em first_completed_at)
-    const diasUnicos = new Set<string>()
-    progressos.forEach(p => {
-        if (p.first_completed_at) {
-            const dataEstudo = new Date(p.first_completed_at)
-            const diaStr = `${dataEstudo.getFullYear()}-${String(dataEstudo.getMonth() + 1).padStart(2, '0')}-${String(dataEstudo.getDate()).padStart(2, '0')}`
-            diasUnicos.add(diaStr)
-        }
-    })
 
     const diasConcluidos = diasUnicos.size
     const xpTotal = diasConcluidos * 50 // 50 XP por dia único
