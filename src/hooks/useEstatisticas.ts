@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react'
 import { getEstatisticas, getResgates, salvarResgate, getExtrato } from '@/lib/database'
-import type { Estatisticas, Redemption, ExtratoItem } from '@/lib/database'
+import type { ExtratoItem } from '@/lib/database'
+import type { Estatisticas, Redemption } from '@/types/database'
 import { useToast } from '@/hooks/use-toast'
 
 export function useEstatisticas() {
