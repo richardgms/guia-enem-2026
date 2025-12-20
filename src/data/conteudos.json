@@ -123,9 +123,9 @@
             "resumo": "## As Classes de Palavras\n\nNo português, as palavras são como peças de um lego. Cada uma tem sua função!\n\n### 1. Substantivo\nNomeia tudo! Seres, objetos, sentimentos, lugares. \n*   **Concreto x Abstrato**: Mesa (concreto) x Amor (abstrato - depende de alguém para existir).\n*   **Próprio x Comum**: Brasil (próprio) x país (comum).\n\n### 2. Adjetivo\nQualifica o substantivo. Dá cor, tamanho, estado.\n*   Ex: O carro **vermelho**. A prova **difícil**.\n\n### 3. Artigo\nDefine ou indefine o substantivo.\n*   **Definidos**: o, a, os, as.\n*   **Indefinidos**: um, uma, uns, umas.\n\n> **Atenção**: No ENEM, o foco é o *efeito de sentido*. Por que o autor usou 'O' projeto e não 'UM' projeto? 'O' dá ideia de especificidade, importância.",
             "videos": [
                 {
-                    "titulo": "CLASSES DE PALAVRAS + EXERCÍCIOS RESOLVIDOS",
-                    "youtubeId": "2tMS1O3xn24",
-                    "canal": "Professor Noslen"
+                    "titulo": "Classes Gramaticais em 13 Minutos! (Completo)",
+                    "youtubeId": "QYHrtSku8F4",
+                    "canal": "Português sem Enrolação - Profª Lis"
                 }
             ],
             "questoes": [
@@ -235,9 +235,14 @@
             "resumo": "## O Estudo da Vida\n\nBiologia (Bio = Vida, Logos = Estudo). Mas o que define algo como 'vivo'?\n\n### Níveis de Organização\nÁtomo -> Molécula -> Organela -> **Célula** -> Tecido -> Órgão -> Sistema -> Organismo -> População -> Comunidade -> Ecossistema -> Biosfera.\n\n### Características dos Seres Vivos (C.H.O.M.P.R.E)\n1.  **C**élula (Unidade básica)\n2.  **H**ereditariedade (DNA/RNA)\n3.  **M**etabolismo (Anabolismo + Catabolismo)\n4.  **R**eprodução (Sexuada ou Assexuada)\n5.  **E**volução (Adaptação)\n\n> **Fique Ligado**: Vírus são a exceção! Não têm célula (acelulares) e não têm metabolismo próprio. São parasitas intracelulares obrigatórios.",
             "videos": [
                 {
-                    "titulo": "Componentes químicos dos seres vivos - Aula 01",
-                    "youtubeId": "guddNfCuAdw",
-                    "canal": "Prof. Guilherme Goulart"
+                    "titulo": "Níveis de Organização dos Seres Vivos",
+                    "youtubeId": "GcQGshBofTo",
+                    "canal": "Biologia com Samuel Cunha"
+                },
+                {
+                    "titulo": "Características Gerais dos Seres Vivos",
+                    "youtubeId": "L8i7E0t_iH0",
+                    "canal": "Biologia com Samuel Cunha"
                 }
             ],
             "questoes": [
@@ -347,7 +352,7 @@
             "resumo": "## Antes da Escrita\n\nA Pré-história vai do surgimento do homem (~2 mi anos atrás) até a invenção da escrita (~4000 a.C).\n\n### Períodos Principais\n\n1.  **Paleolítico (Pedra Lascada)**\n    *   Nômades (caçadores-coletores).\n    *   Descoberta do fogo.\n    *   Pinturas rupestres.\n\n2.  **Neolítico (Pedra Polida)**\n    *   **Revolução Agrícola**: O homem aprende a plantar.\n    *   Sedentarismo (primeiras vilas).\n    *   Domesticação de animais.\n\n3.  **Idade dos Metais**\n    *   Cobre -> Bronze -> Ferro.\n    *   Melhores armas e ferramentas -> Surgimento do Estado e das Cidades.\n\n> **Conceito Chave**: 'Pré-história' é um termo preconceituoso? Sim, pois sugere que povos sem escrita não têm história. Hoje usa-se 'Povos Ágrafos', mas no vestibular o termo clássico ainda aparece.",
             "videos": [
                 {
-                    "titulo": "HISTÓRIA GERAL - A PRÉ-HISTÓRIA",
+                    "titulo": "Pré-História: Do Paleolítico à Idade dos Metais",
                     "youtubeId": "ym5aER-r2tI",
                     "canal": "Parabólica"
                 }
@@ -459,9 +464,9 @@
             "resumo": "## O Texto Dissertativo-Argumentativo\n\nNo ENEM, você precisa defender uma opinião (Tese) sobre um problema.\n\n### O Esqueleto (30 linhas)\n\n1.  **Introdução (1 parágrafo)**\n    *   **Contextualização**: Apresente o tema (filme, livro, fato histórico).\n    *   **Tema**: Mostre que você entendeu a frase temática.\n    *   **Tese**: Sua opinião (sem dizer 'eu acho').\n    *   **Argumentos (A1 e A2)**: O que você vai discutir nos próximos parágrafos.\n\n2.  **Desenvolvimento (2 parágrafos)**\n    *   **D1**: Explica o Argumento 1 + Repertório + Consequência.\n    *   **D2**: Explica o Argumento 2 + Repertório + Consequência.\n\n3.  **Conclusão (1 parágrafo)**\n    *   Retomada da Tese.\n    *   **Proposta de Intervenção (GOMIF)**: Agente, Ação, Meio/Modo, Efeito e Detalhamento.\n\n> **Tarefa de Hoje**: Leia uma redação nota 1000 de anos anteriores e tente identificar essas 3 partes.",
             "videos": [
                 {
-                    "titulo": "COMO FAZER REDAÇÃO ENEM | Redação do Zero",
-                    "youtubeId": "evneF7mhhMU",
-                    "canal": "Lucas Felpi"
+                    "titulo": "Como elaborar CADA PARTE da Redação do ENEM",
+                    "youtubeId": "sHn3Yv2Bw-M",
+                    "canal": "Professor Noslen"
                 }
             ],
             "questoes": [
@@ -571,8 +576,13 @@
             "resumo": "## Razão e Proporção\n\nConceitos fundamentais que aparecem em TUDO: regra de três, escalas, porcentagem!\n\n### Razão\nComparação entre duas grandezas através de uma divisão.\n- Ex: Se tenho 4 meninas e 6 meninos, a razão é 4/6 = 2/3.\n\n### Proporção\nIgualdade entre duas razões.\n- Ex: 2/3 = 4/6 (mesma proporção)\n\n### Propriedade Fundamental\nEm a/b = c/d, temos: **a × d = b × c** (produto dos extremos = produto dos meios)\n\n> **Dica ENEM**: Fique atento a problemas de escala em mapas! Se a escala é 1:100.000, cada 1cm no mapa = 100.000cm (1km) na realidade.",
             "videos": [
                 {
-                    "titulo": "RAZÃO E PROPORÇÃO | COMPLETO",
-                    "youtubeId": "mJKeDmj_hEQ",
+                    "titulo": "RAZÃO E PROPORÇÃO (Parte 1): Propriedades e Conceitos",
+                    "youtubeId": "uIulBEk8gcM",
+                    "canal": "Professor Ferretto"
+                },
+                {
+                    "titulo": "RAZÃO E PROPORÇÃO (Parte 2): Divisões Proporcionais",
+                    "youtubeId": "6Dsta1eZ1BA",
                     "canal": "Professor Ferretto"
                 }
             ],
@@ -618,12 +628,12 @@
             "assunto": "Verbos e Tempos Verbais",
             "dificuldade": "medio",
             "tempoEstimado": "1h",
-            "resumo": "## Verbos: O Motor da Frase\n\nVerbos indicam ação, estado ou fenômeno da natureza.\n\n### Tempos Verbais\n1. **Presente**: Acontece agora. 'Eu estudo.'\n2. **Pretérito Perfeito**: Ação concluída. 'Eu estudei.'\n3. **Pretérito Imperfeito**: Ação contínua no passado. 'Eu estudava.'\n4. **Futuro do Presente**: Vai acontecer. 'Eu estudarei.'\n5. **Futuro do Pretérito**: Condição. 'Eu estudaria (se pudesse).'\n\n### Modos Verbais\n- **Indicativo**: Certeza.\n- **Subjuntivo**: Dúvida, hipótese.\n- **Imperativo**: Ordem, pedido.\n\n> **ENEM**: Foco nos efeitos de sentido! Por que o autor usou 'seria' em vez de 'é'?",
+            "resumo": "## Verbos: O Motor da Frase\n\nVerbos indicam ação, estado ou fenômeno da natureza.\n\n### Tempos Verbais\n1. **Presente**: Acontece agora. 'Eu estudo.'\n2. **Pretérito Perfeito**: Ação concluída. 'Eu estudei.'\n3. **Pretérito Imperfeito**: Ação contínua no passado. 'Eu estudava.'\n4. **Futuro do Presente**: Vai acontecer. 'Eu estudarei.'\n5. **Futuro do Pretérito**: Condição. 'Eu estudaria (se pudesse).'\n\n### Modos Verbais\n- **Indicativo**: Certeza.\n- **Subjuntivo**: Dúvida, hipótese.\n- **Imperativo**: Ordem, pedido.\n\n> **Dica TDAH 🧠**: Este vídeo é longo (50 min). Minha sugestão: assista até os 25 minutos, faça uma pausa de 10 minutos para esticar as pernas ou beber uma água, e depois termine! Isso ajuda muito no foco.\n\n> **ENEM**: Foco nos efeitos de sentido! Por que o autor usou 'seria' em vez de 'é'?",
             "videos": [
                 {
-                    "titulo": "VERBOS - Modos e Tempos Verbais",
-                    "youtubeId": "K_Dx1gLLLjg",
-                    "canal": "Professor Noslen"
+                    "titulo": "Verbo: Tempo e Modo Verbal",
+                    "youtubeId": "_wIg5jA2wuc",
+                    "canal": "Diones Martins"
                 }
             ],
             "questoes": [
@@ -671,9 +681,9 @@
             "resumo": "## Movimento Uniforme (MU)\n\nQuando a velocidade é constante (v = constante).\n\n### Fórmula Principal\n**S = S₀ + v·t**\n- S = posição final\n- S₀ = posição inicial\n- v = velocidade (constante)\n- t = tempo\n\n### Gráficos\n- **S × t**: Reta inclinada (v > 0 sobe, v < 0 desce)\n- **v × t**: Linha horizontal\n\n### Velocidade Média\n**Vm = ΔS / Δt** (variação de espaço / variação de tempo)\n\n> **Atenção**: Não confunda velocidade média com a média das velocidades! São coisas diferentes.",
             "videos": [
                 {
-                    "titulo": "CINEMÁTICA - Movimento Uniforme (MU)",
-                    "youtubeId": "QP7a1K8EHGQ",
-                    "canal": "Professor Boaro"
+                    "titulo": "MOVIMENTO UNIFORME (MU) - [CINEMÁTICA DO ZERO]",
+                    "youtubeId": "PJKYzv_dpXM",
+                    "canal": "Eureka Matemática"
                 }
             ],
             "questoes": [
@@ -721,9 +731,9 @@
             "resumo": "## O Átomo\n\nTudo começa aqui: a menor unidade da matéria que mantém as propriedades de um elemento.\n\n### Partículas Subatômicas\n- **Próton (p⁺)**: Carga positiva, no núcleo. Define o elemento (Z).\n- **Nêutron (n)**: Sem carga, no núcleo. Estabiliza.\n- **Elétron (e⁻)**: Carga negativa, na eletrosfera.\n\n### Números Atômicos\n- **Z (Número Atômico)** = nº de prótons\n- **A (Número de Massa)** = prótons + nêutrons (A = Z + N)\n\n### Isótopos, Isóbaros, Isótonos\n- **Isótopos**: Mesmo Z, diferente A (ex: C-12 e C-14)\n- **Isóbaros**: Mesmo A, diferente Z\n- **Isótonos**: Mesmo número de nêutrons\n\n> **Lembrete**: Átomo neutro → nº de prótons = nº de elétrons.",
             "videos": [
                 {
-                    "titulo": "ESTRUTURA ATÔMICA | COMPLETO",
-                    "youtubeId": "7GmLJp3P8Wg",
-                    "canal": "Prof. Gabriel Cabral"
+                    "titulo": "ESTRUTURA ATÔMICA - PRÓTONS, NÊUTRONS E ELÉTRONS",
+                    "youtubeId": "eav23HYcowI",
+                    "canal": "Professor Gabriel Cabral"
                 }
             ],
             "questoes": [
@@ -771,9 +781,9 @@
             "resumo": "## Cartografia\n\nA arte de representar a Terra em mapas planos.\n\n### Principais Projeções\n1. **Cilíndrica (Mercator)**: Distorce áreas perto dos polos, mas mantém ângulos (navegação).\n2. **Cônica**: Boa para latitudes médias.\n3. **Azimutal/Plana**: Centrada em um ponto (usada em mapas polares ou de rotas aéreas).\n\n### Escalas\n- **Grande Escala** (ex: 1:1.000): Área pequena, muito detalhe.\n- **Pequena Escala** (ex: 1:10.000.000): Área grande, pouco detalhe.\n\n> **Cuidado**: Escala 'grande' mostra área 'pequena' e vice-versa! É contraintuitivo.\n\n### Curvas de Nível\nLinhas que conectam pontos de mesma altitude. Quanto mais juntas, mais íngreme o terreno.",
             "videos": [
                 {
-                    "titulo": "CARTOGRAFIA | PROJEÇÕES CARTOGRÁFICAS",
-                    "youtubeId": "qKNvxaC_s3M",
-                    "canal": "Prof. Silvester"
+                    "titulo": "CARTOGRAFIA | AULA COMPLETA",
+                    "youtubeId": "x0B7Wv6bCfU",
+                    "canal": "Professor Geovane"
                 }
             ],
             "questoes": [
@@ -821,9 +831,9 @@
             "resumo": "## Repertório: A Arma Secreta\n\nRepertório sociocultural é qualquer referência externa que você usa para embasar seu argumento.\n\n### Tipos de Repertório\n1. **Filosófico**: Citações de filósofos (Kant, Platão, Hannah Arendt).\n2. **Histórico**: Eventos do passado (Revolução Industrial, Ditadura).\n3. **Literário**: Livros, poemas (1984, Dom Casmurro).\n4. **Cinematográfico**: Filmes e séries (Coringa, Black Mirror).\n5. **Legal**: Constituição, Declaração Universal dos Direitos Humanos.\n6. **Dados**: Estatísticas de fontes confiáveis (IBGE, OMS).\n\n### Repertório Legitimado\nDeve ser:\n- **Pertinente**: Relacionado ao tema.\n- **Produtivo**: Ajuda a construir o argumento.\n- **Legitimado**: Reconhecido socialmente (nada de 'meu vizinho disse').\n\n> **Dica**: Monte um banco de repertórios coringas que funcionam para vários temas!",
             "videos": [
                 {
-                    "titulo": "REPERTÓRIO SOCIOCULTURAL - Como usar na Redação do ENEM",
-                    "youtubeId": "Tn9W2J5bOOE",
-                    "canal": "Lucas Felpi"
+                    "titulo": "5 REFERÊNCIAS PARA QUALQUER TEMA DE REDAÇÃO DO ENEM!",
+                    "youtubeId": "QmwFj5puT-U",
+                    "canal": "Débora Aladim"
                 }
             ],
             "questoes": [
@@ -871,8 +881,8 @@
             "resumo": "## Porcentagem\n\nUma razão com denominador 100. Representa partes de um todo de 100 unidades.\n\n### Formas de Representação\n1. **Percentual**: 20%\n2. **Fracionária**: 20/100 (ou 1/5)\n3. **Decimal**: 0,20\n\n### Cálculos Rápidos\n- **10%**: Anda a vírgula uma casa para a esquerda (divide por 10).\n- **5%**: Metade de 10%.\n- **1%**: Anda a vírgula duas casas para a esquerda (divide por 100).\n- **20%**: Dobro de 10%.\n\n### Aumentos e Descontos\n- Aumento de 10% → Multiplica por 1,10.\n- Desconto de 10% → Multiplica por 0,90.\n\n> **Dica ENEM**: Muito comum em gráficos e tabelas. Sempre identifique o 'valor de referência' (o 100%).",
             "videos": [
                 {
-                    "titulo": "PORCENTAGEM | COMPLETO",
-                    "youtubeId": "W57z89S-f3A",
+                    "titulo": "PORCENTAGEM: Teoria e Exemplos",
+                    "youtubeId": "CERiIwParX4",
                     "canal": "Professor Ferretto"
                 }
             ],
@@ -921,9 +931,9 @@
             "resumo": "## Pronomes\n\nPalavras que acompanham ou substituem o substantivo, indicando a pessoa do discurso.\n\n### Principais Tipos\n1. **Pessoais**: Eu, tu, ele, nós... (Retos); Me, te, se, o, a... (Oblíquos).\n2. **Possessivos**: Meu, teu, seu, nosso.\n3. **Demonstrativos**: Este (perto de quem fala), Esse (perto de quem ouve), Aquele (longe de ambos).\n4. **Relativos**: Que, quem, onde, o qual (Retomam um termo anterior).\n5. **Indefinidos**: Alguém, ninguém, tudo, algo.\n\n> **Foco no ENEM**: Coesão textual! O pronome 'este' refere-se a quê no texto? Os pronomes relativos são essenciais para evitar repetições desnecessárias.",
             "videos": [
                 {
-                    "titulo": "PRONOMES (Parte 1) | Aula Completa",
-                    "youtubeId": "T9h_O1vWw-c",
-                    "canal": "Professor Noslen"
+                    "titulo": "PRONOMES | Aula de Português completa",
+                    "youtubeId": "4LVbsP4v13c",
+                    "canal": "Português com Letícia"
                 }
             ],
             "questoes": [
@@ -971,9 +981,9 @@
             "resumo": "## Bioquímica Celular\n\nComponentes inorgânicos essenciais para o funcionamento dos seres vivos.\n\n### Água\n- Substância mais abundante nos seres vivos.\n- **Solvente Universal**: Dissolve a maioria das substâncias.\n- **Metabolismo**: Participa de reações químicas (Hidrólise).\n- **Termorregulação**: Ajuda a manter a temperatura corporal (suor).\n\n### Sais Minerais\n- **Cálcio**: Ossos, dentes, contração muscular e coagulação.\n- **Ferro**: Compõe a Hemoglobina (transporte de oxigênio).\n- **Sódio/Potássio**: Impulsos nervosos e equilíbrio hídrico.\n- **Fósforo**: Compõe DNA, RNA e ATP (energia).\n\n> **Véspera de Natal**: Estudo focado e mais curto para aproveitar o descanso!",
             "videos": [
                 {
-                    "titulo": "BIOQUÍMICA - ÁGUA E SAIS MINERAIS",
-                    "youtubeId": "I_nREr1oW9w",
-                    "canal": "Prof. Paulo Jubilut"
+                    "titulo": "Água e Sais Minerais 🐵",
+                    "youtubeId": "ItQp2sHN04U",
+                    "canal": "Biologia com Jubilut"
                 }
             ],
             "questoes": [
@@ -1039,9 +1049,9 @@
             "resumo": "## Grécia Antiga\n\nBerço da democracia e da filosofia ocidental.\n\n### Atenas vs. Esparta\n- **Atenas**: Foco na cultura, educação e política (Democracia Direta - apenas para cidadãos).\n- **Esparta**: Sociedade militarista, oligárquica e disciplinada.\n\n### Legados Culturais\n- **Filosofia**: Sócrates, Platão e Aristóteles.\n- **Jogos Olímpicos**: Valorização do corpo e trégua entre as cidades-estado.\n- **Teatro**: Tragédia e Comédia.\n- **Arquitetura**: Colunas e proporção.\n\n> **Importante**: As cidades-estado (Polis) eram independentes e rivais, mas compartilhavam a mesma cultura, língua e religião (Helenismo).",
             "videos": [
                 {
-                    "titulo": "GRÉCIA ANTIGA | RESUMO COMPLETO",
-                    "youtubeId": "z867lreO9_k",
-                    "canal": "Débora Aladim"
+                    "titulo": "GRÉCIA ANTIGA - RESUMO DESENHADO",
+                    "youtubeId": "ijU4-hf7lGE",
+                    "canal": "HISTORIAR-TE"
                 }
             ],
             "questoes": [
@@ -1089,9 +1099,9 @@
             "resumo": "## Coesão: A 'Cola' do Texto\n\nA Competência 4 do ENEM avalia o uso de mecanismos linguísticos para a construção da argumentação.\n\n### Operadores Argumentativos\n- **Adição**: Além disso, ademais, somado a isso.\n- **Oposição**: No entanto, entretanto, porém, contudo.\n- **Conclusão**: Portanto, logo, dessarte, por conseguinte.\n- **Causa/Consequência**: Devido a, posto que, em virtude de.\n- **Exemplificação**: A título de exemplo, como ocorre em.\n\n### Dicas para Nota Máxima\n1. Use conectivos **entre os parágrafos** (conectivos interparágrafos).\n2. Use conectivos **dentro dos parágrafos** (conectivos intraparágrafos).\n3. Evite repetir o mesmo conectivo várias vezes.\n\n> **Prática**: Releia seu último texto e circule todos os conectivos. Você usou pelo menos dois tipos diferentes por parágrafo?",
             "videos": [
                 {
-                    "titulo": "COESÃO TEXTUAL (CONECTIVOS) para Redação ENEM",
-                    "youtubeId": "48R9B8FzOIs",
-                    "canal": "PoxaLulu"
+                    "titulo": "COESÃO TEXTUAL: TIPOS E CARACTERÍSTICAS",
+                    "youtubeId": "5Z8ziZYcSdg",
+                    "canal": "Professora Pamba"
                 }
             ],
             "questoes": [
