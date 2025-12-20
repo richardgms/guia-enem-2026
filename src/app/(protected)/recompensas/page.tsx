@@ -76,7 +76,7 @@ export default function RecompensasPage() {
                                 <ConfirmRedeemDialog
                                     reward={reward}
                                     saldo={saldo}
-                                    onConfirm={() => resgatarRecompensa(reward)}
+                                    onConfirm={async () => { await resgatarRecompensa(reward) }}
                                     disabled={!canAfford}
                                 />
                             </CardFooter>
