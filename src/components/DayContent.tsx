@@ -79,6 +79,10 @@ export function DayContent({ conteudo }: DayContentProps) {
     }
 
     const handleSalvar = async () => {
+        console.log('=== handleSalvar iniciado ===')
+        console.log('Progresso atual:', progresso)
+        console.log('Permissão:', permissaoTarefa)
+
         setSaving(true)
         try {
             const novoProgresso = {
@@ -87,7 +91,12 @@ export function DayContent({ conteudo }: DayContentProps) {
                 dataRevisao: calculateReviewDate(progresso.autoAvaliacao)
             }
 
+            console.log('Novo progresso a salvar:', novoProgresso)
+            console.log('Data ID:', conteudo.data)
+
             await salvarProgresso(conteudo.data, novoProgresso)
+            console.log('Progresso salvo com sucesso!')
+
             setProgresso(novoProgresso)
 
             toast({
@@ -98,12 +107,13 @@ export function DayContent({ conteudo }: DayContentProps) {
             })
 
             // Hard redirect para forçar atualização do layout e header
+            console.log('Redirecionando para /dashboard...')
             window.location.href = '/dashboard'
         } catch (error) {
-            console.error("Erro ao salvar progresso:", error)
+            console.error("=== ERRO ao salvar progresso ===", error)
             toast({
                 title: "Erro ao salvar",
-                description: "Tente novamente.",
+                description: error instanceof Error ? error.message : "Tente novamente.",
                 variant: "destructive"
             })
         } finally {

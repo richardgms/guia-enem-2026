@@ -859,6 +859,274 @@
                     "materia": "redacao"
                 }
             ]
+        },
+        {
+            "id": "2025-12-22",
+            "data": "2025-12-22",
+            "diaSemana": "Segunda-feira",
+            "materia": "matematica",
+            "assunto": "Porcentagem",
+            "dificuldade": "facil",
+            "tempoEstimado": "50min",
+            "resumo": "## Porcentagem\n\nUma razão com denominador 100. Representa partes de um todo de 100 unidades.\n\n### Formas de Representação\n1. **Percentual**: 20%\n2. **Fracionária**: 20/100 (ou 1/5)\n3. **Decimal**: 0,20\n\n### Cálculos Rápidos\n- **10%**: Anda a vírgula uma casa para a esquerda (divide por 10).\n- **5%**: Metade de 10%.\n- **1%**: Anda a vírgula duas casas para a esquerda (divide por 100).\n- **20%**: Dobro de 10%.\n\n### Aumentos e Descontos\n- Aumento de 10% → Multiplica por 1,10.\n- Desconto de 10% → Multiplica por 0,90.\n\n> **Dica ENEM**: Muito comum em gráficos e tabelas. Sempre identifique o 'valor de referência' (o 100%).",
+            "videos": [
+                {
+                    "titulo": "PORCENTAGEM | COMPLETO",
+                    "youtubeId": "W57z89S-f3A",
+                    "canal": "Professor Ferretto"
+                }
+            ],
+            "questoes": [
+                {
+                    "id": "q1-mat-sem3",
+                    "ano": 2021,
+                    "enunciado": "Um produto custava R$ 200,00 e sofreu um aumento de 15%. Qual o novo valor do produto?",
+                    "alternativas": [
+                        {
+                            "letra": "A",
+                            "texto": "R$ 215,00"
+                        },
+                        {
+                            "letra": "B",
+                            "texto": "R$ 230,00"
+                        },
+                        {
+                            "letra": "C",
+                            "texto": "R$ 215,00"
+                        },
+                        {
+                            "letra": "D",
+                            "texto": "R$ 245,00"
+                        },
+                        {
+                            "letra": "E",
+                            "texto": "R$ 300,00"
+                        }
+                    ],
+                    "gabarito": "B",
+                    "explicacao": "10% de 200 = 20. 5% de 200 = 10. Total aumento = 30. Novo valor = 200 + 30 = 230.",
+                    "assunto": "Porcentagem",
+                    "materia": "matematica"
+                }
+            ]
+        },
+        {
+            "id": "2025-12-23",
+            "data": "2025-12-23",
+            "diaSemana": "Terça-feira",
+            "materia": "portugues",
+            "assunto": "Pronomes: Tipos e Funções",
+            "dificuldade": "medio",
+            "tempoEstimado": "1h",
+            "resumo": "## Pronomes\n\nPalavras que acompanham ou substituem o substantivo, indicando a pessoa do discurso.\n\n### Principais Tipos\n1. **Pessoais**: Eu, tu, ele, nós... (Retos); Me, te, se, o, a... (Oblíquos).\n2. **Possessivos**: Meu, teu, seu, nosso.\n3. **Demonstrativos**: Este (perto de quem fala), Esse (perto de quem ouve), Aquele (longe de ambos).\n4. **Relativos**: Que, quem, onde, o qual (Retomam um termo anterior).\n5. **Indefinidos**: Alguém, ninguém, tudo, algo.\n\n> **Foco no ENEM**: Coesão textual! O pronome 'este' refere-se a quê no texto? Os pronomes relativos são essenciais para evitar repetições desnecessárias.",
+            "videos": [
+                {
+                    "titulo": "PRONOMES (Parte 1) | Aula Completa",
+                    "youtubeId": "T9h_O1vWw-c",
+                    "canal": "Professor Noslen"
+                }
+            ],
+            "questoes": [
+                {
+                    "id": "q1-port-sem3",
+                    "ano": 2019,
+                    "enunciado": "Na frase 'Estes livros que estou segurando são ótimos', o uso do pronome demonstrativo 'estes' indica que:",
+                    "alternativas": [
+                        {
+                            "letra": "A",
+                            "texto": "Os livros estão longe do falante."
+                        },
+                        {
+                            "letra": "B",
+                            "texto": "Os livros estão próximos de quem fala."
+                        },
+                        {
+                            "letra": "C",
+                            "texto": "Os livros pertencem a outra pessoa."
+                        },
+                        {
+                            "letra": "D",
+                            "texto": "O falante não sabe de quais livros está falando."
+                        },
+                        {
+                            "letra": "E",
+                            "texto": "É um pronome indefinido."
+                        }
+                    ],
+                    "gabarito": "B",
+                    "explicacao": "'Este/Esta/Estes' indica proximidade física em relação ao emissor da mensagem.",
+                    "assunto": "Pronomes",
+                    "materia": "portugues"
+                }
+            ]
+        },
+        {
+            "id": "2025-12-24",
+            "data": "2025-12-24",
+            "diaSemana": "Quarta-feira",
+            "materia": "biologia",
+            "assunto": "Bioquímica: Água e Sais Minerais",
+            "dificuldade": "facil",
+            "tempoEstimado": "40min",
+            "resumo": "## Bioquímica Celular\n\nComponentes inorgânicos essenciais para o funcionamento dos seres vivos.\n\n### Água\n- Substância mais abundante nos seres vivos.\n- **Solvente Universal**: Dissolve a maioria das substâncias.\n- **Metabolismo**: Participa de reações químicas (Hidrólise).\n- **Termorregulação**: Ajuda a manter a temperatura corporal (suor).\n\n### Sais Minerais\n- **Cálcio**: Ossos, dentes, contração muscular e coagulação.\n- **Ferro**: Compõe a Hemoglobina (transporte de oxigênio).\n- **Sódio/Potássio**: Impulsos nervosos e equilíbrio hídrico.\n- **Fósforo**: Compõe DNA, RNA e ATP (energia).\n\n> **Véspera de Natal**: Estudo focado e mais curto para aproveitar o descanso!",
+            "videos": [
+                {
+                    "titulo": "BIOQUÍMICA - ÁGUA E SAIS MINERAIS",
+                    "youtubeId": "I_nREr1oW9w",
+                    "canal": "Prof. Paulo Jubilut"
+                }
+            ],
+            "questoes": [
+                {
+                    "id": "q1-bio-sem3",
+                    "ano": 2018,
+                    "enunciado": "A carência de qual sal mineral pode levar à anemia ferropriva, prejudicando o transporte de oxigênio pelo sangue?",
+                    "alternativas": [
+                        {
+                            "letra": "A",
+                            "texto": "Cálcio"
+                        },
+                        {
+                            "letra": "B",
+                            "texto": "Potássio"
+                        },
+                        {
+                            "letra": "C",
+                            "texto": "Sódio"
+                        },
+                        {
+                            "letra": "D",
+                            "texto": "Ferro"
+                        },
+                        {
+                            "letra": "E",
+                            "texto": "Flúor"
+                        }
+                    ],
+                    "gabarito": "D",
+                    "explicacao": "O ferro é o componente central da hemoglobina, proteína responsável pelo transporte de O2 nas hemácias.",
+                    "assunto": "Bioquímica",
+                    "materia": "biologia"
+                }
+            ]
+        },
+        {
+            "id": "2025-12-25",
+            "data": "2025-12-25",
+            "diaSemana": "Quinta-feira",
+            "materia": "fisica",
+            "assunto": "Revisão de Natal: Cinemática",
+            "dificuldade": "facil",
+            "tempoEstimado": "30min",
+            "resumo": "## Natal: Dia de Revisão Leve\n\nHoje o foco é consolidar o que aprendemos sobre Movimento Uniforme antes de avançar para o MUV na próxima semana.\n\n### Pontos Chave para não esquecer:\n1. No MU, a **aceleração é zero** e a velocidade não muda.\n2. No MU, o corpo percorre **distâncias iguais em tempos iguais**.\n3. A função horária da posição é do 1º grau: **S = S₀ + vt**.\n\n> **Feliz Natal!** Aproveite o dia com moderação nos estudos. Recarregar as energias também faz parte do plano.",
+            "videos": [
+                {
+                    "titulo": "Revisão Rápida de Cinemática",
+                    "youtubeId": "fR2h8pL7I6k",
+                    "canal": "Física Total"
+                }
+            ],
+            "questoes": []
+        },
+        {
+            "id": "2025-12-26",
+            "data": "2025-12-26",
+            "diaSemana": "Sexta-feira",
+            "materia": "historia",
+            "assunto": "Grécia Antiga: Período Clássico",
+            "dificuldade": "medio",
+            "tempoEstimado": "50min",
+            "resumo": "## Grécia Antiga\n\nBerço da democracia e da filosofia ocidental.\n\n### Atenas vs. Esparta\n- **Atenas**: Foco na cultura, educação e política (Democracia Direta - apenas para cidadãos).\n- **Esparta**: Sociedade militarista, oligárquica e disciplinada.\n\n### Legados Culturais\n- **Filosofia**: Sócrates, Platão e Aristóteles.\n- **Jogos Olímpicos**: Valorização do corpo e trégua entre as cidades-estado.\n- **Teatro**: Tragédia e Comédia.\n- **Arquitetura**: Colunas e proporção.\n\n> **Importante**: As cidades-estado (Polis) eram independentes e rivais, mas compartilhavam a mesma cultura, língua e religião (Helenismo).",
+            "videos": [
+                {
+                    "titulo": "GRÉCIA ANTIGA | RESUMO COMPLETO",
+                    "youtubeId": "z867lreO9_k",
+                    "canal": "Débora Aladim"
+                }
+            ],
+            "questoes": [
+                {
+                    "id": "q1-hist-sem3",
+                    "ano": 2020,
+                    "enunciado": "A principal diferença entre a educação em Atenas e em Esparta era que:",
+                    "alternativas": [
+                        {
+                            "letra": "A",
+                            "texto": "Atenas focava no militarismo e Esparta na arte."
+                        },
+                        {
+                            "letra": "B",
+                            "texto": "Esparta focava na formação de soldados e Atenas na formação do cidadão completo (intelectual e fisicamente)."
+                        },
+                        {
+                            "letra": "C",
+                            "texto": "Atenas era governada por reis e Esparta por uma democracia."
+                        },
+                        {
+                            "letra": "D",
+                            "texto": "Ambas eram idênticas em seus métodos educativos."
+                        },
+                        {
+                            "letra": "E",
+                            "texto": "Apenas em Esparta as mulheres tinham acesso à educação física básica."
+                        }
+                    ],
+                    "gabarito": "B",
+                    "explicacao": "Esparta priorizava o treinamento militar (Hagoge), enquanto Atenas buscava o equilíbrio entre corpo e mente.",
+                    "assunto": "Grécia Antiga",
+                    "materia": "historia"
+                }
+            ]
+        },
+        {
+            "id": "2025-12-27",
+            "data": "2025-12-27",
+            "diaSemana": "Sábado",
+            "materia": "redacao",
+            "assunto": "Coesão Textual: Conectivos",
+            "dificuldade": "medio",
+            "tempoEstimado": "1h",
+            "resumo": "## Coesão: A 'Cola' do Texto\n\nA Competência 4 do ENEM avalia o uso de mecanismos linguísticos para a construção da argumentação.\n\n### Operadores Argumentativos\n- **Adição**: Além disso, ademais, somado a isso.\n- **Oposição**: No entanto, entretanto, porém, contudo.\n- **Conclusão**: Portanto, logo, dessarte, por conseguinte.\n- **Causa/Consequência**: Devido a, posto que, em virtude de.\n- **Exemplificação**: A título de exemplo, como ocorre em.\n\n### Dicas para Nota Máxima\n1. Use conectivos **entre os parágrafos** (conectivos interparágrafos).\n2. Use conectivos **dentro dos parágrafos** (conectivos intraparágrafos).\n3. Evite repetir o mesmo conectivo várias vezes.\n\n> **Prática**: Releia seu último texto e circule todos os conectivos. Você usou pelo menos dois tipos diferentes por parágrafo?",
+            "videos": [
+                {
+                    "titulo": "COESÃO TEXTUAL (CONECTIVOS) para Redação ENEM",
+                    "youtubeId": "48R9B8FzOIs",
+                    "canal": "PoxaLulu"
+                }
+            ],
+            "questoes": [
+                {
+                    "id": "q1-red-sem3",
+                    "ano": 2023,
+                    "enunciado": "Qual conectivo deve ser usado para introduzir uma ideia oposta à anterior?",
+                    "alternativas": [
+                        {
+                            "letra": "A",
+                            "texto": "Ademais"
+                        },
+                        {
+                            "letra": "B",
+                            "texto": "Portanto"
+                        },
+                        {
+                            "letra": "C",
+                            "texto": "Outrossim"
+                        },
+                        {
+                            "letra": "D",
+                            "texto": "No entanto"
+                        },
+                        {
+                            "letra": "E",
+                            "texto": "Logo"
+                        }
+                    ],
+                    "gabarito": "D",
+                    "explicacao": "'No entanto' é uma conjunção adversativa, usada para estabelecer oposição ou contraste.",
+                    "assunto": "Conectivos",
+                    "materia": "redacao"
+                }
+            ]
         }
     ]
 }

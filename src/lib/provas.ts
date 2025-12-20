@@ -138,7 +138,7 @@ export async function verificarElegibilidade(): Promise<ElegibilidadeProva> {
 
     // Verificar provas atrasadas (semanas anteriores sem prova finalizada)
     // IMPORTANTE: Só verificar semanas que TÊM questões cadastradas (por enquanto só semana 1)
-    const SEMANAS_COM_PROVA = [1] // Atualizar quando adicionar mais provas
+    const SEMANAS_COM_PROVA = [1, 2] // Atualizar quando adicionar mais provas
 
     let semanaAtrasada: number | null = null
     for (const s of SEMANAS_COM_PROVA) {

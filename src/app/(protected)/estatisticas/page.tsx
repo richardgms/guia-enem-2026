@@ -15,17 +15,23 @@ export default async function EstatisticasPage() {
         xpTotal: 0,
         streakAtual: 0,
         maiorStreak: 0,
-        diasConcluidos: 0
+        diasConcluidos: 0,
+        saldo: 0
     }
 
     if (user) {
         const { data: statsDB } = await supabase.from('estatisticas').select('*').eq('user_id', user.id).single()
         if (statsDB) {
+            // Busca gastos
+            const { data: resgates } = await supabase.from('redemptions').select('cost').eq('user_id', user.id)
+            const totalGasto = resgates?.reduce((acc: any, r: any) => acc + r.cost, 0) || 0
+
             stats = {
                 xpTotal: statsDB.xp_total,
                 streakAtual: statsDB.streak_atual,
                 maiorStreak: statsDB.maior_streak,
-                diasConcluidos: statsDB.dias_concluidos
+                diasConcluidos: statsDB.dias_concluidos,
+                saldo: statsDB.xp_total - totalGasto
             }
         }
     }
@@ -88,12 +94,12 @@ export default async function EstatisticasPage() {
                 </Card>
                 <Card>
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                        <CardTitle className="text-sm font-medium">XP Total</CardTitle>
+                        <CardTitle className="text-sm font-medium">Moedas</CardTitle>
                         <TrophyIcon className="h-4 w-4 text-yellow-500" />
                     </CardHeader>
                     <CardContent>
-                        <div className="text-2xl font-bold">{stats.xpTotal}</div>
-                        <p className="text-xs text-muted-foreground">Nível Iniciante</p>
+                        <div className="text-2xl font-bold">{stats.saldo}</div>
+                        <p className="text-xs text-muted-foreground">Saldo disponível</p>
                     </CardContent>
                 </Card>
                 <Card>

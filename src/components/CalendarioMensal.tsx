@@ -29,7 +29,7 @@ interface CalendarioMensalProps {
 }
 
 import { materiaColors, materiaLabels } from "@/lib/constants"
-import { getDomingoDaSemana } from "@/lib/provaUtils"
+import { getDomingoDaSemana, SEMANAS_COM_PROVA } from "@/lib/provaUtils"
 
 export function CalendarioMensal({ conteudos, progressos, provasRealizadas = [] }: CalendarioMensalProps) {
     const [currentDate, setCurrentDate] = useState(new Date(2025, 11)) // Dezembro 2025
@@ -103,7 +103,6 @@ export function CalendarioMensal({ conteudos, progressos, provasRealizadas = [] 
                     if (!date) return <div key={`empty-${i}`} className="bg-card min-h-[100px]" />
 
                     const conteudo = getContentForDate(date)
-                    const colorClass = getStatusColor(conteudo)
 
                     const today = new Date()
                     const todayStr = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`
@@ -111,6 +110,21 @@ export function CalendarioMensal({ conteudos, progressos, provasRealizadas = [] 
 
                     const isToday = dateStr === todayStr
                     const isSunday = date.getDay() === 0
+
+                    // Verificar se é um domingo de prova e se foi realizada
+                    const semanaDaProva = isSunday ? SEMANAS_COM_PROVA.find(s => {
+                        const domingo = getDomingoDaSemana(s)
+                        return domingo.getDate() === date.getDate() &&
+                            domingo.getMonth() === date.getMonth() &&
+                            domingo.getFullYear() === date.getFullYear()
+                    }) : null
+
+                    const provaRealizada = semanaDaProva ? provasRealizadas.find(p => p.semana === semanaDaProva) : null
+                    const foiProvaRealizada = !!provaRealizada
+
+                    const colorClass = foiProvaRealizada
+                        ? "bg-green-100 dark:bg-green-900/30"
+                        : getStatusColor(conteudo)
 
                     return (
                         <div key={date.toISOString()} className={cn("min-h-[100px] p-2 relative group transition-colors", colorClass)}>
@@ -121,35 +135,17 @@ export function CalendarioMensal({ conteudos, progressos, provasRealizadas = [] 
                                 )}>
                                     {date.getDate()}
                                 </span>
-                                {conteudo && (
-                                    <div className="flex gap-1">
-                                        {progressos[conteudo.data]?.concluido && (
-                                            <Check className="h-3 w-3 text-green-600" />
-                                        )}
-                                    </div>
-                                )}
+                                <div className="flex gap-1">
+                                    {(progressos[conteudo?.data || '']?.concluido || foiProvaRealizada) && (
+                                        <Check className="h-3 w-3 text-green-600" />
+                                    )}
+                                </div>
                             </div>
 
                             {/* Prova indicator - verifica se foi realizada */}
-                            {isSunday && date.getDate() === 14 && date.getMonth() === 11 && date.getFullYear() === 2025 && (() => {
+                            {semanaDaProva && (() => {
                                 const sundayDateStr = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`
                                 const isOverdue = sundayDateStr < todayStr
-                                // Verificar se a prova da semana 1 foi realizada
-                                const provaRealizada = provasRealizadas.find(p => p.semana === 1)
-                                const foiRealizada = !!provaRealizada
-
-                                if (foiRealizada) {
-                                    return (
-                                        <div className="block mt-1">
-                                            <Badge
-                                                variant="secondary"
-                                                className="w-full justify-start text-[10px] px-1 mb-1 bg-green-100 text-green-700"
-                                            >
-                                                ✓ Prova Realizada
-                                            </Badge>
-                                        </div>
-                                    )
-                                }
 
                                 return (
                                     <Link href="/prova" className="block mt-1">
@@ -157,12 +153,12 @@ export function CalendarioMensal({ conteudos, progressos, provasRealizadas = [] 
                                             variant="secondary"
                                             className={cn(
                                                 "w-full justify-start text-[10px] px-1 mb-1",
-                                                isOverdue
-                                                    ? "bg-red-100 text-red-700 hover:bg-red-200"
-                                                    : "bg-slate-100 text-slate-700 hover:bg-slate-200"
+                                                foiProvaRealizada
+                                                    ? "bg-slate-100 text-slate-700"
+                                                    : (isOverdue ? "bg-red-100 text-red-700 hover:bg-red-200" : "bg-slate-100 text-slate-700 hover:bg-slate-200")
                                             )}
                                         >
-                                            {isOverdue ? "⚠️ Prova Atrasada" : "📝 Prova Semanal"}
+                                            {foiProvaRealizada ? "📝 Prova Realizada" : (isOverdue ? "⚠️ Prova Atrasada" : "📝 Prova Semanal")}
                                         </Badge>
                                     </Link>
                                 )

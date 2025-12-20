@@ -29,9 +29,18 @@ export function LoginForm() {
         setLoading(true)
 
         try {
-            // Força o redirecionamento sempre para a URL oficial de produção ou env configurada
-            // Isso evita problemas com Deploy Previews ou localhost enviando links quebrados
-            const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://guiaenem2026.netlify.app'
+            // Determina a URL base
+            let siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://guiaenem2026.netlify.app'
+
+            // Se estiver em desenvolvimento, FORÇA localhost
+            if (process.env.NODE_ENV === 'development' || (typeof window !== 'undefined' && window.location.hostname === 'localhost')) {
+                siteUrl = 'http://localhost:3000'
+            }
+
+            console.log('=== TENTATIVA DE LOGIN ===')
+            console.log('Ambiente:', process.env.NODE_ENV)
+            console.log('Site URL definida:', siteUrl)
+            console.log('Redirect URL final:', `${siteUrl}/auth/callback`)
 
             const { error } = await supabase.auth.signInWithOtp({
                 email,
@@ -40,6 +49,7 @@ export function LoginForm() {
                 },
             })
 
+            console.log('Resposta Supabase:', { error })
             if (error) throw error
 
             setEnviado(true)

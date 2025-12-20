@@ -24,6 +24,22 @@ export interface ResultadoPermissao {
     motivo?: string
 }
 
+export interface RegistroPresenca {
+    data: string
+    data_id: string
+    status: 'presenca' | 'falta' | 'atrasado' | 'pendente'
+    tipo: 'aula' | 'prova'
+}
+
+export interface StatsPresenca {
+    presencas: number
+    faltas: number
+    atrasados: number
+    total: number
+    totalPontos: number
+    taxa: number
+}
+
 // =============================================================================
 // HELPER FUNCTIONS
 // =============================================================================
@@ -250,4 +266,147 @@ export function getProximosDias(
 
     // Pega os próximos N a partir de hoje
     return conteudos.slice(hojeIndex + 1, hojeIndex + 1 + limite)
+}
+
+/**
+ * Calcula o histórico completo de presença baseado no progresso e provas
+ */
+export function calcularHistoricoPresenca(
+    conteudos: ConteudoDia[],
+    progressos: Record<string, { concluido: boolean, first_completed_at?: string }>,
+    provasRealizadas: { semana: number, finalizada_em?: string }[],
+    hoje: string
+): RegistroPresenca[] {
+    const historico: RegistroPresenca[] = []
+
+    // 1. Processar Aulas
+    conteudos.forEach(conteudo => {
+        const progresso = progressos[conteudo.data]
+        const dataProgramada = conteudo.data
+        const jaPassou = compararDatas(dataProgramada, hoje) < 0
+        const ehHoje = dataProgramada === hoje
+
+        let status: 'presenca' | 'falta' | 'atrasado' | 'pendente' = 'pendente'
+
+        if (progresso?.concluido) {
+            if (progresso.first_completed_at) {
+                const dataConclusao = new Date(progresso.first_completed_at).toLocaleDateString('pt-BR', {
+                    timeZone: 'America/Sao_Paulo',
+                    year: 'numeric',
+                    month: '2-digit',
+                    day: '2-digit'
+                }).split('/').reverse().join('-')
+
+                const comparacao = compararDatas(dataConclusao, dataProgramada)
+                status = comparacao <= 0 ? 'presenca' : 'atrasado'
+            } else {
+                // Fallback se não tiver data de conclusão
+                status = 'presenca'
+            }
+        } else if (jaPassou) {
+            status = 'falta'
+        } else if (ehHoje) {
+            status = 'pendente'
+        }
+
+        historico.push({
+            data: dataProgramada,
+            data_id: conteudo.data,
+            status,
+            tipo: 'aula'
+        })
+    })
+
+    // 2. Processar Provas (Domingos)
+    // Usamos o domingo da primeira semana (14/12/2025) como base
+    const PRIMEIRO_DOMINGO = new Date('2025-12-14T12:00:00')
+
+    // Mapear provas realizadas por semana
+    const provasMap = new Map(provasRealizadas.map(p => [p.semana, p]))
+
+    // Consideramos até a semana atual + 1
+    const semanaAtual = Math.ceil(historico.length / 6) // Aproximação baseada em aulas
+
+    for (let s = 1; s <= semanaAtual + 1; s++) {
+        const dataDomingo = new Date(PRIMEIRO_DOMINGO)
+        dataDomingo.setDate(dataDomingo.getDate() + (s - 1) * 7)
+        const dataDomStr = dataDomingo.toLocaleDateString('pt-BR', {
+            timeZone: 'America/Sao_Paulo',
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit'
+        }).split('/').reverse().join('-')
+
+        const provaRealizada = provasMap.get(s)
+        const jaPassou = compararDatas(dataDomStr, hoje) < 0
+        const ehHoje = dataDomStr === hoje
+
+        let status: 'presenca' | 'falta' | 'atrasado' | 'pendente' = 'pendente'
+
+        if (provaRealizada) {
+            if (provaRealizada.finalizada_em) {
+                const dataConclusao = new Date(provaRealizada.finalizada_em).toLocaleDateString('pt-BR', {
+                    timeZone: 'America/Sao_Paulo',
+                    year: 'numeric',
+                    month: '2-digit',
+                    day: '2-digit'
+                }).split('/').reverse().join('-')
+
+                const comparacao = compararDatas(dataConclusao, dataDomStr)
+                status = comparacao <= 0 ? 'presenca' : 'atrasado'
+            } else {
+                status = 'presenca'
+            }
+        } else if (jaPassou) {
+            status = 'falta'
+        }
+
+        // Se o domingo tiver passado ou for hoje/futuro, adicionamos ao histórico
+        // Mas apenas se houver aulas cadastradas para essa semana (para não mostrar domingos infinitos)
+        const temAulasNessaSemana = historico.some(h => {
+            const hData = new Date(h.data + 'T12:00:00')
+            const diffDias = Math.abs((hData.getTime() - dataDomingo.getTime()) / (1000 * 60 * 60 * 24))
+            return diffDias <= 6
+        })
+
+        if (temAulasNessaSemana) {
+            historico.push({
+                data: dataDomStr,
+                data_id: `prova-s${s}`,
+                status,
+                tipo: 'prova'
+            })
+        }
+    }
+
+    // Ordenar por data decrescente
+    return historico.sort((a, b) => compararDatas(b.data, a.data))
+}
+
+/**
+ * Gera estatísticas resumidas a partir do histórico de presença
+ */
+export function gerarStatsPresenca(historico: RegistroPresenca[]): StatsPresenca {
+    // Filtramos apenas o que já passou ou foi concluído (ignoramos pendentes futuros)
+    const registrosRelevantes = historico.filter(h => h.status !== 'pendente')
+
+    const presencas = registrosRelevantes.filter(h => h.status === 'presenca').length
+    const atrasados = registrosRelevantes.filter(h => h.status === 'atrasado').length
+    const faltas = registrosRelevantes.filter(h => h.status === 'falta').length
+
+    const totalCount = registrosRelevantes.length
+    const totalPontos = presencas + (atrasados * 0.5)
+
+    const taxa = totalCount > 0
+        ? Math.round((totalPontos / totalCount) * 100)
+        : 0
+
+    return {
+        presencas,
+        faltas,
+        atrasados,
+        total: totalCount,
+        totalPontos,
+        taxa
+    }
 }

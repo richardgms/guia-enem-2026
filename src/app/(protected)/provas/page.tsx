@@ -103,7 +103,7 @@ export default function ProvasPage() {
 
                 {/* Lista de Provas */}
                 {provas.length === 0 ? (
-                    <div className="bg-surface rounded-xl p-12 text-center border border-border">
+                    <div className="bg-white shadow-sm rounded-xl p-12 text-center border border-border">
                         <Trophy className="w-16 h-16 text-text-tertiary mx-auto mb-4" />
                         <h2 className="text-xl font-semibold text-primary mb-2">
                             Nenhuma prova realizada ainda
@@ -125,7 +125,7 @@ export default function ProvasPage() {
                             <Link
                                 key={prova.id}
                                 href={`/provas/${prova.id}`}
-                                className="block bg-surface rounded-xl p-6 border border-border hover:border-brand-primary/50 transition-all hover:shadow-lg group"
+                                className="block bg-white shadow-sm rounded-xl p-6 border border-border hover:border-brand-primary/50 transition-all hover:shadow-lg group"
                             >
                                 <div className="flex items-center justify-between">
                                     <div className="flex-1">

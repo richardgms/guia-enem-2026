@@ -1,5 +1,5 @@
 import { createClient } from '@/lib/supabase/client'
-import type { ProgressoDia, Estatisticas, Configuracoes } from '@/types/database'
+import type { ProgressoDia, Estatisticas, Configuracoes, Redemption } from '@/types/database'
 
 // PROGRESSO
 export async function salvarProgresso(dataId: string, progresso: ProgressoDia) {
@@ -114,7 +114,8 @@ export async function getEstatisticas(): Promise<Estatisticas> {
         diasConcluidos: 0,
         streakAtual: 0,
         maiorStreak: 0,
-        xpTotal: 0
+        xpTotal: 0,
+        saldo: 0
     }
 
     if (!user) return defaultStats
@@ -127,11 +128,20 @@ export async function getEstatisticas(): Promise<Estatisticas> {
 
     if (error || !data) return defaultStats
 
+    // Busca gastos com recompensas
+    const { data: resgates } = await supabase
+        .from('redemptions')
+        .select('cost')
+        .eq('user_id', user.id)
+
+    const totalGasto = resgates?.reduce((acc, r) => acc + r.cost, 0) || 0
+
     return {
         diasConcluidos: data.dias_concluidos,
         streakAtual: data.streak_atual,
         maiorStreak: data.maior_streak,
         xpTotal: data.xp_total,
+        saldo: data.xp_total - totalGasto,
         ultimoDiaEstudo: data.ultimo_dia_estudo
     }
 }
@@ -154,21 +164,42 @@ export async function atualizarEstatisticas() {
     // Busca provas finalizadas para contabilizar dias recuperados
     const { data: provasFinalizadas } = await supabase
         .from('provas_semanais')
-        .select('semana, finalizada_em')
+        .select('semana, finalizada_em, nota')
         .eq('user_id', user.id)
         .eq('status', 'finalizada')
 
-    // Pega dias únicos em que houve estudo (baseado em first_completed_at)
+    // Pega dias únicos globais (para XP e Dias Concluídos)
     const diasUnicos = new Set<string>()
+    // Pega dias de estudo REAL (para Streak - apenas dias que ela realmente estudou)
+    const diasEstudoReal = new Set<string>()
 
-    // Adiciona dias de estudo normal
+    // Contadores de XP diferenciado
+    let moedasEstudoNoPrazo = 0
+    let moedasEstudoRecuperado = 0
+    const diasEstudoNoPrazo = new Set<string>()
+
     progressos?.forEach(p => {
         if (p.first_completed_at) {
-            const dataEstudo = new Date(p.first_completed_at)
-            const diaStr = `${dataEstudo.getFullYear()}-${String(dataEstudo.getMonth() + 1).padStart(2, '0')}-${String(dataEstudo.getDate()).padStart(2, '0')}`
-            diasUnicos.add(diaStr)
+            const dataConclusao = new Date(p.first_completed_at)
+            const dataConclusaoStr = `${dataConclusao.getFullYear()}-${String(dataConclusao.getMonth() + 1).padStart(2, '0')}-${String(dataConclusao.getDate()).padStart(2, '0')}`
+
+            diasUnicos.add(p.data_id)
+
+            // Se a data da lição for igual à data de conclusão, ganha 50
+            if (p.data_id === dataConclusaoStr) {
+                moedasEstudoNoPrazo += 50
+                diasEstudoNoPrazo.add(p.data_id)
+            } else {
+                // Se foi feito depois, ganha 30
+                moedasEstudoRecuperado += 30
+            }
         }
     })
+
+    // Contador de dias recuperados e bônus de provas
+    let diasRecuperados = 0
+    let xpBonusProvas = 0
+    const domingosDasProvas = new Set<string>()
 
     // NOVO: Adiciona dias recuperados de provas atrasadas
     // Para cada prova finalizada, adiciona os dias entre o domingo da prova e a data de finalização
@@ -176,17 +207,22 @@ export async function atualizarEstatisticas() {
 
     provasFinalizadas?.forEach(prova => {
         if (prova.finalizada_em) {
-            // Calcular o domingo da semana dessa prova
             const domingoDaProva = new Date(PRIMEIRO_DOMINGO)
             domingoDaProva.setDate(domingoDaProva.getDate() + (prova.semana - 1) * 7)
+            const domingoStr = `${domingoDaProva.getFullYear()}-${String(domingoDaProva.getMonth() + 1).padStart(2, '0')}-${String(domingoDaProva.getDate()).padStart(2, '0')}`
+
+            domingosDasProvas.add(domingoStr)
+
+            // Bônus de desempenho: Nota / 10 (Ex: 1000 nota = 100 moedas)
+            xpBonusProvas += Math.floor((prova.nota || 0) / 10)
 
             const dataFinalizacao = new Date(prova.finalizada_em)
 
-            // Verificar se a prova foi feita após o domingo (atrasada)
             if (dataFinalizacao > domingoDaProva) {
-                // Adiciona o dia da prova (domingo)
-                const domingoStr = `${domingoDaProva.getFullYear()}-${String(domingoDaProva.getMonth() + 1).padStart(2, '0')}-${String(domingoDaProva.getDate()).padStart(2, '0')}`
-                diasUnicos.add(domingoStr)
+                // Domingo da prova conta para dias concluídos mas não para XP fixo de 30 (já ganha bônus de nota)
+                if (!diasUnicos.has(domingoStr)) {
+                    diasUnicos.add(domingoStr)
+                }
 
                 // Adiciona todos os dias entre o domingo+1 e a data de finalização
                 const diaAtual = new Date(domingoDaProva)
@@ -194,13 +230,17 @@ export async function atualizarEstatisticas() {
 
                 while (diaAtual <= dataFinalizacao) {
                     const diaStr = `${diaAtual.getFullYear()}-${String(diaAtual.getMonth() + 1).padStart(2, '0')}-${String(diaAtual.getDate()).padStart(2, '0')}`
-                    diasUnicos.add(diaStr)
+                    if (!diasUnicos.has(diaStr)) {
+                        diasUnicos.add(diaStr)
+                        diasRecuperados++
+                    }
                     diaAtual.setDate(diaAtual.getDate() + 1)
                 }
             } else {
-                // Prova foi feita no próprio domingo - só adiciona o domingo
-                const domingoStr = `${domingoDaProva.getFullYear()}-${String(domingoDaProva.getMonth() + 1).padStart(2, '0')}-${String(domingoDaProva.getDate()).padStart(2, '0')}`
-                diasUnicos.add(domingoStr)
+                // Prova foi feita no próprio domingo
+                if (!diasUnicos.has(domingoStr)) {
+                    diasUnicos.add(domingoStr)
+                }
             }
         }
     })
@@ -224,12 +264,18 @@ export async function atualizarEstatisticas() {
     }
 
     const diasConcluidos = diasUnicos.size
-    const xpTotal = diasConcluidos * 50 // 50 XP por dia único
+    const xpTotal = moedasEstudoNoPrazo + moedasEstudoRecuperado + (diasRecuperados * 30) + xpBonusProvas
 
     // Ordena os dias de estudo do mais recente ao mais antigo
-    const diasOrdenados = Array.from(diasUnicos).sort((a, b) => new Date(b).getTime() - new Date(a).getTime())
 
-    // Calcula streak baseado em dias consecutivos de atividade
+    // Ordena os dias de estudo REAL (NO PRAZO) para cálculo do streak
+    const diasOrdenadosStreak = Array.from(diasEstudoNoPrazo).sort((a, b) => new Date(b).getTime() - new Date(a).getTime())
+
+    // Calcula ultimo dia de estudo (considerando recuperados também para exibição geral, mas streak é estrito)
+    // Na verdade, ultimo dia de estudo costuma ser o gatilho do streak, mas se o streak é só real, usamos o real.
+    const ultimoDiaEstudo = diasOrdenadosStreak[0] || null
+
+    // Calcula streak baseado em dias consecutivos de atividade REAL
     let streakAtual = 0
     const hoje = new Date()
     hoje.setHours(0, 0, 0, 0)
@@ -241,19 +287,18 @@ export async function atualizarEstatisticas() {
     ontem.setDate(ontem.getDate() - 1)
     const ontemStr = `${ontem.getFullYear()}-${String(ontem.getMonth() + 1).padStart(2, '0')}-${String(ontem.getDate()).padStart(2, '0')}`
 
-    // O streak só está ativo se estudou HOJE ou ONTEM
-    const ultimoDiaEstudo = diasOrdenados[0]
+    // O streak só está ativo se estudou HOJE ou ONTEM (Estudo REAL)
     const estudouHoje = ultimoDiaEstudo === hojeStr
     const estudouOntem = ultimoDiaEstudo === ontemStr
 
-    if (estudouHoje || estudouOntem) {
+    if ((estudouHoje || estudouOntem) && diasOrdenadosStreak.length > 0) {
         // Streak está vivo, conta dias consecutivos
         streakAtual = 1
-        let dataAtual = new Date(diasOrdenados[0])
+        let dataAtual = new Date(diasOrdenadosStreak[0])
         dataAtual.setHours(0, 0, 0, 0)
 
-        for (let i = 1; i < diasOrdenados.length; i++) {
-            const dataAnterior = new Date(diasOrdenados[i])
+        for (let i = 1; i < diasOrdenadosStreak.length; i++) {
+            const dataAnterior = new Date(diasOrdenadosStreak[i])
             dataAnterior.setHours(0, 0, 0, 0)
 
             const diffTime = dataAtual.getTime() - dataAnterior.getTime()
@@ -269,7 +314,7 @@ export async function atualizarEstatisticas() {
             }
         }
     } else {
-        // Mais de 24h sem estudar, streak zera
+        // Mais de 24h sem estudar REALMENTE, streak zera
         streakAtual = 0
     }
 
@@ -344,4 +389,201 @@ export async function salvarConfiguracoes(config: Configuracoes) {
         })
 
     if (error) throw error
+}
+
+// RECOMPENSAS
+export async function getResgates(): Promise<Redemption[]> {
+    const supabase = createClient()
+    const { data: { user } } = await supabase.auth.getUser()
+
+    if (!user) return []
+
+    const { data, error } = await supabase
+        .from('redemptions')
+        .select('*')
+        .eq('user_id', user.id)
+        .order('redeemed_at', { ascending: false })
+
+    if (error || !data) return []
+
+    return data.map(item => ({
+        id: item.id,
+        userId: item.user_id,
+        rewardId: item.reward_id,
+        rewardTitle: item.reward_title,
+        cost: item.cost,
+        redeemedAt: item.redeemed_at,
+        usedAt: item.used_at
+    }))
+}
+
+export async function salvarResgate(reward: { id: string, title: string, cost: number }) {
+    const supabase = createClient()
+    const { data: { user } } = await supabase.auth.getUser()
+
+    if (!user) throw new Error('Usuário não autenticado')
+
+    const { error } = await supabase
+        .from('redemptions')
+        .insert({
+            user_id: user.id,
+            reward_id: reward.id,
+            reward_title: reward.title,
+            cost: reward.cost
+        })
+
+    if (error) throw error
+}
+
+export async function usarVale(redemptionId: string) {
+    const supabase = createClient()
+    const { data: { user } } = await supabase.auth.getUser()
+
+    if (!user) throw new Error('Usuário não autenticado')
+
+    const { error } = await supabase
+        .from('redemptions')
+        .update({ used_at: new Date().toISOString() })
+        .eq('id', redemptionId)
+        .eq('user_id', user.id)
+
+    if (error) throw error
+}
+
+// EXTRATO
+export interface ExtratoItem {
+    id: string
+    tipo: 'ganho' | 'gasto'
+    descricao: string
+    valor: number
+    data: string
+}
+
+export async function getExtrato(): Promise<ExtratoItem[]> {
+    const supabase = createClient()
+    const { data: { user } } = await supabase.auth.getUser()
+
+    if (!user) return []
+
+    // 1. Buscar ganhos (dias concluídos)
+    // Precisamos buscar o conteúdo também para saber o nome da tarefa
+    // Como o conteúdo é estático (json), pegamos apenas o data_id e cruzamos depois no front?
+    // Melhor: retornar algo genérico como "Dia Concluído" e a data, se não tivermos acesso fácil ao JSON aqui.
+    // Mas podemos importar o JSON aqui se necessário, ou apenas retornar o ID e o front resolve o nome.
+    // Simplificação v1: "Dia de Estudo Concluído"
+
+    const { data: progressos } = await supabase
+        .from('progresso')
+        .select('*')
+        .eq('user_id', user.id)
+        .eq('concluido', true)
+        .not('first_completed_at', 'is', null)
+
+    const ganhos: ExtratoItem[] = (progressos || []).map(p => {
+        const dataConclusao = new Date(p.first_completed_at!)
+        const dataConclusaoStr = `${dataConclusao.getFullYear()}-${String(dataConclusao.getMonth() + 1).padStart(2, '0')}-${String(dataConclusao.getDate()).padStart(2, '0')}`
+
+        const noPrazo = p.data_id === dataConclusaoStr
+
+        return {
+            id: `ganho-${p.data_id}`,
+            tipo: 'ganho' as const,
+            descricao: noPrazo ? 'Dia Concluído (No Prazo)' : 'Dia Recuperado',
+            valor: noPrazo ? 50 : 30,
+            data: p.first_completed_at!
+        }
+    })
+
+    // 2. Buscar provas finalizadas para dias recuperados
+    const { data: provasFinalizadas } = await supabase
+        .from('provas_semanais')
+        .select('semana, finalizada_em, nota')
+        .eq('user_id', user.id)
+        .eq('status', 'finalizada')
+
+    const diasUnicos = new Set<string>()
+    progressos?.forEach(p => {
+        if (p.first_completed_at) {
+            const dataEstudo = new Date(p.first_completed_at)
+            const diaStr = `${dataEstudo.getFullYear()}-${String(dataEstudo.getMonth() + 1).padStart(2, '0')}-${String(dataEstudo.getDate()).padStart(2, '0')}`
+            diasUnicos.add(diaStr)
+        }
+    })
+
+    const PRIMEIRO_DOMINGO = new Date('2025-12-14T12:00:00')
+    const diasRecuperados: { data: string, origem: string }[] = []
+
+    provasFinalizadas?.forEach(prova => {
+        if (prova.finalizada_em) {
+            const domingoDaProva = new Date(PRIMEIRO_DOMINGO)
+            domingoDaProva.setDate(domingoDaProva.getDate() + (prova.semana - 1) * 7)
+            const dataFinalizacao = new Date(prova.finalizada_em)
+
+            if (dataFinalizacao > domingoDaProva) {
+                // Domingo da prova
+                const domingoStr = `${domingoDaProva.getFullYear()}-${String(domingoDaProva.getMonth() + 1).padStart(2, '0')}-${String(domingoDaProva.getDate()).padStart(2, '0')}`
+                if (!diasUnicos.has(domingoStr)) {
+                    diasRecuperados.push({ data: domingoDaProva.toISOString(), origem: `Prova Semanal ${prova.semana}` })
+                    diasUnicos.add(domingoStr)
+                }
+
+                // Dias entre domingo e finalização
+                const diaAtual = new Date(domingoDaProva)
+                diaAtual.setDate(diaAtual.getDate() + 1)
+
+                while (diaAtual <= dataFinalizacao) {
+                    const diaStr = `${diaAtual.getFullYear()}-${String(diaAtual.getMonth() + 1).padStart(2, '0')}-${String(diaAtual.getDate()).padStart(2, '0')}`
+                    if (!diasUnicos.has(diaStr)) {
+                        diasRecuperados.push({ data: diaAtual.toISOString(), origem: `Recuperado (Prova ${prova.semana})` })
+                        diasUnicos.add(diaStr)
+                    }
+                    diaAtual.setDate(diaAtual.getDate() + 1)
+                }
+            } else {
+                const domingoStr = `${domingoDaProva.getFullYear()}-${String(domingoDaProva.getMonth() + 1).padStart(2, '0')}-${String(domingoDaProva.getDate()).padStart(2, '0')}`
+                if (!diasUnicos.has(domingoStr)) {
+                    diasRecuperados.push({ data: domingoDaProva.toISOString(), origem: `Prova Semanal ${prova.semana}` })
+                    diasUnicos.add(domingoStr)
+                }
+            }
+        }
+    })
+
+    const ganhosRecuperados: ExtratoItem[] = diasRecuperados.map((d, index) => ({
+        id: `recuperado-${index}-${d.data}`,
+        tipo: 'ganho',
+        descricao: d.origem,
+        valor: 30, // Dias recuperados valem 30 moedas (vs 50 de dias normais)
+        data: d.data
+    }))
+
+    // 2.5 Bônus das Provas no Extrato
+    const ganhosProvas: ExtratoItem[] = (provasFinalizadas || []).map(p => ({
+        id: `prova-bonus-${p.semana}`,
+        tipo: 'ganho' as const,
+        descricao: `Bônus de Desempenho (Semana ${p.semana})`,
+        valor: Math.floor(((p as any).nota || 0) / 10),
+        data: p.finalizada_em!
+    })).filter(p => p.valor > 0)
+
+    // 3. Buscar gastos (resgates)
+    const { data: resgates } = await supabase
+        .from('redemptions')
+        .select('*')
+        .eq('user_id', user.id)
+
+    const gastos: ExtratoItem[] = (resgates || []).map(r => ({
+        id: r.id,
+        tipo: 'gasto',
+        descricao: `Resgate: ${r.reward_title}`,
+        valor: r.cost,
+        data: r.redeemed_at
+    }))
+
+    // 4. Unificar e Ordenar
+    const extrato = [...ganhos, ...ganhosRecuperados, ...ganhosProvas, ...gastos].sort((a, b) =>
+        new Date(b.data).getTime() - new Date(a.data).getTime()
+    )
+
+    return extrato
 }

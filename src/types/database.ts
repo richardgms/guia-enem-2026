@@ -52,6 +52,7 @@ export interface Estatisticas {
     streakAtual: number;
     maiorStreak: number;
     xpTotal: number;
+    saldo: number;
     ultimoDiaEstudo?: string;
 }
 
@@ -59,4 +60,24 @@ export interface Configuracoes {
     modoEscuro: boolean;
     notificacoes: boolean;
     metaDiaria: number;
+}
+
+export interface RedemptionDB {
+    id: string;
+    user_id: string;
+    reward_id: string;
+    reward_title: string;
+    cost: number;
+    redeemed_at: string;
+    used_at: string | null;
+}
+
+export interface Redemption {
+    id: string;
+    userId: string;
+    rewardId: string;
+    rewardTitle: string;
+    cost: number;
+    redeemedAt: string;
+    usedAt: string | null;
 }

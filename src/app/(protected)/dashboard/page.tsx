@@ -1,13 +1,14 @@
-
 import { createClient } from "@/lib/supabase/server"
 import { Streak } from "@/components/Streak"
 import { StatusFeedback } from "@/components/StatusFeedback"
 import { TaskBadge } from "@/components/TaskBadge"
 import conteudosData from "@/data/conteudos.json"
 import {
+    getHojeBrasil,
+    calcularHistoricoPresenca,
+    gerarStatsPresenca,
     calcularStatusEstudante,
     getTarefaPrioritaria,
-    getHojeBrasil,
     podeConcluirTarefa,
     formatarDataExibicao
 } from "@/lib/studyProgress"
@@ -15,6 +16,7 @@ import { calcularSemanaAtual, getDomingoDaSemana, SEMANAS_COM_PROVA } from "@/li
 
 import Link from "next/link"
 import type { ConteudoDia } from "@/types"
+import { MotivationalQuotes } from "@/components/MotivationalQuotes"
 
 export const dynamic = 'force-dynamic'
 
@@ -54,12 +56,13 @@ export default async function DashboardPage() {
     const supabase = await createClient()
     const { data: { user } } = await supabase.auth.getUser()
 
-    // Buscar estatísticas diretamente do DB
+    // Buscar estatísticas direto do banco (server-side)
     let stats = {
-        xpTotal: 0,
+        diasConcluidos: 0,
         streakAtual: 0,
         maiorStreak: 0,
-        diasConcluidos: 0
+        xpTotal: 0,
+        saldo: 0
     }
 
     if (user) {
@@ -70,54 +73,70 @@ export default async function DashboardPage() {
             .single()
 
         if (statsDB) {
+            // Buscar gastos
+            const { data: resgates } = await supabase
+                .from('redemptions')
+                .select('cost')
+                .eq('user_id', user.id)
+
+            const totalGasto = resgates?.reduce((acc: number, r: { cost: number }) => acc + r.cost, 0) || 0
+
             stats = {
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                xpTotal: (statsDB as any).xp_total,
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                streakAtual: (statsDB as any).streak_atual,
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                maiorStreak: (statsDB as any).maior_streak,
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                diasConcluidos: (statsDB as any).dias_concluidos
+                diasConcluidos: statsDB.dias_concluidos || 0,
+                streakAtual: statsDB.streak_atual || 0,
+                maiorStreak: statsDB.maior_streak || 0,
+                xpTotal: statsDB.xp_total || 0,
+                saldo: (statsDB.xp_total || 0) - totalGasto
             }
         }
     }
 
-    // Buscar métricas de presença
-    let presencaStats = { presencas: 0, faltas: 0, atrasados: 0, total: 0, taxa: 0 }
+    // 1. Buscar todos os progressos
+    const progressos: Record<string, { concluido: boolean, first_completed_at?: string }> = {}
     if (user) {
-        const { data: presencaData } = await supabase
-            .from('presenca')
-            .select('status')
+        const { data: progressoDB } = await supabase
+            .from('progresso')
+            .select('data_id, concluido, first_completed_at')
             .eq('user_id', user.id)
 
-        if (presencaData && presencaData.length > 0) {
-            presencaStats = {
-                presencas: presencaData.filter(p => p.status === 'presenca').length,
-                faltas: presencaData.filter(p => p.status === 'falta').length,
-                atrasados: presencaData.filter(p => p.status === 'atrasado').length,
-                total: presencaData.length,
-                taxa: Math.round((presencaData.filter(p => p.status === 'presenca').length / presencaData.length) * 100)
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        progressoDB?.forEach((p: any) => {
+            progressos[p.data_id] = {
+                concluido: p.concluido,
+                first_completed_at: p.first_completed_at
             }
-        }
+        })
     }
+
+    // 2. Buscar provas semanais finalizadas
+    let provasRealizadasDB = null
+    if (user) {
+        const { data } = await supabase
+            .from('provas_semanais')
+            .select('semana, finalizada_em')
+            .eq('user_id', user.id)
+            .eq('status', 'finalizada')
+        provasRealizadasDB = data
+    }
+
+    const provasRealizadas = (provasRealizadasDB || []).map(p => ({
+        semana: p.semana,
+        finalizada_em: p.finalizada_em
+    }))
+
+    // 3. Buscar conteúdos
+    const conteudos = conteudosData.conteudos as ConteudoDia[]
+    const hoje = getHojeBrasil()
+
+    // 4. Calcular métricas de presença dinamicamente
+    const historicoPresenca = calcularHistoricoPresenca(conteudos, progressos, provasRealizadas, hoje)
+    const presencaStats = gerarStatsPresenca(historicoPresenca)
 
     // ===== VERIFICAR PROVA ATRASADA =====
     let provaAtrasada: { semana: number; diasAtraso: number } | null = null
     if (user) {
         const agora = new Date()
-        const semanaAtual = calcularSemanaAtual(agora)
-        const anoAtual = agora.getFullYear()
-
-        // Buscar provas finalizadas
-        const { data: provasRealizadas } = await supabase
-            .from('provas_semanais')
-            .select('semana')
-            .eq('user_id', user.id)
-            .eq('ano', anoAtual)
-            .eq('status', 'finalizada')
-
-        const semanasFeitas = new Set(provasRealizadas?.map(p => p.semana) || [])
+        const semanasFeitas = new Set(provasRealizadas.map(p => p.semana))
 
         // Verificar cada semana com prova
         for (const s of SEMANAS_COM_PROVA) {
@@ -133,31 +152,11 @@ export default async function DashboardPage() {
         }
     }
 
-    // Buscar todos os progressos
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const progressos: Record<string, { concluido: boolean }> = {}
-    if (user) {
-        const { data: progressoDB } = await supabase
-            .from('progresso')
-            .select('*')
-            .eq('user_id', user.id)
-
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        progressoDB?.forEach((p: any) => {
-            progressos[p.data_id] = {
-                concluido: p.concluido
-            }
-        })
-    }
-
     // Calcular progresso geral
-    const conteudos = conteudosData.conteudos as ConteudoDia[]
     const totalDias = conteudos.length
     const diasConcluidos = stats.diasConcluidos
 
     // ===== NOVA LÓGICA DE PRIORIZAÇÃO =====
-    const hoje = getHojeBrasil()
-
     // Calcular status do estudante
     const analiseEstudante = calcularStatusEstudante(conteudos, progressos, hoje)
 
@@ -280,7 +279,7 @@ export default async function DashboardPage() {
                                         <h3 className="text-2xl font-bold mt-2 text-red-700">Prova Semanal - Semana {provaAtrasada.semana}</h3>
                                         <div className="flex items-center space-x-3 mt-3 text-sm flex-wrap gap-y-2">
                                             <span className="bg-red-100 text-red-700 px-3 py-1 rounded-full font-medium">
-                                                📝 10 questões
+                                                📝 25 questões
                                             </span>
                                             <span className="flex items-center text-red-600 font-medium">
                                                 <span className="material-symbols-outlined text-base mr-1.5" style={{ fontFamily: 'Material Symbols Outlined' }}>timer</span>
@@ -321,12 +320,12 @@ export default async function DashboardPage() {
 
                                     {permissaoTarefa.permitido ? (
                                         <Link href={`/dia/${tarefaPrioritaria.data}`} className="w-full md:w-auto">
-                                            <button className={`w-full md:w-auto ${progressos[tarefaPrioritaria.id]?.concluido ? 'bg-green-600' : analiseEstudante.status === 'atrasado' ? 'bg-red-600' : 'bg-accent-green-button'} text-white font-semibold px-4 py-2 rounded-full flex items-center justify-center space-x-2 hover:opacity-90 transition-colors h-auto`}>
+                                            <button className={`w-full md:w-auto ${progressos[tarefaPrioritaria.data]?.concluido ? 'bg-green-600' : analiseEstudante.status === 'atrasado' ? 'bg-red-600' : 'bg-accent-green-button'} text-white font-semibold px-4 py-2 rounded-full flex items-center justify-center space-x-2 hover:opacity-90 transition-colors h-auto`}>
                                                 <span className="material-symbols-outlined text-xl" style={{ fontFamily: 'Material Symbols Outlined' }}>
-                                                    {progressos[tarefaPrioritaria.id]?.concluido ? 'check' : 'play_arrow'}
+                                                    {progressos[tarefaPrioritaria.data]?.concluido ? 'check' : 'play_arrow'}
                                                 </span>
                                                 <span>
-                                                    {progressos[tarefaPrioritaria.id]?.concluido ? 'Concluído' : analiseEstudante.status === 'atrasado' ? 'Recuperar' : 'Começar'}
+                                                    {progressos[tarefaPrioritaria.data]?.concluido ? 'Concluído' : analiseEstudante.status === 'atrasado' ? 'Recuperar' : 'Começar'}
                                                 </span>
                                             </button>
                                         </Link>
@@ -362,14 +361,14 @@ export default async function DashboardPage() {
                                     const dateObj = new Date(day.data + 'T12:00:00') // prevent timezone offset issues
                                     const dateStr = dateObj.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' })
                                     const weekdayCap = dateObj.toLocaleDateString('pt-BR', { weekday: 'long' })
-                                    const isCompleted = progressos[day.id]?.concluido
+                                    const isCompleted = progressos[day.data]?.concluido
                                     const permissao = podeConcluirTarefa(day, hoje)
                                     const isRevisaoBloqueada = !permissao.permitido
 
                                     return (
                                         <Link
                                             href={isRevisaoBloqueada ? '#' : `/dia/${day.data}`}
-                                            key={day.id}
+                                            key={day.data}
                                             className={`block group h-full ${isRevisaoBloqueada ? 'cursor-not-allowed' : ''}`}
                                             onClick={isRevisaoBloqueada ? (e) => e.preventDefault() : undefined}
                                         >
@@ -414,10 +413,84 @@ export default async function DashboardPage() {
                                 )}
                             </div>
                         </section>
+
+                        {/* Statistics Section */}
+                        <section aria-labelledby="stats-heading">
+                            <h2 className="text-2xl font-semibold mb-4 text-[#082F49]" id="stats-heading">Estatísticas</h2>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                {/* Progress Card */}
+                                <div className="bg-white shadow-custom rounded-2xl p-6 border border-card-border h-full flex flex-col justify-between">
+                                    <div>
+                                        <div className="flex items-center justify-between mb-4">
+                                            <div className="flex items-center space-x-2">
+                                                <span className="material-symbols-outlined text-2xl text-slate-500" style={{ fontFamily: 'Material Symbols Outlined' }}>monitoring</span>
+                                                <h3 className="font-semibold text-lg text-primary">Progresso Geral</h3>
+                                            </div>
+                                            <span className="font-bold text-lg text-primary">{Math.round((diasConcluidos / totalDias) * 100) || 0}%</span>
+                                        </div>
+                                        <p className="text-sm text-text-secondary mb-3">Cronograma completo</p>
+
+                                        <div className="w-full bg-slate-100 rounded-full h-3 mb-6">
+                                            <div className="bg-gradient-to-r from-cyan-400 to-sky-500 h-3 rounded-full" style={{ width: `${Math.round((diasConcluidos / totalDias) * 100) || 0}%` }}></div>
+                                        </div>
+                                    </div>
+
+                                    <div className="grid grid-cols-2 gap-4">
+                                        <div className="bg-slate-50 rounded-xl p-4 text-center border border-slate-100">
+                                            <p className="font-bold text-3xl text-primary mb-1">{diasConcluidos}</p>
+                                            <p className="text-xs font-medium text-text-secondary uppercase tracking-wider">Concluídos</p>
+                                        </div>
+                                        <div className="bg-slate-50 rounded-xl p-4 text-center border border-slate-100">
+                                            <p className="font-bold text-3xl text-primary mb-1">{totalDias - diasConcluidos}</p>
+                                            <p className="text-xs font-medium text-text-secondary uppercase tracking-wider">Restantes</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Presença Card */}
+                                <Link href="/presenca" className="block h-full group">
+                                    <div className="bg-white shadow-custom rounded-2xl p-6 border border-card-border h-full flex flex-col justify-between group-hover:shadow-lg transition-all group-hover:border-primary/20">
+                                        <div>
+                                            <div className="flex items-center justify-between mb-4">
+                                                <div className="flex items-center space-x-2">
+                                                    <span className="material-symbols-outlined text-2xl text-slate-500" style={{ fontFamily: 'Material Symbols Outlined' }}>event_available</span>
+                                                    <div>
+                                                        <h3 className="font-semibold text-lg text-primary">Presença</h3>
+                                                        <p className="text-[10px] text-text-secondary -mt-0.5 font-medium">(Hoje: 1.0 • Recup.: 0.5)</p>
+                                                    </div>
+                                                </div>
+                                                <span className="font-bold text-lg text-primary">{presencaStats.taxa}%</span>
+                                            </div>
+                                            <div className="w-full bg-slate-100 rounded-full h-3 mb-6">
+                                                <div className="bg-gradient-to-r from-green-400 to-emerald-500 h-3 rounded-full" style={{ width: `${presencaStats.taxa}%` }}></div>
+                                            </div>
+                                        </div>
+
+                                        <div className="grid grid-cols-3 gap-3">
+                                            <div className="bg-green-50 rounded-xl p-3 text-center border border-green-100">
+                                                <p className="font-bold text-2xl text-green-600 mb-1">{presencaStats.presencas}</p>
+                                                <p className="text-[10px] font-bold text-green-700 uppercase">Presente</p>
+                                            </div>
+                                            <div className="bg-amber-50 rounded-xl p-3 text-center border border-amber-100">
+                                                <p className="font-bold text-2xl text-amber-600 mb-1">{presencaStats.atrasados}</p>
+                                                <p className="text-[10px] font-bold text-amber-700 uppercase">Recup.</p>
+                                            </div>
+                                            <div className="bg-red-50 rounded-xl p-3 text-center border border-red-100">
+                                                <p className="font-bold text-2xl text-red-600 mb-1">{presencaStats.faltas}</p>
+                                                <p className="text-[10px] font-bold text-red-700 uppercase">Falta</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </Link>
+                            </div>
+                        </section>
                     </div>
 
                     {/* Sidebar */}
                     <aside className="space-y-6">
+                        {/* Motivational Quotes Card */}
+                        <MotivationalQuotes nomeUsuario={nomeUsuario} />
+
                         {/* Stats Grid */}
                         <div className="grid grid-cols-2 gap-6">
                             <div className="bg-white shadow-custom rounded-2xl p-4 border border-card-border flex items-center space-x-4">
@@ -427,71 +500,18 @@ export default async function DashboardPage() {
                                     <p className="font-bold text-lg text-primary">Iniciante</p>
                                 </div>
                             </div>
-                            <div className="bg-white shadow-custom rounded-2xl p-4 border border-card-border">
-                                <p className="text-xs text-text-secondary font-medium">XP TOTAL</p>
-                                <p className="font-bold text-lg mt-1 text-primary">{stats.xpTotal} XP</p>
+                            <div className="bg-white shadow-custom rounded-2xl p-4 border border-card-border flex items-center space-x-4">
+                                <span className="material-symbols-outlined text-3xl text-yellow-500" style={{ fontFamily: 'Material Symbols Outlined' }}>paid</span>
+                                <div>
+                                    <p className="text-xs text-text-secondary font-medium">MOEDAS</p>
+                                    <p className="font-bold text-lg text-primary">{stats.saldo}</p>
+                                </div>
                             </div>
                         </div>
 
                         {/* Streak Card */}
                         <Streak dias={stats.streakAtual} maiorStreak={stats.maiorStreak} />
 
-                        {/* Progress Card */}
-                        <div className="bg-white shadow-custom rounded-2xl p-5 border border-card-border">
-                            <div className="flex items-center justify-between mb-3">
-                                <div className="flex items-center space-x-2">
-                                    <span className="material-symbols-outlined text-2xl text-slate-500" style={{ fontFamily: 'Material Symbols Outlined' }}>monitoring</span>
-                                    <h3 className="font-semibold text-primary">Progresso Geral</h3>
-                                </div>
-                                <span className="font-bold text-sm text-primary">{Math.round((diasConcluidos / totalDias) * 100) || 0}%</span>
-                            </div>
-                            <p className="text-sm text-text-secondary mt-1">Cronograma completo</p>
-
-                            <div className="w-full bg-slate-200 rounded-full h-2 mt-3">
-                                <div className="bg-gradient-to-r from-cyan-400 to-sky-500 h-2 rounded-full" style={{ width: `${Math.round((diasConcluidos / totalDias) * 100) || 0}%` }}></div>
-                            </div>
-
-                            <div className="grid grid-cols-2 gap-4 mt-4">
-                                <div className="bg-slate-100 rounded-lg p-3 text-center">
-                                    <p className="font-bold text-2xl text-primary">{diasConcluidos}</p>
-                                    <p className="text-xs text-text-secondary">Dias Concluídos</p>
-                                </div>
-                                <div className="bg-slate-100 rounded-lg p-3 text-center">
-                                    <p className="font-bold text-2xl text-primary">{totalDias - diasConcluidos}</p>
-                                    <p className="text-xs text-text-secondary">Dias Restantes</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* Presença Card */}
-                        <Link href="/presenca" className="block">
-                            <div className="bg-white shadow-custom rounded-2xl p-5 border border-card-border hover:shadow-lg transition-all">
-                                <div className="flex items-center justify-between mb-3">
-                                    <div className="flex items-center space-x-2">
-                                        <span className="material-symbols-outlined text-2xl text-slate-500" style={{ fontFamily: 'Material Symbols Outlined' }}>event_available</span>
-                                        <h3 className="font-semibold text-primary">Presença</h3>
-                                    </div>
-                                    <span className="font-bold text-sm text-primary">{presencaStats.taxa}%</span>
-                                </div>
-                                <div className="w-full bg-slate-200 rounded-full h-2">
-                                    <div className="bg-gradient-to-r from-green-400 to-emerald-500 h-2 rounded-full" style={{ width: `${presencaStats.taxa}%` }}></div>
-                                </div>
-                                <div className="grid grid-cols-3 gap-2 mt-3">
-                                    <div className="text-center">
-                                        <p className="font-bold text-lg text-green-600">{presencaStats.presencas}</p>
-                                        <p className="text-xs text-text-secondary">✅</p>
-                                    </div>
-                                    <div className="text-center">
-                                        <p className="font-bold text-lg text-amber-600">{presencaStats.atrasados}</p>
-                                        <p className="text-xs text-text-secondary">⚠️</p>
-                                    </div>
-                                    <div className="text-center">
-                                        <p className="font-bold text-lg text-red-600">{presencaStats.faltas}</p>
-                                        <p className="text-xs text-text-secondary">❌</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </Link>
 
                         {/* Visão Geral CTA */}
                         <div className="bg-header-bg text-white rounded-2xl p-6 shadow-lg">
@@ -504,9 +524,6 @@ export default async function DashboardPage() {
                     </aside>
                 </main>
             </div>
-
-            {/* Background SVG Waves */}
-
         </div>
     )
 }
