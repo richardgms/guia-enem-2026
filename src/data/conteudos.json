@@ -617,6 +617,99 @@
                     "explicacao": "4cm × 250.000 = 1.000.000 cm = 10.000 m = 10 km.",
                     "assunto": "Escalas",
                     "materia": "matematica"
+                },
+                {
+                    "id": "q2-mat-sem2",
+                    "ano": 2020,
+                    "enunciado": "Uma torneira está gotejando água em um balde com capacidade de 18 litros. No instante atual, o balde se encontra com ocupação de 50% de sua capacidade. A cada segundo caem 5 gotas de água da torneira, e uma gota é formada, em média, por 5×10⁻² ml de água. Quanto tempo, em hora, será necessário para encher completamente o balde, partindo do instante atual?",
+                    "alternativas": [
+                        {
+                            "letra": "A",
+                            "texto": "2 × 10¹"
+                        },
+                        {
+                            "letra": "B",
+                            "texto": "1 × 10¹"
+                        },
+                        {
+                            "letra": "C",
+                            "texto": "2 × 10⁻²"
+                        },
+                        {
+                            "letra": "D",
+                            "texto": "1 × 10⁻²"
+                        },
+                        {
+                            "letra": "E",
+                            "texto": "1 × 10⁻³"
+                        }
+                    ],
+                    "gabarito": "B",
+                    "explicacao": "Volume a encher: 9 litros (9000 ml). Vazão: 5 gotas/s * 0,05 ml/gota = 0,25 ml/s. Tempo em segundos: 9000 / 0,25 = 36.000s. Em horas: 36.000 / 3.600 = 10h = 1x10¹.",
+                    "assunto": "Razão e Proporção",
+                    "materia": "matematica"
+                },
+                {
+                    "id": "q3-mat-sem2",
+                    "ano": 2020,
+                    "enunciado": "Um motociclista planeja realizar uma viagem cujo destino fica a 500 km de sua casa. Sua moto consome 5 litros de gasolina para cada 100 km rodados, e o tanque da moto tem capacidade para 22 litros. Pelo mapa, observou que no trajeto da viagem o último posto disponível para reabastecimento, chamado Estrela, fica a 80 km do seu destino. Ele pretende partir com o tanque da moto cheio e planeja fazer somente duas paradas para reabastecimento, uma na ida e outra na volta, ambas no posto Estrela. No reabastecimento para a viagem de ida, deve considerar também combustível suficiente para se deslocar por mais 200 km no seu destino. A quantidade mínima de combustível, em litro, que esse motociclista deve reabastecer no posto Estrela na viagem de ida, que seja suficiente para fazer o segundo reabastecimento, é:",
+                    "alternativas": [
+                        {
+                            "letra": "A",
+                            "texto": "13"
+                        },
+                        {
+                            "letra": "B",
+                            "texto": "14"
+                        },
+                        {
+                            "letra": "C",
+                            "texto": "17"
+                        },
+                        {
+                            "letra": "D",
+                            "texto": "18"
+                        },
+                        {
+                            "letra": "E",
+                            "texto": "21"
+                        }
+                    ],
+                    "gabarito": "C",
+                    "explicacao": "Distância total até o reabastecimento: 80km (ida) + 200km (no destino) + 80km (volta) = 360km. Consumo: 5L/100km = 0,05L/km. Combustível necessário: 360 * 0,05 = 18L. Ao chegar no posto na ida, ele percorreu 420km, gastando 21L (sobra 1L no tanque de 22L). Para ter 18L, ele precisa abastecer 17L.",
+                    "assunto": "Razão e Proporção",
+                    "materia": "matematica"
+                },
+                {
+                    "id": "q4-mat-sem2",
+                    "ano": 2020,
+                    "enunciado": "Uma empresa de ônibus utiliza um sistema de vendas de passagens que fornece a imagem de todos os assentos do ônibus, diferenciando os assentos já vendidos, por uma cor mais escura, dos assentos ainda disponíveis. A empresa monitora, permanentemente, o número de assentos já vendidos e compara-o com o número total de assentos do ônibus para avaliar a necessidade de alocação de veículos extras. Na imagem tem-se a informação dos assentos já vendidos e dos ainda disponíveis em um determinado instante.\n\n![Assentos do Ônibus](/assets/assentos-vendidos-disponiveis.webp)\n\nA razão entre o número de assentos já vendidos e o total de assentos desse ônibus, no instante considerado na imagem, é:",
+                    "alternativas": [
+                        {
+                            "letra": "A",
+                            "texto": "16/42"
+                        },
+                        {
+                            "letra": "B",
+                            "texto": "16/26"
+                        },
+                        {
+                            "letra": "C",
+                            "texto": "26/42"
+                        },
+                        {
+                            "letra": "D",
+                            "texto": "42/26"
+                        },
+                        {
+                            "letra": "E",
+                            "texto": "42/16"
+                        }
+                    ],
+                    "gabarito": "A",
+                    "explicacao": "Contando os assentos escuros (vendidos) na imagem, temos 16. O total de assentos numerados vai até 42. Portanto, a razão é 16/42.",
+                    "assunto": "Razão e Proporção",
+                    "materia": "matematica"
                 }
             ]
         },
@@ -665,6 +758,68 @@
                     ],
                     "gabarito": "D",
                     "explicacao": "'Pudesse' está no Pretérito Imperfeito do Subjuntivo (hipótese). 'Viajaria' está no Futuro do Pretérito do Indicativo (consequência da condição).",
+                    "assunto": "Verbos",
+                    "materia": "portugues"
+                },
+                {
+                    "id": "q2-port-sem2",
+                    "ano": 2024,
+                    "enunciado": "Leia o trecho de uma campanha publicitária: 'Se todos ajudarem, a cidade será mais limpa'. O uso dos verbos 'ajudarem' e 'será' estabelece uma relação linguística de:",
+                    "alternativas": [
+                        {
+                            "letra": "A",
+                            "texto": "Certeza absoluta sobre o passado."
+                        },
+                        {
+                            "letra": "B",
+                            "texto": "Desejo irrealizável no tempo presente."
+                        },
+                        {
+                            "letra": "C",
+                            "texto": "Condição futura para um evento provável."
+                        },
+                        {
+                            "letra": "D",
+                            "texto": "Hábito constante no cotidiano urbano."
+                        },
+                        {
+                            "letra": "E",
+                            "texto": "Ordem direta ao cidadão para limpar a rua."
+                        }
+                    ],
+                    "gabarito": "C",
+                    "explicacao": "'Ajudarem' (Futuro do Subjuntivo) indica a condição necessária para que a consequência 'será' (Futuro do Presente) ocorra.",
+                    "assunto": "Verbos",
+                    "materia": "portugues"
+                },
+                {
+                    "id": "q3-port-sem2",
+                    "ano": 2024,
+                    "enunciado": "Em um editorial jornalístico, o autor escreve: 'Desejamos que as autoridades tomem as providências necessárias'. O emprego do modo subjuntivo em 'tomem' justifica-se pela intenção de expressar:",
+                    "alternativas": [
+                        {
+                            "letra": "A",
+                            "texto": "Um fato já ocorrido e consolidado."
+                        },
+                        {
+                            "letra": "B",
+                            "texto": "Uma ordem enfática de cumprimento imediato."
+                        },
+                        {
+                            "letra": "C",
+                            "texto": "Uma possibilidade, desejo ou incerteza."
+                        },
+                        {
+                            "letra": "D",
+                            "texto": "Uma ação habitual no passado das autoridades."
+                        },
+                        {
+                            "letra": "E",
+                            "texto": "Uma descrição objetiva da realidade política."
+                        }
+                    ],
+                    "gabarito": "C",
+                    "explicacao": "O modo subjuntivo é utilizado para expressar atitudes subjetivas como desejo, hipótese ou dúvida.",
                     "assunto": "Verbos",
                     "materia": "portugues"
                 }
@@ -717,6 +872,68 @@
                     "explicacao": "Vm = ΔS/Δt = 180 km / 3h = 60 km/h.",
                     "assunto": "MU",
                     "materia": "fisica"
+                },
+                {
+                    "id": "q2-fis-sem2",
+                    "ano": 2024,
+                    "enunciado": "Um trem de 200m de comprimento atravessa uma ponte de 800m de extensão. Se a velocidade do trem é constante e igual a 20 m/s, quanto tempo ele gasta para atravessar completamente a ponte?",
+                    "alternativas": [
+                        {
+                            "letra": "A",
+                            "texto": "10 segundos"
+                        },
+                        {
+                            "letra": "B",
+                            "texto": "40 segundos"
+                        },
+                        {
+                            "letra": "C",
+                            "texto": "50 segundos"
+                        },
+                        {
+                            "letra": "D",
+                            "texto": "80 segundos"
+                        },
+                        {
+                            "letra": "E",
+                            "texto": "100 segundos"
+                        }
+                    ],
+                    "gabarito": "C",
+                    "explicacao": "ΔS = comprimento do trem + comprimento da ponte = 200 + 800 = 1000m. Δt = ΔS / v = 1000 / 20 = 50s.",
+                    "assunto": "MU",
+                    "materia": "fisica"
+                },
+                {
+                    "id": "q3-fis-sem2",
+                    "ano": 2024,
+                    "enunciado": "Um atleta de maratona mantém uma velocidade constante de 12 km/h. Se ele já correu por 1 hora e 15 minutos, qual a distância aproximada percorrida?",
+                    "alternativas": [
+                        {
+                            "letra": "A",
+                            "texto": "12 km"
+                        },
+                        {
+                            "letra": "B",
+                            "texto": "15 km"
+                        },
+                        {
+                            "letra": "C",
+                            "texto": "18 km"
+                        },
+                        {
+                            "letra": "D",
+                            "texto": "24 km"
+                        },
+                        {
+                            "letra": "E",
+                            "texto": "30 km"
+                        }
+                    ],
+                    "gabarito": "B",
+                    "explicacao": "1h15min = 1,25h. ΔS = v * t = 12 * 1,25 = 15 km.",
+                    "assunto": "MU",
+                    "materia": "fisica"
                 }
             ]
         },
@@ -765,6 +982,68 @@
                     ],
                     "gabarito": "B",
                     "explicacao": "N = A - Z = 23 - 11 = 12 nêutrons.",
+                    "assunto": "Estrutura Atômica",
+                    "materia": "quimica"
+                },
+                {
+                    "id": "q2-qui-sem2",
+                    "ano": 2024,
+                    "enunciado": "Um íon de Ferro (Fe³⁺) possui número atômico Z = 26 e número de massa A = 56. Sobre esse íon, é correto afirmar que ele possui:",
+                    "alternativas": [
+                        {
+                            "letra": "A",
+                            "texto": "26 prótons e 26 elétrons."
+                        },
+                        {
+                            "letra": "B",
+                            "texto": "26 prótons e 23 elétrons."
+                        },
+                        {
+                            "letra": "C",
+                            "texto": "29 prótons e 26 elétrons."
+                        },
+                        {
+                            "letra": "D",
+                            "texto": "26 prótons e 29 elétrons."
+                        },
+                        {
+                            "letra": "E",
+                            "texto": "23 prótons e 26 elétrons."
+                        }
+                    ],
+                    "gabarito": "B",
+                    "explicacao": "O número de prótons (Z) não muda: 26. Como a carga é 3+, ele perdeu 3 elétrons: 26 - 3 = 23 elétrons.",
+                    "assunto": "Estrutura Atômica",
+                    "materia": "quimica"
+                },
+                {
+                    "id": "q3-qui-sem2",
+                    "ano": 2024,
+                    "enunciado": "Dois átomos A e B são isótopos. O átomo A tem 20 prótons e 20 nêutrons. O átomo B tem número de massa igual a 42. Qual o número de nêutrons do átomo B?",
+                    "alternativas": [
+                        {
+                            "letra": "A",
+                            "texto": "20"
+                        },
+                        {
+                            "letra": "B",
+                            "texto": "21"
+                        },
+                        {
+                            "letra": "C",
+                            "texto": "22"
+                        },
+                        {
+                            "letra": "D",
+                            "texto": "40"
+                        },
+                        {
+                            "letra": "E",
+                            "texto": "42"
+                        }
+                    ],
+                    "gabarito": "C",
+                    "explicacao": "Isótopos têm o mesmo número de prótons. Se A tem 20, B também tem 20. Logo, nêutrons de B = A - Z = 42 - 20 = 22.",
                     "assunto": "Estrutura Atômica",
                     "materia": "quimica"
                 }
@@ -817,6 +1096,68 @@
                     "explicacao": "Mercator é cilíndrica e mantém os ângulos (conforme), mas distorce áreas perto dos polos, fazendo a Groenlândia parecer maior que a África, por exemplo.",
                     "assunto": "Projeções",
                     "materia": "geografia"
+                },
+                {
+                    "id": "q2-geo-sem2",
+                    "ano": 2024,
+                    "enunciado": "Em um mapa de escala 1:100, a distância entre dois pontos é de 5 cm. Qual a distância real entre esses pontos em metros?",
+                    "alternativas": [
+                        {
+                            "letra": "A",
+                            "texto": "0,5 m"
+                        },
+                        {
+                            "letra": "B",
+                            "texto": "5 m"
+                        },
+                        {
+                            "letra": "C",
+                            "texto": "50 m"
+                        },
+                        {
+                            "letra": "D",
+                            "texto": "500 m"
+                        },
+                        {
+                            "letra": "E",
+                            "texto": "5000 m"
+                        }
+                    ],
+                    "gabarito": "B",
+                    "explicacao": "Distância real = escala * distância no mapa = 100 * 5 cm = 500 cm = 5 metros.",
+                    "assunto": "Escalas",
+                    "materia": "geografia"
+                },
+                {
+                    "id": "q3-geo-sem2",
+                    "ano": 2024,
+                    "enunciado": "As curvas de nível em um mapa topográfico estão muito próximas umas das outras. Isso indica que o relevo naquela região é:",
+                    "alternativas": [
+                        {
+                            "letra": "A",
+                            "texto": "Totalmente plano."
+                        },
+                        {
+                            "letra": "B",
+                            "texto": "Suavemente ondulado."
+                        },
+                        {
+                            "letra": "C",
+                            "texto": "Muito íngreme (declividade alta)."
+                        },
+                        {
+                            "letra": "D",
+                            "texto": "Abaixo do nível do mar."
+                        },
+                        {
+                            "letra": "E",
+                            "texto": "Preenchido por bacias hidrográficas."
+                        }
+                    ],
+                    "gabarito": "C",
+                    "explicacao": "Quanto mais próximas as curvas de nível, maior a variação de altitude em uma distância curta, indicando maior inclinação.",
+                    "assunto": "Cartografia",
+                    "materia": "geografia"
                 }
             ]
         },
@@ -865,6 +1206,68 @@
                     ],
                     "gabarito": "C",
                     "explicacao": "A Constituição Federal é uma fonte legitimada e extremamente relevante para temas sociais e de direitos de comunidades tradicionais.",
+                    "assunto": "Repertório",
+                    "materia": "redacao"
+                },
+                {
+                    "id": "q2-red-sem2",
+                    "ano": 2024,
+                    "enunciado": "Ao discutir o tema da 'Manipulação do comportamento do usuário pelo controle de dados rurais', um estudante utiliza o conceito de 'Panóptico' de Jeremy Bentham, adaptado por Michel Foucault. Esse tipo de repertório é classificado como:",
+                    "alternativas": [
+                        {
+                            "letra": "A",
+                            "texto": "Histórico."
+                        },
+                        {
+                            "letra": "B",
+                            "texto": "Literário."
+                        },
+                        {
+                            "letra": "C",
+                            "texto": "Filosófico/Sociológico."
+                        },
+                        {
+                            "letra": "D",
+                            "texto": "Científico (Ciências Naturais)."
+                        },
+                        {
+                            "letra": "E",
+                            "texto": "Senso comum."
+                        }
+                    ],
+                    "gabarito": "C",
+                    "explicacao": "Conceitos vindos da filosofia ou sociologia entram nessa categoria técnica de repertório.",
+                    "assunto": "Repertório",
+                    "materia": "redacao"
+                },
+                {
+                    "id": "q3-red-sem2",
+                    "ano": 2024,
+                    "enunciado": "Qual dos elementos abaixo é indispensável para que um repertório sociocultural seja considerado 'produtivo' na redação do ENEM?",
+                    "alternativas": [
+                        {
+                            "letra": "A",
+                            "texto": "Ser uma citação direta entre aspas."
+                        },
+                        {
+                            "letra": "B",
+                            "texto": "Ter sido escrito por um autor estrangeiro."
+                        },
+                        {
+                            "letra": "C",
+                            "texto": "Estar vinculado à argumentação para defender a tese."
+                        },
+                        {
+                            "letra": "D",
+                            "texto": "Apresentar dados estatísticos do ano corrente."
+                        },
+                        {
+                            "letra": "E",
+                            "texto": "Ser mencionado logo na primeira linha do texto."
+                        }
+                    ],
+                    "gabarito": "C",
+                    "explicacao": "O uso produtivo ocorre quando o repertório não é apenas citado, mas integrado ao raciocínio do autor para validar seu ponto de vista.",
                     "assunto": "Repertório",
                     "materia": "redacao"
                 }
@@ -917,6 +1320,68 @@
                     "explicacao": "10% de 200 = 20. 5% de 200 = 10. Total aumento = 30. Novo valor = 200 + 30 = 230.",
                     "assunto": "Porcentagem",
                     "materia": "matematica"
+                },
+                {
+                    "id": "q2-mat-sem3",
+                    "ano": 2024,
+                    "enunciado": "Uma loja oferece um desconto de 20% para pagamentos à vista. Se um cliente comprar um objeto de R$ 150,00 e pagar à vista, quanto ele economizará?",
+                    "alternativas": [
+                        {
+                            "letra": "A",
+                            "texto": "R$ 15,00"
+                        },
+                        {
+                            "letra": "B",
+                            "texto": "R$ 20,00"
+                        },
+                        {
+                            "letra": "C",
+                            "texto": "R$ 30,00"
+                        },
+                        {
+                            "letra": "D",
+                            "texto": "R$ 120,00"
+                        },
+                        {
+                            "letra": "E",
+                            "texto": "R$ 130,00"
+                        }
+                    ],
+                    "gabarito": "C",
+                    "explicacao": "Economia = 20% de 150 = 0,2 * 150 = R$ 30,00.",
+                    "assunto": "Porcentagem",
+                    "materia": "matematica"
+                },
+                {
+                    "id": "q3-mat-sem3",
+                    "ano": 2024,
+                    "enunciado": "Em uma cidade com 50.000 habitantes, 40% são jovens. Desses jovens, 10% praticam esportes regularmente. Quantos jovens dessa cidade praticam esportes regularmente?",
+                    "alternativas": [
+                        {
+                            "letra": "A",
+                            "texto": "2.000"
+                        },
+                        {
+                            "letra": "B",
+                            "texto": "4.000"
+                        },
+                        {
+                            "letra": "C",
+                            "texto": "5.000"
+                        },
+                        {
+                            "letra": "D",
+                            "texto": "10.000"
+                        },
+                        {
+                            "letra": "E",
+                            "texto": "20.000"
+                        }
+                    ],
+                    "gabarito": "A",
+                    "explicacao": "Jovens = 40% de 50.000 = 20.000. Desse grupo, 10% praticam esportes: 10% de 20.000 = 2.000.",
+                    "assunto": "Porcentagem",
+                    "materia": "matematica"
                 }
             ]
         },
@@ -965,6 +1430,68 @@
                     ],
                     "gabarito": "B",
                     "explicacao": "'Este/Esta/Estes' indica proximidade física em relação ao emissor da mensagem.",
+                    "assunto": "Pronomes",
+                    "materia": "portugues"
+                },
+                {
+                    "id": "q2-port-sem3",
+                    "ano": 2024,
+                    "enunciado": "No trecho 'O cientista apresentou sua teoria; esta, porém, foi refutada pelos pares', o pronome 'esta' exerce uma função de coesão referencial ao retomar:",
+                    "alternativas": [
+                        {
+                            "letra": "A",
+                            "texto": "O cientista."
+                        },
+                        {
+                            "letra": "B",
+                            "texto": "A teoria."
+                        },
+                        {
+                            "letra": "C",
+                            "texto": "A refutação."
+                        },
+                        {
+                            "letra": "D",
+                            "texto": "Os pares."
+                        },
+                        {
+                            "letra": "E",
+                            "texto": "Uma ideia que ainda será apresentada."
+                        }
+                    ],
+                    "gabarito": "B",
+                    "explicacao": "O pronome demonstrativo 'esta' retoma o termo mais próximo mencionado anteriormente (a teoria).",
+                    "assunto": "Pronomes",
+                    "materia": "portugues"
+                },
+                {
+                    "id": "q3-port-sem3",
+                    "ano": 2024,
+                    "enunciado": "Qual dos pronomes abaixo é utilizado para retomar um termo anteriormente citado em um texto, funcionando como um elemento de coesão anafórica?",
+                    "alternativas": [
+                        {
+                            "letra": "A",
+                            "texto": "Aquele."
+                        },
+                        {
+                            "letra": "B",
+                            "texto": "Este."
+                        },
+                        {
+                            "letra": "C",
+                            "texto": "O qual."
+                        },
+                        {
+                            "letra": "D",
+                            "texto": "Ninguém."
+                        },
+                        {
+                            "letra": "E",
+                            "texto": "Seu."
+                        }
+                    ],
+                    "gabarito": "C",
+                    "explicacao": "Os pronomes relativos (como 'o qual') têm como função básica retomar um substantivo antecedente.",
                     "assunto": "Pronomes",
                     "materia": "portugues"
                 }
@@ -1017,6 +1544,68 @@
                     "explicacao": "O ferro é o componente central da hemoglobina, proteína responsável pelo transporte de O2 nas hemácias.",
                     "assunto": "Bioquímica",
                     "materia": "biologia"
+                },
+                {
+                    "id": "q2-bio-sem3",
+                    "ano": 2024,
+                    "enunciado": "A água é fundamental para a vida devido à sua capacidade de atuar como solvente universal. Essa propriedade deve-se principalmente à:",
+                    "alternativas": [
+                        {
+                            "letra": "A",
+                            "texto": "Sua baixa densidade no estado sólido."
+                        },
+                        {
+                            "letra": "B",
+                            "texto": "Polaridade da molécula e formação de pontes de hidrogênio."
+                        },
+                        {
+                            "letra": "C",
+                            "texto": "Sua alta viscosidade em baixas temperaturas."
+                        },
+                        {
+                            "letra": "D",
+                            "texto": "Ausência de minerais em sua composição pura."
+                        },
+                        {
+                            "letra": "E",
+                            "texto": "Capacidade de gerar energia térmica para as células."
+                        }
+                    ],
+                    "gabarito": "B",
+                    "explicacao": "A polaridade da água permite que ela interaja com diversas substâncias polares, facilitando sua dissolução.",
+                    "assunto": "Bioquímica",
+                    "materia": "biologia"
+                },
+                {
+                    "id": "q3-bio-sem3",
+                    "ano": 2024,
+                    "enunciado": "Um atleta, após uma corrida intensa sob o sol, sente cãibras musculares. Esse sintoma pode estar relacionado à perda excessiva de qual sal mineral através do suor?",
+                    "alternativas": [
+                        {
+                            "letra": "A",
+                            "texto": "Ferro."
+                        },
+                        {
+                            "letra": "B",
+                            "texto": "Flúor."
+                        },
+                        {
+                            "letra": "C",
+                            "texto": "Potássio (e Sódio)."
+                        },
+                        {
+                            "letra": "D",
+                            "texto": "Fósforo."
+                        },
+                        {
+                            "letra": "E",
+                            "texto": "Iodo."
+                        }
+                    ],
+                    "gabarito": "C",
+                    "explicacao": "O sódio e o potássio são essenciais para o equilíbrio hidroeletrolítico e a contração muscular.",
+                    "assunto": "Bioquímica",
+                    "materia": "biologia"
                 }
             ]
         },
@@ -1036,7 +1625,39 @@
                     "canal": "Física Total"
                 }
             ],
-            "questoes": []
+            "questoes": [
+                {
+                    "id": "q1-fis-natal",
+                    "ano": 2024,
+                    "enunciado": "O trenó do Papai Noel percorre 100 km em 2 horas com velocidade constante. No retorno, ele aumenta a velocidade para 100 km/h. Quanto tempo ele gasta no trajeto de volta?",
+                    "alternativas": [
+                        {
+                            "letra": "A",
+                            "texto": "30 minutos"
+                        },
+                        {
+                            "letra": "B",
+                            "texto": "1 hora"
+                        },
+                        {
+                            "letra": "C",
+                            "texto": "1,5 horas"
+                        },
+                        {
+                            "letra": "D",
+                            "texto": "2 horas"
+                        },
+                        {
+                            "letra": "E",
+                            "texto": "4 horas"
+                        }
+                    ],
+                    "gabarito": "B",
+                    "explicacao": "t = ΔS / v = 100 / 100 = 1 hora.",
+                    "assunto": "Cinemática",
+                    "materia": "fisica"
+                }
+            ]
         },
         {
             "id": "2025-12-26",
@@ -1083,6 +1704,68 @@
                     ],
                     "gabarito": "B",
                     "explicacao": "Esparta priorizava o treinamento militar (Hagoge), enquanto Atenas buscava o equilíbrio entre corpo e mente.",
+                    "assunto": "Grécia Antiga",
+                    "materia": "historia"
+                },
+                {
+                    "id": "q2-hist-sem3",
+                    "ano": 2024,
+                    "enunciado": "O conceito de 'isonomia', fundamental para a democracia ateniense, referia-se a:",
+                    "alternativas": [
+                        {
+                            "letra": "A",
+                            "texto": "Igualdade de todos perante a lei, independentemente da condição de cidadão."
+                        },
+                        {
+                            "letra": "B",
+                            "texto": "Igualdade de direitos políticos entre todos os cidadãos homens livres."
+                        },
+                        {
+                            "letra": "C",
+                            "texto": "Domínio militar de Atenas sobre as outras cidades-estado."
+                        },
+                        {
+                            "letra": "D",
+                            "texto": "Exclusividade da educação para os filhos dos soldados."
+                        },
+                        {
+                            "letra": "E",
+                            "texto": "Divisão da sociedade em castas baseadas na riqueza."
+                        }
+                    ],
+                    "gabarito": "B",
+                    "explicacao": "Isonomia significa igualdade de leis para os cidadãos (na época, homens livres nascidos em Atenas).",
+                    "assunto": "Grécia Antiga",
+                    "materia": "historia"
+                },
+                {
+                    "id": "q3-hist-sem3",
+                    "ano": 2024,
+                    "enunciado": "A principal justificativa para o rigoroso treinamento militar em Esparta era:",
+                    "alternativas": [
+                        {
+                            "letra": "A",
+                            "texto": "A necessidade de expandir territórios na Ásia Menor."
+                        },
+                        {
+                            "letra": "B",
+                            "texto": "O controle da grande população de hilotas (servos) para evitar revoltas."
+                        },
+                        {
+                            "letra": "C",
+                            "texto": "O desejo de promover a democracia nas colônias gregas."
+                        },
+                        {
+                            "letra": "D",
+                            "texto": "A influência da filosofia platônica sobre os reis espartanos."
+                        },
+                        {
+                            "letra": "E",
+                            "texto": "A falta de recursos naturais para a agricultura."
+                        }
+                    ],
+                    "gabarito": "B",
+                    "explicacao": "A elite espartana mantinha o militarismo para subjugar a maioria escravizada (hilotas) e garantir a estabilidade interna.",
                     "assunto": "Grécia Antiga",
                     "materia": "historia"
                 }
@@ -1133,6 +1816,68 @@
                     ],
                     "gabarito": "D",
                     "explicacao": "'No entanto' é uma conjunção adversativa, usada para estabelecer oposição ou contraste.",
+                    "assunto": "Conectivos",
+                    "materia": "redacao"
+                },
+                {
+                    "id": "q2-red-sem3",
+                    "ano": 2024,
+                    "enunciado": "Qual dos conectivos abaixo deve ser utilizado para introduzir um parágrafo que conclui o raciocínio desenvolvido anteriormente?",
+                    "alternativas": [
+                        {
+                            "letra": "A",
+                            "texto": "Ademais."
+                        },
+                        {
+                            "letra": "B",
+                            "texto": "Contudo."
+                        },
+                        {
+                            "letra": "C",
+                            "texto": "Por conseguinte."
+                        },
+                        {
+                            "letra": "D",
+                            "texto": "Pelo contrário."
+                        },
+                        {
+                            "letra": "E",
+                            "texto": "Dessa maneira (no início do desenvolvimento)."
+                        }
+                    ],
+                    "gabarito": "C",
+                    "explicacao": "'Por conseguinte' indica consequência lógica e encerramento de ideia.",
+                    "assunto": "Conectivos",
+                    "materia": "redacao"
+                },
+                {
+                    "id": "q3-red-sem3",
+                    "ano": 2024,
+                    "enunciado": "No início do segundo parágrafo de desenvolvimento, um estudante escreve: 'Somado a isso, nota-se a negligência governamental'. O conectivo 'Somado a isso' tem valor de:",
+                    "alternativas": [
+                        {
+                            "letra": "A",
+                            "texto": "Oposição."
+                        },
+                        {
+                            "letra": "B",
+                            "texto": "Adição/Continuidade."
+                        },
+                        {
+                            "letra": "C",
+                            "texto": "Causa."
+                        },
+                        {
+                            "letra": "D",
+                            "texto": "Conclusão."
+                        },
+                        {
+                            "letra": "E",
+                            "texto": "Dúvida."
+                        }
+                    ],
+                    "gabarito": "B",
+                    "explicacao": "Conectivos de adição servem para agregar um novo argumento à discussão já iniciada.",
                     "assunto": "Conectivos",
                     "materia": "redacao"
                 }
