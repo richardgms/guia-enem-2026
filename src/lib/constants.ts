@@ -7,6 +7,7 @@ export const materiaColors: Record<string, string> = {
     historia: "bg-red-100 text-red-700 border-red-200 hover:bg-red-200",
     geografia: "bg-lime-100 text-lime-700 border-lime-200 hover:bg-lime-200",
     redacao: "bg-pink-100 text-pink-700 border-pink-200 hover:bg-pink-200",
+    sociologia: "bg-gray-200 text-gray-600 border-gray-300 hover:bg-gray-300",
     revisao: "bg-slate-100 text-slate-700 border-slate-200 hover:bg-slate-200",
 }
 
@@ -19,6 +20,7 @@ export const materiaLabels: Record<string, string> = {
     historia: "História",
     geografia: "Geografia",
     redacao: "Redação",
+    sociologia: "Sociologia",
     revisao: "Revisão",
 }
 

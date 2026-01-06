@@ -1882,6 +1882,1238 @@
                     "materia": "redacao"
                 }
             ]
+        },
+        {
+            "id": "2025-12-29",
+            "data": "2025-12-29",
+            "diaSemana": "Segunda-feira",
+            "materia": "quimica",
+            "assunto": "Tabela Periódica",
+            "dificuldade": "medio",
+            "tempoEstimado": "50min",
+            "resumo": "## A Tabela Periódica\n\nA Tabela Periódica organiza todos os elementos químicos conhecidos de acordo com suas propriedades.\n\n### Estrutura\n- **Períodos (linhas)**: 7 no total. Indicam o número de camadas eletrônicas.\n- **Grupos/Famílias (colunas)**: 18 no total. Elementos do mesmo grupo têm propriedades semelhantes.\n\n### Famílias Importantes\n1. **1A - Metais Alcalinos**: Li, Na, K... (muito reativos, 1 elétron na última camada)\n2. **2A - Metais Alcalino-terrosos**: Be, Mg, Ca... (2 elétrons na última camada)\n3. **7A - Halogênios**: F, Cl, Br, I... (7 elétrons, faltando 1 para completar o octeto)\n4. **8A - Gases Nobres**: He, Ne, Ar... (camada completa, estáveis)\n\n### Propriedades Periódicas\n- **Raio atômico**: Aumenta para BAIXO e para a ESQUERDA.\n- **Eletronegatividade**: Aumenta para CIMA e para a DIREITA (exceto gases nobres).\n- **Energia de Ionização**: Aumenta para CIMA e para a DIREITA.\n\n> **Dica ENEM**: O ENEM adora relacionar a posição do elemento na tabela com seu comportamento químico (reatividade, formação de íons).",
+            "videos": [
+                {
+                    "titulo": "Tabela Periódica - Conceitos Fundamentais",
+                    "youtubeId": "6OI4cBNkGOU",
+                    "canal": "Gabriel Cabral"
+                }
+            ],
+            "questoes": [
+                {
+                    "id": "q1-quim-tabela",
+                    "ano": 2024,
+                    "enunciado": "O sódio (Na) e o potássio (K) são elementos químicos amplamente utilizados na indústria alimentícia para conservação de alimentos. Ambos pertencem ao mesmo grupo da Tabela Periódica, o que significa que:\n\nI. Possuem o mesmo número de elétrons na camada de valência.\nII. Apresentam propriedades químicas semelhantes.\nIII. Possuem o mesmo número de prótons.\n\nEstá correto o que se afirma em:",
+                    "alternativas": [
+                        {
+                            "letra": "A",
+                            "texto": "I, apenas."
+                        },
+                        {
+                            "letra": "B",
+                            "texto": "II, apenas."
+                        },
+                        {
+                            "letra": "C",
+                            "texto": "I e II, apenas."
+                        },
+                        {
+                            "letra": "D",
+                            "texto": "II e III, apenas."
+                        },
+                        {
+                            "letra": "E",
+                            "texto": "I, II e III."
+                        }
+                    ],
+                    "gabarito": "C",
+                    "explicacao": "Elementos do mesmo grupo têm o mesmo número de elétrons na camada de valência (I) e, por isso, propriedades químicas semelhantes (II). Porém, cada elemento tem um número atômico (prótons) diferente, então III está errada.",
+                    "assunto": "Tabela Periódica",
+                    "materia": "quimica"
+                },
+                {
+                    "id": "q2-quim-tabela",
+                    "ano": 2024,
+                    "enunciado": "A eletronegatividade é a tendência que um átomo tem de atrair elétrons em uma ligação química. Na Tabela Periódica, a eletronegatividade aumenta:\n\nConsiderando os elementos O (oxigênio), S (enxofre), F (flúor) e Cl (cloro), qual é a ordem crescente de eletronegatividade?",
+                    "alternativas": [
+                        {
+                            "letra": "A",
+                            "texto": "F < O < Cl < S"
+                        },
+                        {
+                            "letra": "B",
+                            "texto": "S < Cl < O < F"
+                        },
+                        {
+                            "letra": "C",
+                            "texto": "O < F < S < Cl"
+                        },
+                        {
+                            "letra": "D",
+                            "texto": "Cl < S < F < O"
+                        },
+                        {
+                            "letra": "E",
+                            "texto": "S < O < Cl < F"
+                        }
+                    ],
+                    "gabarito": "B",
+                    "explicacao": "A eletronegatividade aumenta de baixo para cima e da esquerda para a direita. F é o mais eletronegativo de todos, seguido de O (mesmo período, mais à esquerda). Cl e S estão abaixo, sendo Cl mais eletronegativo que S. Ordem: S < Cl < O < F.",
+                    "assunto": "Propriedades Periódicas",
+                    "materia": "quimica"
+                },
+                {
+                    "id": "q3-quim-tabela",
+                    "ano": 2024,
+                    "enunciado": "O cálcio (Ca, Z=20) é um mineral essencial para a formação dos ossos e dentes. Sua configuração eletrônica é 1s² 2s² 2p⁶ 3s² 3p⁶ 4s². Com base nessa configuração, o cálcio pertence a qual período e grupo da Tabela Periódica?",
+                    "alternativas": [
+                        {
+                            "letra": "A",
+                            "texto": "Período 2, Grupo 4A"
+                        },
+                        {
+                            "letra": "B",
+                            "texto": "Período 4, Grupo 2A"
+                        },
+                        {
+                            "letra": "C",
+                            "texto": "Período 3, Grupo 6A"
+                        },
+                        {
+                            "letra": "D",
+                            "texto": "Período 4, Grupo 4A"
+                        },
+                        {
+                            "letra": "E",
+                            "texto": "Período 2, Grupo 2A"
+                        }
+                    ],
+                    "gabarito": "B",
+                    "explicacao": "O período é determinado pela última camada ocupada (4s², logo período 4). O grupo é determinado pelos elétrons de valência: 2 elétrons em 4s² = Grupo 2A (Metais Alcalino-terrosos).",
+                    "assunto": "Configuração Eletrônica",
+                    "materia": "quimica"
+                }
+            ]
+        },
+        {
+            "id": "2025-12-30",
+            "data": "2025-12-30",
+            "diaSemana": "Terça-feira",
+            "materia": "biologia",
+            "assunto": "Citologia - Introdução às Células",
+            "dificuldade": "medio",
+            "tempoEstimado": "55min",
+            "resumo": "## Citologia: O Estudo das Células\n\nA célula é a unidade fundamental da vida. Todo ser vivo é formado por pelo menos uma célula (exceto vírus).\n\n### Tipos de Células\n\n1. **Procarionte**: Sem núcleo organizado (DNA solto no citoplasma). Ex: Bactérias e Arqueas.\n2. **Eucarionte**: Com núcleo delimitado por membrana (carioteca). Ex: Animais, Plantas, Fungos, Protozoários.\n\n### Estruturas Básicas\n- **Membrana Plasmática**: Envolve a célula, controla entrada/saída de substâncias.\n- **Citoplasma**: Gel onde ficam as organelas.\n- **Material Genético**: DNA (e RNA).\n- **Ribossomos**: Produção de proteínas (presente em TODAS as células).\n\n### Diferenças Importantes\n| Característica | Procarionte | Eucarionte |\n|----------------|-------------|------------|\n| Núcleo | Ausente | Presente |\n| Organelas membranosas | Não | Sim |\n| Tamanho | Menor (1-10μm) | Maior (10-100μm) |\n\n> **Dica ENEM**: Questões sobre diferenças entre células animais e vegetais são muito comuns!",
+            "videos": [
+                {
+                    "titulo": "Citologia - Introdução ao Estudo das Células",
+                    "youtubeId": "N33jWXzV8RU",
+                    "canal": "Biologia com Samuel Cunha"
+                }
+            ],
+            "questoes": [
+                {
+                    "id": "q1-bio-cito",
+                    "ano": 2024,
+                    "enunciado": "As células de bactérias e as células humanas apresentam diferenças estruturais significativas. Uma característica exclusiva das células bacterianas, que as diferencia das células humanas, é:\n",
+                    "alternativas": [
+                        {
+                            "letra": "A",
+                            "texto": "A presença de ribossomos para síntese proteica."
+                        },
+                        {
+                            "letra": "B",
+                            "texto": "A ausência de carioteca (membrana nuclear)."
+                        },
+                        {
+                            "letra": "C",
+                            "texto": "A presença de mitocôndrias para respiração celular."
+                        },
+                        {
+                            "letra": "D",
+                            "texto": "A existência de material genético composto por DNA."
+                        },
+                        {
+                            "letra": "E",
+                            "texto": "A capacidade de realizar divisão celular."
+                        }
+                    ],
+                    "gabarito": "B",
+                    "explicacao": "Bactérias são procariontes e não possuem carioteca (membrana nuclear), tendo o DNA disperso no citoplasma. Ribossomos e DNA existem em ambas. Mitocôndrias só existem em eucariontes.",
+                    "assunto": "Citologia",
+                    "materia": "biologia"
+                },
+                {
+                    "id": "q2-bio-cito",
+                    "ano": 2024,
+                    "enunciado": "A Teoria Celular, consolidada no século XIX, estabeleceu princípios fundamentais para a Biologia. Qual das afirmativas abaixo NÃO corresponde a um postulado dessa teoria?\n",
+                    "alternativas": [
+                        {
+                            "letra": "A",
+                            "texto": "A célula é a unidade morfológica e fisiológica dos seres vivos."
+                        },
+                        {
+                            "letra": "B",
+                            "texto": "Toda célula provém de outra célula preexistente."
+                        },
+                        {
+                            "letra": "C",
+                            "texto": "Todos os seres vivos são formados por células."
+                        },
+                        {
+                            "letra": "D",
+                            "texto": "Os vírus são considerados seres vivos celulares."
+                        },
+                        {
+                            "letra": "E",
+                            "texto": "As atividades vitais ocorrem dentro das células."
+                        }
+                    ],
+                    "gabarito": "D",
+                    "explicacao": "Vírus são acelulares (não possuem células) e, por isso, não são considerados seres vivos pela Teoria Celular clássica. Eles dependem de células hospedeiras para se reproduzir.",
+                    "assunto": "Teoria Celular",
+                    "materia": "biologia"
+                },
+                {
+                    "id": "q3-bio-cito",
+                    "ano": 2024,
+                    "enunciado": "Uma estudante observou ao microscópio duas células: uma apresentava cloroplastos e parede celular de celulose, enquanto a outra não possuía essas estruturas, mas tinha centríolos. As células observadas são, respectivamente, de:\n",
+                    "alternativas": [
+                        {
+                            "letra": "A",
+                            "texto": "Animal e Vegetal"
+                        },
+                        {
+                            "letra": "B",
+                            "texto": "Vegetal e Animal"
+                        },
+                        {
+                            "letra": "C",
+                            "texto": "Bactéria e Fungo"
+                        },
+                        {
+                            "letra": "D",
+                            "texto": "Fungo e Vegetal"
+                        },
+                        {
+                            "letra": "E",
+                            "texto": "Vegetal e Bactéria"
+                        }
+                    ],
+                    "gabarito": "B",
+                    "explicacao": "Cloroplastos (fotossíntese) e parede de celulose são exclusivos de células vegetais. Centríolos são típicos de células animais (ausentes na maioria das plantas). A primeira é vegetal, a segunda é animal.",
+                    "assunto": "Célula Animal vs Vegetal",
+                    "materia": "biologia"
+                }
+            ]
+        },
+        {
+            "id": "2025-12-31",
+            "data": "2025-12-31",
+            "diaSemana": "Quarta-feira",
+            "materia": "geografia",
+            "assunto": "Geologia - Estrutura da Terra",
+            "dificuldade": "medio",
+            "tempoEstimado": "50min",
+            "resumo": "## Estrutura Interna da Terra\n\nA Terra é formada por camadas concêntricas com diferentes composições e estados físicos.\n\n### Camadas da Terra\n\n1. **Crosta (Litosfera)**: Camada externa e fina (5-70km). Onde vivemos. Dividida em placas tectônicas.\n2. **Manto**: Camada intermediária, pastosa (material viscoso). Responsável pela movimentação das placas.\n3. **Núcleo Externo**: Líquido, composto por ferro e níquel.\n4. **Núcleo Interno**: Sólido (pressão extrema), também de ferro e níquel.\n\n### Placas Tectônicas\nA litosfera está dividida em grandes blocos chamados placas tectônicas. Seus movimentos causam:\n- **Terremotos**: Liberação de energia nas falhas geológicas.\n- **Vulcanismo**: Magma sobe pelas fissuras.\n- **Formação de montanhas**: Colisão de placas (ex: Himalaia).\n\n### Tipos de Rochas\n1. **Magmáticas/Ígneas**: Solidificação do magma. Ex: Granito, Basalto.\n2. **Sedimentares**: Deposição de sedimentos. Ex: Arenito, Calcário.\n3. **Metamórficas**: Transformação por calor e pressão. Ex: Mármore, Quartzito.\n\n> **Dica ENEM**: O ENEM relaciona estrutura da Terra com fenômenos naturais (terremotos, tsunamis) e impactos sociais.",
+            "videos": [
+                {
+                    "titulo": "Estrutura da Terra - Geografia para ENEM",
+                    "youtubeId": "P2_TpkbTSUI",
+                    "canal": "Prof Silvester Geografia"
+                }
+            ],
+            "questoes": [
+                {
+                    "id": "q1-geo-estrutura",
+                    "ano": 2024,
+                    "enunciado": "O terremoto que atingiu o Haiti em 2010 causou mais de 200 mil mortes, evidenciando a vulnerabilidade de países pobres a desastres naturais. Do ponto de vista geológico, os terremotos são causados por:\n",
+                    "alternativas": [
+                        {
+                            "letra": "A",
+                            "texto": "Erosão das rochas superficiais pela ação das chuvas."
+                        },
+                        {
+                            "letra": "B",
+                            "texto": "Acúmulo de sedimentos nas bacias hidrográficas."
+                        },
+                        {
+                            "letra": "C",
+                            "texto": "Liberação de energia nas zonas de contato entre placas tectônicas."
+                        },
+                        {
+                            "letra": "D",
+                            "texto": "Erupções vulcânicas que destroem a crosta terrestre."
+                        },
+                        {
+                            "letra": "E",
+                            "texto": "Variações de temperatura no núcleo interno da Terra."
+                        }
+                    ],
+                    "gabarito": "C",
+                    "explicacao": "Terremotos ocorrem devido ao acúmulo e liberação súbita de energia nas falhas geológicas, especialmente nas bordas das placas tectônicas. O Haiti está próximo à falha entre as placas do Caribe e Norte-Americana.",
+                    "assunto": "Tectônica de Placas",
+                    "materia": "geografia"
+                },
+                {
+                    "id": "q2-geo-estrutura",
+                    "ano": 2024,
+                    "enunciado": "O ciclo das rochas descreve as transformações que os materiais rochosos sofrem ao longo do tempo geológico. Quando uma rocha sedimentar é submetida a altas temperaturas e pressões no interior da Terra, ela pode se transformar em:\n",
+                    "alternativas": [
+                        {
+                            "letra": "A",
+                            "texto": "Rocha magmática intrusiva."
+                        },
+                        {
+                            "letra": "B",
+                            "texto": "Rocha metamórfica."
+                        },
+                        {
+                            "letra": "C",
+                            "texto": "Sedimento não consolidado."
+                        },
+                        {
+                            "letra": "D",
+                            "texto": "Mineral de origem orgânica."
+                        },
+                        {
+                            "letra": "E",
+                            "texto": "Rocha vulcânica extrusiva."
+                        }
+                    ],
+                    "gabarito": "B",
+                    "explicacao": "Quando qualquer rocha é submetida a altas temperaturas e pressões (sem derreter completamente), ela sofre metamorfismo e se torna uma rocha metamórfica. Ex: Calcário vira Mármore.",
+                    "assunto": "Tipos de Rochas",
+                    "materia": "geografia"
+                },
+                {
+                    "id": "q3-geo-estrutura",
+                    "ano": 2024,
+                    "enunciado": "A teoria da Deriva Continental, proposta por Alfred Wegener, foi posteriormente incorporada à Teoria da Tectônica de Placas. Uma evidência que sustenta essa teoria é:\n",
+                    "alternativas": [
+                        {
+                            "letra": "A",
+                            "texto": "A uniformidade climática em todos os continentes."
+                        },
+                        {
+                            "letra": "B",
+                            "texto": "O encaixe do litoral leste da América do Sul com o litoral oeste da África."
+                        },
+                        {
+                            "letra": "C",
+                            "texto": "A inexistência de fósseis semelhantes em continentes diferentes."
+                        },
+                        {
+                            "letra": "D",
+                            "texto": "A estabilidade permanente da crosta terrestre."
+                        },
+                        {
+                            "letra": "E",
+                            "texto": "A idade idêntica de todas as rochas da Terra."
+                        }
+                    ],
+                    "gabarito": "B",
+                    "explicacao": "O encaixe dos litorais da América do Sul e África foi uma das principais evidências de Wegener. Além disso, fósseis semelhantes nos dois continentes e formações rochosas compatíveis reforçam a teoria.",
+                    "assunto": "Deriva Continental",
+                    "materia": "geografia"
+                }
+            ]
+        },
+        {
+            "id": "2026-01-02",
+            "data": "2026-01-02",
+            "diaSemana": "Sexta-feira",
+            "materia": "historia",
+            "assunto": "Roma Antiga",
+            "dificuldade": "medio",
+            "tempoEstimado": "55min",
+            "resumo": "## Roma Antiga\n\nRoma foi uma das maiores civilizações da Antiguidade, influenciando direito, arquitetura, língua e cultura ocidental.\n\n### Períodos da História Romana\n\n1. **Monarquia (753-509 a.C.)**: Fundação lendária por Rômulo. Reis etruscos no poder.\n2. **República (509-27 a.C.)**: Poder dividido entre Senado, Cônsules e Assembleias. Expansão territorial.\n3. **Império (27 a.C.-476 d.C.)**: Centralização do poder. Pax Romana. Queda de Roma em 476.\n\n### Sociedade Romana\n- **Patrícios**: Aristocracia, grandes proprietários. Únicos com direitos políticos no início.\n- **Plebeus**: Cidadãos comuns, comerciantes, artesãos. Conquistaram direitos gradualmente.\n- **Escravos**: Base da economia. Trabalho forçado em todos os setores.\n\n### Conceitos Importantes\n- **Pão e Circo**: Política de distribuir trigo e espetáculos (gladiadores) para controlar a plebe.\n- **Direito Romano**: Base do direito civil ocidental moderno.\n- **Latifúndios**: Grandes propriedades agrícolas, base da economia imperial.\n\n> **Dica ENEM**: O ENEM adora comparar Roma com sociedades modernas (direitos, cidadania, política de massas).",
+            "videos": [
+                {
+                    "titulo": "Roma Antiga - Completo para ENEM",
+                    "youtubeId": "SfoAgpJwF5g",
+                    "canal": "Parabólica"
+                }
+            ],
+            "questoes": [
+                {
+                    "id": "q1-hist-roma",
+                    "ano": 2024,
+                    "enunciado": "Durante a República Romana, a política do 'Pão e Circo' (Panem et Circenses) foi amplamente utilizada pelo Estado. Essa política consistia em:\n",
+                    "alternativas": [
+                        {
+                            "letra": "A",
+                            "texto": "Distribuir terras aos escravos libertos como forma de reforma agrária."
+                        },
+                        {
+                            "letra": "B",
+                            "texto": "Oferecer trigo gratuito e espetáculos públicos para entreter e controlar a população."
+                        },
+                        {
+                            "letra": "C",
+                            "texto": "Cobrar impostos elevados sobre alimentos para financiar as guerras."
+                        },
+                        {
+                            "letra": "D",
+                            "texto": "Proibir manifestações políticas nas arenas e praças públicas."
+                        },
+                        {
+                            "letra": "E",
+                            "texto": "Educar a plebe sobre filosofia grega nos anfiteatros."
+                        }
+                    ],
+                    "gabarito": "B",
+                    "explicacao": "A política do Pão e Circo visava manter a população urbana satisfeita e alienada dos problemas políticos, oferecendo alimento gratuito (trigo) e entretenimento (lutas de gladiadores, corridas de bigas).",
+                    "assunto": "Roma Antiga",
+                    "materia": "historia"
+                },
+                {
+                    "id": "q2-hist-roma",
+                    "ano": 2024,
+                    "enunciado": "O Direito Romano é considerado uma das principais heranças da civilização romana para o mundo ocidental. Um princípio do Direito Romano que ainda é aplicado atualmente é:\n",
+                    "alternativas": [
+                        {
+                            "letra": "A",
+                            "texto": "A pena de morte por crucificação para crimes políticos."
+                        },
+                        {
+                            "letra": "B",
+                            "texto": "A presunção de inocência até que se prove a culpa."
+                        },
+                        {
+                            "letra": "C",
+                            "texto": "A escravidão como punição para dívidas não pagas."
+                        },
+                        {
+                            "letra": "D",
+                            "texto": "A proibição de mulheres participarem de julgamentos."
+                        },
+                        {
+                            "letra": "E",
+                            "texto": "A decisão de culpa exclusivamente por oráculos religiosos."
+                        }
+                    ],
+                    "gabarito": "B",
+                    "explicacao": "A presunção de inocência é um princípio do Direito Romano que permanece na maioria das constituições modernas, incluindo a brasileira (Art. 5º, LVII da CF/88).",
+                    "assunto": "Direito Romano",
+                    "materia": "historia"
+                },
+                {
+                    "id": "q3-hist-roma",
+                    "ano": 2024,
+                    "enunciado": "A transição da República para o Império Romano foi marcada por conflitos internos e guerras civis. O fim definitivo da República ocorreu quando:\n",
+                    "alternativas": [
+                        {
+                            "letra": "A",
+                            "texto": "Os povos bárbaros invadiram e destruíram a cidade de Roma."
+                        },
+                        {
+                            "letra": "B",
+                            "texto": "Júlio César foi assassinado e o Senado retomou o poder absoluto."
+                        },
+                        {
+                            "letra": "C",
+                            "texto": "Otávio (Augusto) derrotou Marco Antônio e concentrou poderes, tornando-se imperador."
+                        },
+                        {
+                            "letra": "D",
+                            "texto": "Espártaco liderou uma revolta de escravos que tomou o poder."
+                        },
+                        {
+                            "letra": "E",
+                            "texto": "Constantino converteu Roma ao cristianismo e aboliu o Senado."
+                        }
+                    ],
+                    "gabarito": "C",
+                    "explicacao": "Após a morte de Júlio César, Otávio (seu herdeiro) venceu Marco Antônio na Batalha de Ácio (31 a.C.) e recebeu o título de Augusto, tornando-se o primeiro imperador romano em 27 a.C.",
+                    "assunto": "Queda da República",
+                    "materia": "historia"
+                }
+            ]
+        },
+        {
+            "id": "2026-01-03",
+            "data": "2026-01-03",
+            "diaSemana": "Sábado",
+            "materia": "matematica",
+            "assunto": "Regra de Três Simples e Composta",
+            "dificuldade": "facil",
+            "tempoEstimado": "45min",
+            "resumo": "## Regra de Três\n\nFerramenta poderosa para resolver problemas envolvendo proporcionalidade.\n\n### Regra de Três Simples\nEnvolve apenas 2 grandezas.\n\n1. **Diretamente proporcionais**: Se uma aumenta, a outra também aumenta. Multiplica em X.\n   - Ex: Mais horas trabalhadas = Mais dinheiro.\n2. **Inversamente proporcionais**: Se uma aumenta, a outra diminui. Inverte antes de multiplicar.\n   - Ex: Mais trabalhadores = Menos tempo para terminar a obra.\n\n### Regra de Três Composta\nEnvolve 3 ou mais grandezas.\n\n**Passo a passo:**\n1. Identifique a grandeza que você quer descobrir.\n2. Compare cada outra grandeza com ela (direta ou inversa).\n3. Se for inversa, inverta a fração.\n4. Multiplique tudo.\n\n### Exemplo Clássico\n5 pedreiros fazem uma obra em 10 dias. Quantos dias 10 pedreiros levariam?\n- Mais pedreiros → Menos dias (INVERSA)\n- 5/10 = x/10 → x = 5 dias\n\n> **Dica ENEM**: Questões de regra de três aparecem em contextos de consumo de água, energia, combustível, velocidade média.",
+            "videos": [
+                {
+                    "titulo": "Regra de Três Simples - Aula 26",
+                    "youtubeId": "alLifth7gxE",
+                    "canal": "Professor Ferretto"
+                }
+            ],
+            "questoes": [
+                {
+                    "id": "q1-mat-regra3",
+                    "ano": 2024,
+                    "enunciado": "Uma fábrica produz 240 peças em 4 horas de trabalho. Mantendo o mesmo ritmo de produção, quantas peças essa fábrica produzirá em 6 horas?\n",
+                    "alternativas": [
+                        {
+                            "letra": "A",
+                            "texto": "300 peças"
+                        },
+                        {
+                            "letra": "B",
+                            "texto": "320 peças"
+                        },
+                        {
+                            "letra": "C",
+                            "texto": "360 peças"
+                        },
+                        {
+                            "letra": "D",
+                            "texto": "400 peças"
+                        },
+                        {
+                            "letra": "E",
+                            "texto": "480 peças"
+                        }
+                    ],
+                    "gabarito": "C",
+                    "explicacao": "Grandezas diretamente proporcionais (mais horas = mais peças). Regra de três: 240/4 = x/6 → x = 240 × 6 / 4 = 360 peças.",
+                    "assunto": "Regra de Três Simples",
+                    "materia": "matematica"
+                },
+                {
+                    "id": "q2-mat-regra3",
+                    "ano": 2024,
+                    "enunciado": "Uma torneira aberta enche um tanque de 5.000 litros em 8 horas. Se a vazão da torneira for duplicada, em quanto tempo o tanque será preenchido?\n",
+                    "alternativas": [
+                        {
+                            "letra": "A",
+                            "texto": "2 horas"
+                        },
+                        {
+                            "letra": "B",
+                            "texto": "4 horas"
+                        },
+                        {
+                            "letra": "C",
+                            "texto": "6 horas"
+                        },
+                        {
+                            "letra": "D",
+                            "texto": "8 horas"
+                        },
+                        {
+                            "letra": "E",
+                            "texto": "16 horas"
+                        }
+                    ],
+                    "gabarito": "B",
+                    "explicacao": "Vazão e tempo são inversamente proporcionais (maior vazão = menor tempo). Se a vazão dobra (×2), o tempo cai pela metade (÷2). 8 ÷ 2 = 4 horas.",
+                    "assunto": "Regra de Três Simples",
+                    "materia": "matematica"
+                },
+                {
+                    "id": "q3-mat-regra3",
+                    "ano": 2024,
+                    "enunciado": "Uma equipe de 6 funcionários consegue embalar 1.200 produtos em 5 dias, trabalhando 8 horas por dia. Se a equipe for reduzida para 4 funcionários, trabalhando 10 horas por dia, quantos dias serão necessários para embalar a mesma quantidade de produtos?\n",
+                    "alternativas": [
+                        {
+                            "letra": "A",
+                            "texto": "4 dias"
+                        },
+                        {
+                            "letra": "B",
+                            "texto": "5 dias"
+                        },
+                        {
+                            "letra": "C",
+                            "texto": "6 dias"
+                        },
+                        {
+                            "letra": "D",
+                            "texto": "8 dias"
+                        },
+                        {
+                            "letra": "E",
+                            "texto": "10 dias"
+                        }
+                    ],
+                    "gabarito": "C",
+                    "explicacao": "Regra de três composta. Funcionários: 6→4 (inversa, menos gente = mais dias). Horas: 8→10 (inversa, mais horas/dia = menos dias). 5 × (6/4) × (8/10) = 5 × 1,5 × 0,8 = 6 dias.",
+                    "assunto": "Regra de Três Composta",
+                    "materia": "matematica"
+                }
+            ]
+        },
+        {
+            "id": "2026-01-05",
+            "data": "2026-01-05",
+            "diaSemana": "Segunda-feira",
+            "materia": "portugues",
+            "assunto": "Sintaxe - Termos da Oração",
+            "dificuldade": "medio",
+            "tempoEstimado": "55min",
+            "resumo": "## Sintaxe: Termos da Oração\n\nA Sintaxe estuda a função das palavras dentro da frase.\n\n### Termos Essenciais\n1. **Sujeito**: Quem pratica ou sofre a ação. Pode ser simples, composto, indeterminado ou oculto.\n2. **Predicado**: O que se fala sobre o sujeito. Contém o verbo.\n\n### Termos Integrantes\n1. **Objeto Direto**: Completa verbo transitivo direto (sem preposição). Ex: 'Comprei **o livro**'.\n2. **Objeto Indireto**: Completa verbo transitivo indireto (com preposição). Ex: 'Gosto **de música**'.\n3. **Complemento Nominal**: Completa substantivo, adjetivo ou advérbio. Ex: 'Tenho medo **de escuro**'.\n4. **Agente da Passiva**: Pratica ação na voz passiva. Ex: 'O bolo foi feito **pela avó**'.\n\n### Termos Acessórios\n1. **Adjunto Adnominal**: Caracteriza o substantivo. Ex: 'O **grande** livro **azul**'.\n2. **Adjunto Adverbial**: Circunstância do verbo (tempo, lugar, modo). Ex: 'Cheguei **ontem**'.\n3. **Aposto**: Explica termo anterior. Ex: 'Brasília, **capital do Brasil**, é moderna.'\n4. **Vocativo**: Chamamento. Ex: '**Maria**, venha aqui!'.\n\n> **Dica ENEM**: O ENEM não cobra nomenclatura, mas sim a compreensão de como a estrutura sintática afeta o sentido do texto.",
+            "videos": [
+                {
+                    "titulo": "Sintaxe - Termos da Oração (Completo)",
+                    "youtubeId": "bLg5Ug8SBYw",
+                    "canal": "Professor Noslen"
+                }
+            ],
+            "questoes": [
+                {
+                    "id": "q1-port-sintaxe",
+                    "ano": 2024,
+                    "enunciado": "No período 'Os alunos entregaram os trabalhos ao professor', os termos 'os trabalhos' e 'ao professor' exercem, respectivamente, as funções de:\n",
+                    "alternativas": [
+                        {
+                            "letra": "A",
+                            "texto": "Sujeito e adjunto adverbial."
+                        },
+                        {
+                            "letra": "B",
+                            "texto": "Objeto direto e objeto indireto."
+                        },
+                        {
+                            "letra": "C",
+                            "texto": "Predicativo do sujeito e aposto."
+                        },
+                        {
+                            "letra": "D",
+                            "texto": "Adjunto adnominal e complemento nominal."
+                        },
+                        {
+                            "letra": "E",
+                            "texto": "Objeto indireto e objeto direto."
+                        }
+                    ],
+                    "gabarito": "B",
+                    "explicacao": "'Entregar' é verbo transitivo direto e indireto. 'Os trabalhos' (o que foi entregue) = objeto direto (sem preposição). 'Ao professor' (a quem foi entregue) = objeto indireto (com preposição 'a').",
+                    "assunto": "Sintaxe",
+                    "materia": "portugues"
+                },
+                {
+                    "id": "q2-port-sintaxe",
+                    "ano": 2024,
+                    "enunciado": "Identifique a função sintática do termo destacado: 'A descoberta **da vacina** revolucionou a medicina.'\n",
+                    "alternativas": [
+                        {
+                            "letra": "A",
+                            "texto": "Adjunto adnominal"
+                        },
+                        {
+                            "letra": "B",
+                            "texto": "Objeto indireto"
+                        },
+                        {
+                            "letra": "C",
+                            "texto": "Complemento nominal"
+                        },
+                        {
+                            "letra": "D",
+                            "texto": "Agente da passiva"
+                        },
+                        {
+                            "letra": "E",
+                            "texto": "Aposto"
+                        }
+                    ],
+                    "gabarito": "C",
+                    "explicacao": "'Da vacina' completa o sentido do substantivo abstrato 'descoberta' (que deriva do verbo 'descobrir'). Quando o termo preposicionado completa um substantivo abstrato, é complemento nominal.",
+                    "assunto": "Complemento Nominal",
+                    "materia": "portugues"
+                },
+                {
+                    "id": "q3-port-sintaxe",
+                    "ano": 2024,
+                    "enunciado": "Na frase 'Precisa-se de funcionários qualificados', o sujeito é classificado como:\n",
+                    "alternativas": [
+                        {
+                            "letra": "A",
+                            "texto": "Sujeito simples: 'funcionários qualificados'."
+                        },
+                        {
+                            "letra": "B",
+                            "texto": "Sujeito oculto, recuperado pelo contexto."
+                        },
+                        {
+                            "letra": "C",
+                            "texto": "Sujeito indeterminado, indicado pelo pronome 'se'."
+                        },
+                        {
+                            "letra": "D",
+                            "texto": "Sujeito composto: 'funcionários' e 'qualificados'."
+                        },
+                        {
+                            "letra": "E",
+                            "texto": "Não há sujeito (oração sem sujeito)."
+                        }
+                    ],
+                    "gabarito": "C",
+                    "explicacao": "O verbo 'precisar' é transitivo indireto. Quando usado com o pronome 'se' (índice de indeterminação do sujeito), o sujeito não pode ser identificado. 'De funcionários' é objeto indireto.",
+                    "assunto": "Sujeito Indeterminado",
+                    "materia": "portugues"
+                }
+            ]
+        },
+        {
+            "id": "2026-01-06",
+            "data": "2026-01-06",
+            "diaSemana": "Terça-feira",
+            "materia": "biologia",
+            "assunto": "Membrana Plasmática e Transportes",
+            "dificuldade": "medio",
+            "tempoEstimado": "50min",
+            "resumo": "## Membrana Plasmática\n\nA membrana plasmática é a estrutura que delimita a célula e controla a entrada e saída de substâncias.\n\n### Estrutura: Modelo Mosaico Fluido\n- **Bicamada lipídica**: Fosfolipídios com cabeça hidrofílica e cauda hidrofóbica.\n- **Proteínas**: Integrais (atravessam) e periféricas (superfície). Fazem transporte, comunicação.\n- **Colesterol**: Dá fluidez à membrana.\n- **Glicocálix**: Camada de açúcares. Proteção e reconhecimento celular.\n\n### Tipos de Transporte\n\n**Passivo (sem gasto de energia - ATP):**\n1. **Difusão simples**: Substâncias pequenas e apolares passam direto. Ex: O₂, CO₂.\n2. **Difusão facilitada**: Precisa de proteínas canal ou carreadoras. Ex: Glicose.\n3. **Osmose**: Passagem de água do meio menos concentrado para o mais concentrado.\n\n**Ativo (com gasto de ATP):**\n1. **Bomba de Na⁺/K⁺**: Joga 3 Na⁺ para fora e 2 K⁺ para dentro. Mantém potencial de membrana.\n\n### Soluções e Células\n- **Hipotônica**: Célula incha (entra água).\n- **Hipertônica**: Célula murcha (sai água).\n- **Isotônica**: Equilíbrio.\n\n> **Dica ENEM**: Relacionar osmose com conservação de alimentos (sal/açúcar) e soro fisiológico.",
+            "videos": [
+                {
+                    "titulo": "Membrana Plasmática - Completo",
+                    "youtubeId": "9Nf0EJtwxn0",
+                    "canal": "Biologia com Samuel Cunha"
+                }
+            ],
+            "questoes": [
+                {
+                    "id": "q1-bio-membrana",
+                    "ano": 2024,
+                    "enunciado": "O soro fisiológico é uma solução isotônica utilizada para hidratação intravenosa. Se uma solução hipertônica fosse administrada por engano, o que aconteceria com as hemácias (glóbulos vermelhos) do paciente?\n",
+                    "alternativas": [
+                        {
+                            "letra": "A",
+                            "texto": "Inchariam e poderiam romper (hemólise)."
+                        },
+                        {
+                            "letra": "B",
+                            "texto": "Murchariam por perda de água para o meio (crenação)."
+                        },
+                        {
+                            "letra": "C",
+                            "texto": "Permaneceriam inalteradas."
+                        },
+                        {
+                            "letra": "D",
+                            "texto": "Aumentariam de tamanho indefinidamente."
+                        },
+                        {
+                            "letra": "E",
+                            "texto": "Passariam a produzir mais hemoglobina."
+                        }
+                    ],
+                    "gabarito": "B",
+                    "explicacao": "Em meio hipertônico (mais concentrado que a célula), a água sai da hemácia por osmose, fazendo-a murchar. Esse fenômeno é chamado de crenação.",
+                    "assunto": "Osmose",
+                    "materia": "biologia"
+                },
+                {
+                    "id": "q2-bio-membrana",
+                    "ano": 2024,
+                    "enunciado": "A glicose é uma molécula polar e relativamente grande, que não consegue atravessar a bicamada lipídica livremente. O mecanismo pelo qual a glicose entra na maioria das células é:\n",
+                    "alternativas": [
+                        {
+                            "letra": "A",
+                            "texto": "Difusão simples através da bicamada."
+                        },
+                        {
+                            "letra": "B",
+                            "texto": "Osmose, junto com a água."
+                        },
+                        {
+                            "letra": "C",
+                            "texto": "Difusão facilitada por proteínas carreadoras."
+                        },
+                        {
+                            "letra": "D",
+                            "texto": "Transporte ativo pela bomba de sódio-potássio."
+                        },
+                        {
+                            "letra": "E",
+                            "texto": "Endocitose por fagocitose."
+                        }
+                    ],
+                    "gabarito": "C",
+                    "explicacao": "A glicose é polar e grande demais para atravessar a bicamada lipídica sozinha. Ela utiliza proteínas carreadoras (permeases) em um processo chamado difusão facilitada, que não gasta ATP pois segue o gradiente de concentração.",
+                    "assunto": "Difusão Facilitada",
+                    "materia": "biologia"
+                },
+                {
+                    "id": "q3-bio-membrana",
+                    "ano": 2024,
+                    "enunciado": "A bomba de sódio e potássio é um importante mecanismo de transporte ativo. Sobre essa estrutura, é CORRETO afirmar que:\n",
+                    "alternativas": [
+                        {
+                            "letra": "A",
+                            "texto": "Transporta íons a favor do gradiente de concentração."
+                        },
+                        {
+                            "letra": "B",
+                            "texto": "Bombeia 3 íons K⁺ para fora e 2 íons Na⁺ para dentro da célula."
+                        },
+                        {
+                            "letra": "C",
+                            "texto": "Não consome energia (ATP) durante seu funcionamento."
+                        },
+                        {
+                            "letra": "D",
+                            "texto": "Bombeia 3 íons Na⁺ para fora e 2 íons K⁺ para dentro da célula."
+                        },
+                        {
+                            "letra": "E",
+                            "texto": "Está presente apenas em células vegetais."
+                        }
+                    ],
+                    "gabarito": "D",
+                    "explicacao": "A bomba de Na⁺/K⁺ transporta ativamente (gastando ATP) 3 íons sódio para FORA e 2 íons potássio para DENTRO da célula. Isso mantém o potencial de membrana e é essencial para a transmissão de impulsos nervosos.",
+                    "assunto": "Transporte Ativo",
+                    "materia": "biologia"
+                }
+            ]
+        },
+        {
+            "id": "2026-01-07",
+            "data": "2026-01-07",
+            "diaSemana": "Quarta-feira",
+            "materia": "fisica",
+            "assunto": "MRUV - Movimento Retilíneo Uniformemente Variado",
+            "dificuldade": "medio",
+            "tempoEstimado": "55min",
+            "resumo": "## MRUV - Movimento Retilíneo Uniformemente Variado\n\nNo MRUV, a velocidade varia de forma constante (aceleração constante).\n\n### Conceitos Básicos\n- **Aceleração (a)**: Variação da velocidade por unidade de tempo. Unidade: m/s².\n- **Acelerado**: a e v têm mesmo sinal (velocidade aumenta).\n- **Retardado**: a e v têm sinais opostos (velocidade diminui).\n\n### Fórmulas do MRUV\n\n1. **Função Horária da Velocidade:**\n   - $v = v_0 + a \\cdot t$\n\n2. **Função Horária da Posição:**\n   - $S = S_0 + v_0 \\cdot t + \\frac{a \\cdot t^2}{2}$\n\n3. **Equação de Torricelli (sem tempo):**\n   - $v^2 = v_0^2 + 2 \\cdot a \\cdot \\Delta S$\n\n### Queda Livre e Lançamento Vertical\n- **Queda livre**: $v_0 = 0$, $a = g \\approx 10m/s^2$.\n- **Lançamento para cima**: $a = -g$ (desacelera na subida).\n\n> **Dica ENEM**: Questões de MRUV aparecem em contextos de trânsito (frenagem), queda livre e lançamentos.",
+            "videos": [
+                {
+                    "titulo": "MRUV - Movimento Uniformemente Variado",
+                    "youtubeId": "cHm4MGcYbcw",
+                    "canal": "Professor Boaro"
+                }
+            ],
+            "questoes": [
+                {
+                    "id": "q1-fis-mruv",
+                    "ano": 2024,
+                    "enunciado": "Um carro está a 72 km/h quando o motorista aciona os freios, reduzindo sua velocidade uniformemente até parar em 4 segundos. A aceleração do carro durante a frenagem foi de:\n",
+                    "alternativas": [
+                        {
+                            "letra": "A",
+                            "texto": "-5 m/s²"
+                        },
+                        {
+                            "letra": "B",
+                            "texto": "-18 m/s²"
+                        },
+                        {
+                            "letra": "C",
+                            "texto": "5 m/s²"
+                        },
+                        {
+                            "letra": "D",
+                            "texto": "18 m/s²"
+                        },
+                        {
+                            "letra": "E",
+                            "texto": "-10 m/s²"
+                        }
+                    ],
+                    "gabarito": "A",
+                    "explicacao": "Convertendo: 72 km/h = 20 m/s. Usando v = v₀ + at: 0 = 20 + a×4 → a = -20/4 = -5 m/s². O sinal negativo indica desaceleração (frenagem).",
+                    "assunto": "MRUV",
+                    "materia": "fisica"
+                },
+                {
+                    "id": "q2-fis-mruv",
+                    "ano": 2024,
+                    "enunciado": "Uma pedra é abandonada do alto de um edifício e leva 3 segundos para atingir o solo. Desprezando a resistência do ar e considerando g = 10 m/s², a altura do edifício é de:\n",
+                    "alternativas": [
+                        {
+                            "letra": "A",
+                            "texto": "30 metros"
+                        },
+                        {
+                            "letra": "B",
+                            "texto": "45 metros"
+                        },
+                        {
+                            "letra": "C",
+                            "texto": "60 metros"
+                        },
+                        {
+                            "letra": "D",
+                            "texto": "90 metros"
+                        },
+                        {
+                            "letra": "E",
+                            "texto": "100 metros"
+                        }
+                    ],
+                    "gabarito": "B",
+                    "explicacao": "Queda livre: v₀ = 0. Usando S = S₀ + v₀t + (gt²)/2 → S = 0 + 0 + (10×9)/2 = 45 metros.",
+                    "assunto": "Queda Livre",
+                    "materia": "fisica"
+                },
+                {
+                    "id": "q3-fis-mruv",
+                    "ano": 2024,
+                    "enunciado": "Um veículo parte do repouso e acelera uniformemente a 2 m/s². Para atingir a velocidade de 20 m/s, o veículo percorrerá uma distância de:\n",
+                    "alternativas": [
+                        {
+                            "letra": "A",
+                            "texto": "50 metros"
+                        },
+                        {
+                            "letra": "B",
+                            "texto": "100 metros"
+                        },
+                        {
+                            "letra": "C",
+                            "texto": "200 metros"
+                        },
+                        {
+                            "letra": "D",
+                            "texto": "400 metros"
+                        },
+                        {
+                            "letra": "E",
+                            "texto": "10 metros"
+                        }
+                    ],
+                    "gabarito": "B",
+                    "explicacao": "Usando Torricelli: v² = v₀² + 2aΔS → 400 = 0 + 2×2×ΔS → ΔS = 400/4 = 100 metros.",
+                    "assunto": "Equação de Torricelli",
+                    "materia": "fisica"
+                }
+            ]
+        },
+        {
+            "id": "2026-01-08",
+            "data": "2026-01-08",
+            "diaSemana": "Quinta-feira",
+            "materia": "quimica",
+            "assunto": "Ligações Químicas",
+            "dificuldade": "medio",
+            "tempoEstimado": "50min",
+            "resumo": "## Ligações Químicas\n\nOs átomos se ligam para atingir estabilidade (regra do octeto: 8 elétrons na última camada).\n\n### Tipos de Ligações\n\n**1. Ligação Iônica**\n- Entre metal e não-metal.\n- Metal doa elétrons → vira cátion (+).\n- Não-metal recebe elétrons → vira ânion (-).\n- Atração eletrostática entre íons.\n- Propriedades: sólidos cristalinos, alto ponto de fusão, conduzem eletricidade quando dissolvidos.\n- Ex: NaCl (sal de cozinha).\n\n**2. Ligação Covalente**\n- Entre não-metais.\n- Compartilhamento de elétrons.\n- Pode ser simples (1 par), dupla (2 pares) ou tripla (3 pares).\n- Propriedades: podem ser gases, líquidos ou sólidos; baixo ponto de fusão.\n- Ex: H₂O, CO₂, O₂.\n\n**3. Ligação Metálica**\n- Entre metais.\n- 'Mar de elétrons' livres entre cátions metálicos.\n- Propriedades: brilho, condução elétrica, maleáveis, dúcteis.\n- Ex: Fe, Cu, Au.\n\n> **Dica ENEM**: O ENEM relaciona o tipo de ligação com as propriedades dos materiais (condutividade, ponto de fusão).",
+            "videos": [
+                {
+                    "titulo": "Ligações Químicas - Iônica, Covalente e Metálica",
+                    "youtubeId": "5BXvwoeseSc",
+                    "canal": "Gabriel Cabral"
+                }
+            ],
+            "questoes": [
+                {
+                    "id": "q1-quim-ligacoes",
+                    "ano": 2024,
+                    "enunciado": "O cloreto de sódio (NaCl), popularmente conhecido como sal de cozinha, é um composto formado pela transferência de elétrons entre o sódio (metal) e o cloro (não-metal). O tipo de ligação química presente nesse composto e a propriedade característica desse tipo de substância são, respectivamente:\n",
+                    "alternativas": [
+                        {
+                            "letra": "A",
+                            "texto": "Covalente; baixo ponto de fusão."
+                        },
+                        {
+                            "letra": "B",
+                            "texto": "Metálica; condução elétrica no estado sólido."
+                        },
+                        {
+                            "letra": "C",
+                            "texto": "Iônica; alto ponto de fusão."
+                        },
+                        {
+                            "letra": "D",
+                            "texto": "Iônica; baixa solubilidade em água."
+                        },
+                        {
+                            "letra": "E",
+                            "texto": "Covalente; estrutura cristalina."
+                        }
+                    ],
+                    "gabarito": "C",
+                    "explicacao": "NaCl é formado por ligação iônica (metal + não-metal, transferência de elétrons). Compostos iônicos têm alto ponto de fusão devido à forte atração eletrostática entre os íons.",
+                    "assunto": "Ligação Iônica",
+                    "materia": "quimica"
+                },
+                {
+                    "id": "q2-quim-ligacoes",
+                    "ano": 2024,
+                    "enunciado": "A água (H₂O) é uma substância essencial para a vida. A ligação entre os átomos de hidrogênio e oxigênio na molécula de água é do tipo:\n",
+                    "alternativas": [
+                        {
+                            "letra": "A",
+                            "texto": "Iônica, pois há transferência de elétrons."
+                        },
+                        {
+                            "letra": "B",
+                            "texto": "Metálica, devido ao mar de elétrons."
+                        },
+                        {
+                            "letra": "C",
+                            "texto": "Covalente polar, pois há compartilhamento desigual de elétrons."
+                        },
+                        {
+                            "letra": "D",
+                            "texto": "Covalente apolar, pois os átomos são iguais."
+                        },
+                        {
+                            "letra": "E",
+                            "texto": "Van der Waals, devido às forças intermoleculares."
+                        }
+                    ],
+                    "gabarito": "C",
+                    "explicacao": "A água é formada por ligação covalente (entre não-metais: H e O). Como o oxigênio é mais eletronegativo, ele atrai os elétrons compartilhados com mais força, tornando a ligação polar.",
+                    "assunto": "Ligação Covalente",
+                    "materia": "quimica"
+                },
+                {
+                    "id": "q3-quim-ligacoes",
+                    "ano": 2024,
+                    "enunciado": "Os metais são amplamente utilizados na fabricação de fios elétricos devido à sua capacidade de conduzir eletricidade. Essa propriedade está relacionada ao tipo de ligação química presente nos metais, caracterizada por:\n",
+                    "alternativas": [
+                        {
+                            "letra": "A",
+                            "texto": "Compartilhamento de pares de elétrons entre átomos vizinhos."
+                        },
+                        {
+                            "letra": "B",
+                            "texto": "Transferência definitiva de elétrons formando íons."
+                        },
+                        {
+                            "letra": "C",
+                            "texto": "Elétrons livres que se movem por toda a estrutura metálica."
+                        },
+                        {
+                            "letra": "D",
+                            "texto": "Forças de atração entre moléculas polares."
+                        },
+                        {
+                            "letra": "E",
+                            "texto": "Ligações de hidrogênio entre os átomos metálicos."
+                        }
+                    ],
+                    "gabarito": "C",
+                    "explicacao": "Na ligação metálica, os elétrons da camada de valência ficam 'livres', formando um 'mar de elétrons' que se move por toda a estrutura. Isso explica a condutividade elétrica dos metais.",
+                    "assunto": "Ligação Metálica",
+                    "materia": "quimica"
+                }
+            ]
+        },
+        {
+            "id": "2026-01-09",
+            "data": "2026-01-09",
+            "diaSemana": "Sexta-feira",
+            "materia": "sociologia",
+            "assunto": "Émile Durkheim e o Fato Social",
+            "dificuldade": "medio",
+            "tempoEstimado": "45min",
+            "resumo": "## Émile Durkheim: O Pai da Sociologia\n\nDurkheim (1858-1917) é considerado um dos fundadores da Sociologia como ciência. Sua grande contribuição foi definir o **objeto de estudo** da disciplina.\n\n### Fato Social\nPara Durkheim, a Sociologia estuda os **fatos sociais**, que são:\n\n1. **Exteriores**: Existem fora do indivíduo, independente de sua vontade.\n2. **Coercitivos**: Exercem pressão sobre o indivíduo (regras, normas, leis).\n3. **Gerais**: São coletivos, compartilhados pela sociedade.\n\n### Exemplos de Fatos Sociais\n- Linguagem (você não escolheu o português)\n- Moralidade (regras de comportamento)\n- Religião\n- Padrões de consumo\n\n### Consciência Coletiva\nConjunto de crenças e sentimentos comuns à média dos membros de uma sociedade.\n\n### Solidariedade Social\n- **Mecânica**: Sociedades simples, homogêneas. Coesão por semelhança.\n- **Orgânica**: Sociedades complexas. Coesão pela interdependência.\n\n> **Dica ENEM**: O ENEM adora questões sobre como a sociedade molda o indivíduo.",
+            "videos": [
+                {
+                    "titulo": "Émile Durkheim - Fato Social",
+                    "youtubeId": "4F6M3g_VhCE",
+                    "canal": "Parabólica"
+                }
+            ],
+            "questoes": [
+                {
+                    "id": "q1-soc-durkheim",
+                    "ano": 2024,
+                    "enunciado": "Para Émile Durkheim, os fatos sociais são 'maneiras de agir, pensar e sentir exteriores ao indivíduo e dotadas de um poder coercitivo'. Qual situação melhor exemplifica um fato social?\n",
+                    "alternativas": [
+                        {
+                            "letra": "A",
+                            "texto": "Um indivíduo decide estudar matemática por interesse pessoal."
+                        },
+                        {
+                            "letra": "B",
+                            "texto": "Uma pessoa escolhe sua cor favorita."
+                        },
+                        {
+                            "letra": "C",
+                            "texto": "Um jovem segue as regras de etiqueta à mesa durante um jantar formal."
+                        },
+                        {
+                            "letra": "D",
+                            "texto": "Um artista pinta um quadro expressando sua emoção individual."
+                        },
+                        {
+                            "letra": "E",
+                            "texto": "Uma criança brinca sozinha em seu quarto."
+                        }
+                    ],
+                    "gabarito": "C",
+                    "explicacao": "As regras de etiqueta são externas ao indivíduo (ele não as criou), coercitivas (há pressão social para segui-las) e gerais (compartilhadas pela sociedade). Isso caracteriza um fato social.",
+                    "assunto": "Fato Social",
+                    "materia": "sociologia"
+                },
+                {
+                    "id": "q2-soc-durkheim",
+                    "ano": 2024,
+                    "enunciado": "Durkheim distinguiu dois tipos de solidariedade social: mecânica e orgânica. A solidariedade orgânica é típica de sociedades:\n",
+                    "alternativas": [
+                        {
+                            "letra": "A",
+                            "texto": "Simples, onde há pouca divisão do trabalho e os indivíduos são muito semelhantes."
+                        },
+                        {
+                            "letra": "B",
+                            "texto": "Complexas, onde a coesão social ocorre pela interdependência entre funções especializadas."
+                        },
+                        {
+                            "letra": "C",
+                            "texto": "Primitivas, baseadas exclusivamente em laços de sangue."
+                        },
+                        {
+                            "letra": "D",
+                            "texto": "Sem qualquer forma de organização ou hierarquia."
+                        },
+                        {
+                            "letra": "E",
+                            "texto": "Isoladas, sem contato com outras culturas."
+                        }
+                    ],
+                    "gabarito": "B",
+                    "explicacao": "A solidariedade orgânica ocorre em sociedades modernas e complexas, onde a divisão do trabalho cria especialização. As pessoas dependem umas das outras, gerando coesão pela interdependência.",
+                    "assunto": "Solidariedade Social",
+                    "materia": "sociologia"
+                },
+                {
+                    "id": "q3-soc-durkheim",
+                    "ano": 2024,
+                    "enunciado": "O conceito de 'consciência coletiva' em Durkheim refere-se a:\n",
+                    "alternativas": [
+                        {
+                            "letra": "A",
+                            "texto": "A soma das consciências individuais de todos os membros da sociedade."
+                        },
+                        {
+                            "letra": "B",
+                            "texto": "O conjunto de crenças e sentimentos comuns à média dos membros de uma sociedade."
+                        },
+                        {
+                            "letra": "C",
+                            "texto": "A capacidade individual de reflexão crítica sobre a sociedade."
+                        },
+                        {
+                            "letra": "D",
+                            "texto": "O conhecimento científico acumulado ao longo da história."
+                        },
+                        {
+                            "letra": "E",
+                            "texto": "A ideologia da classe dominante imposta às demais."
+                        }
+                    ],
+                    "gabarito": "B",
+                    "explicacao": "A consciência coletiva é o conjunto de crenças, valores e sentimentos compartilhados pelos membros de uma sociedade. Ela existe independentemente das consciências individuais.",
+                    "assunto": "Consciência Coletiva",
+                    "materia": "sociologia"
+                }
+            ]
+        },
+        {
+            "id": "2026-01-10",
+            "data": "2026-01-10",
+            "diaSemana": "Sábado",
+            "materia": "redacao",
+            "assunto": "Estratégias de Introdução na Redação",
+            "dificuldade": "medio",
+            "tempoEstimado": "50min",
+            "resumo": "## Estratégias de Introdução\n\nA introdução é seu cartão de visitas! É onde você contextualiza o tema, apresenta sua tese e indica seus argumentos.\n\n### Estrutura da Introdução (4 elementos)\n1. **Repertório/Contextualização**: Dado, citação, referência histórica, filme, livro.\n2. **Tema**: Mostre que você entendeu a proposta.\n3. **Tese**: Sua opinião sobre o problema (sem dizer 'eu acho').\n4. **Projeto de texto**: Indique os 2 argumentos que desenvolverá.\n\n### Tipos de Abertura\n\n**1. Alusão Histórica**\n- Retome um fato do passado e conecte ao presente.\n- Ex: 'A Revolução Industrial trouxe avanços, mas também problemas ambientais que persistem até hoje...'\n\n**2. Citação Filosófica/Autoridade**\n- Use pensadores, cientistas, artistas.\n- Ex: 'Segundo Nelson Mandela, a educação é a arma mais poderosa...'\n\n**3. Comparação (Internacional ou Temporal)**\n- Compare Brasil com outros países ou épocas.\n- Ex: 'Diferentemente da Alemanha, que investiu em energia solar, o Brasil...'\n\n**4. Dados Estatísticos**\n- IBGE, OMS, IPEA, etc.\n- Ex: 'De acordo com o IBGE, 11% dos brasileiros são analfabetos funcionais...'\n\n> **Dica ENEM**: NUNCA comece a redação com 'Eu acho que...' ou 'Desde a antiguidade...' (clichê).",
+            "videos": [
+                {
+                    "titulo": "Como fazer uma INTRODUÇÃO PERFEITA",
+                    "youtubeId": "WfP2bl5xb5E",
+                    "canal": "Professor Noslen"
+                }
+            ],
+            "questoes": [
+                {
+                    "id": "q1-red-intro",
+                    "ano": 2024,
+                    "enunciado": "Na redação do ENEM, a introdução deve conter alguns elementos essenciais. Qual das alternativas abaixo apresenta TODOS os elementos que uma boa introdução dissertativo-argumentativa deve ter?\n",
+                    "alternativas": [
+                        {
+                            "letra": "A",
+                            "texto": "Proposta de intervenção, agente e ação."
+                        },
+                        {
+                            "letra": "B",
+                            "texto": "Contextualização, tema, tese e projeto de texto."
+                        },
+                        {
+                            "letra": "C",
+                            "texto": "Título, assinatura e dedicatória."
+                        },
+                        {
+                            "letra": "D",
+                            "texto": "Desenvolvimento do argumento 1 e argumento 2."
+                        },
+                        {
+                            "letra": "E",
+                            "texto": "Apenas a tese é necessária na introdução."
+                        }
+                    ],
+                    "gabarito": "B",
+                    "explicacao": "A introdução ideal contém: 1) Contextualização (repertório), 2) Apresentação do tema, 3) Tese (ponto de vista) e 4) Projeto de texto (indicação dos argumentos). A proposta de intervenção fica na conclusão.",
+                    "assunto": "Estrutura da Introdução",
+                    "materia": "redacao"
+                },
+                {
+                    "id": "q2-red-intro",
+                    "ano": 2024,
+                    "enunciado": "Considere a seguinte abertura de redação: 'Segundo a Organização Mundial da Saúde (OMS), mais de 260 milhões de pessoas sofrem de depressão no mundo, evidenciando uma crise global de saúde mental.' Essa estratégia de introdução é classificada como:\n",
+                    "alternativas": [
+                        {
+                            "letra": "A",
+                            "texto": "Alusão histórica."
+                        },
+                        {
+                            "letra": "B",
+                            "texto": "Citação filosófica de autoridade."
+                        },
+                        {
+                            "letra": "C",
+                            "texto": "Comparação internacional."
+                        },
+                        {
+                            "letra": "D",
+                            "texto": "Uso de dados estatísticos."
+                        },
+                        {
+                            "letra": "E",
+                            "texto": "Pergunta retórica."
+                        }
+                    ],
+                    "gabarito": "D",
+                    "explicacao": "A abertura utiliza dados numéricos de uma fonte confiável (OMS) para contextualizar o problema. Isso caracteriza a estratégia de uso de dados estatísticos, muito valorizada pelo ENEM.",
+                    "assunto": "Tipos de Abertura",
+                    "materia": "redacao"
+                },
+                {
+                    "id": "q3-red-intro",
+                    "ano": 2024,
+                    "enunciado": "Na correção da redação do ENEM, a Competência 2 avalia a capacidade de 'compreender a proposta de redação e aplicar conceitos de várias áreas do conhecimento para desenvolver o tema'. Um erro comum que prejudica essa competência na introdução é:\n",
+                    "alternativas": [
+                        {
+                            "letra": "A",
+                            "texto": "Usar repertório sociocultural legitimado (filmes, livros, dados)."
+                        },
+                        {
+                            "letra": "B",
+                            "texto": "Apresentar a tese de forma clara e direta."
+                        },
+                        {
+                            "letra": "C",
+                            "texto": "Tangenciar o tema, falando de assunto relacionado mas não proposto."
+                        },
+                        {
+                            "letra": "D",
+                            "texto": "Indicar os argumentos que serão desenvolvidos."
+                        },
+                        {
+                            "letra": "E",
+                            "texto": "Contextualizar o tema antes de apresentar a tese."
+                        }
+                    ],
+                    "gabarito": "C",
+                    "explicacao": "Tangenciar significa abordar o tema de forma superficial ou desviada, tratando de assuntos relacionados mas sem focar na proposta específica. Isso pode levar a uma nota baixa ou até zero na Competência 2.",
+                    "assunto": "Competência 2",
+                    "materia": "redacao"
+                }
+            ]
         }
     ]
 }

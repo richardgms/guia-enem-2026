@@ -119,6 +119,18 @@ export default async function DashboardPage() {
         provasRealizadasDB = data
     }
 
+    // 2.5 Buscar revisões pendentes (sem filtro de data)
+    let revisoesPendentesCount = 0
+    if (user) {
+        const { count } = await supabase
+            .from('progresso')
+            .select('*', { count: 'exact', head: true })
+            .eq('user_id', user.id)
+            .eq('concluido', true)
+            .in('auto_avaliacao', ['preciso_revisar', 'nao_entendi'])
+        revisoesPendentesCount = count || 0
+    }
+
     const provasRealizadas = (provasRealizadasDB || []).map(p => ({
         semana: p.semana,
         finalizada_em: p.finalizada_em
@@ -241,11 +253,28 @@ export default async function DashboardPage() {
                                 Pronto para dominar o ENEM 2026? Vamos lá!
                             </p>
                             {/* Status Feedback */}
-                            <StatusFeedback
-                                status={analiseEstudante.status}
-                                diasAtrasados={analiseEstudante.diasAtrasados}
-                                diasAdiantados={analiseEstudante.diasAdiantados}
-                            />
+                            {(() => {
+                                // Calcular número de provas atrasadas
+                                const semanasFeitas = new Set(provasRealizadas.map(p => p.semana))
+                                let provasAtrasadasCount = 0
+                                const agora = new Date()
+                                for (const s of SEMANAS_COM_PROVA) {
+                                    const domingo = getDomingoDaSemana(s)
+                                    if (agora > domingo && !semanasFeitas.has(s)) {
+                                        provasAtrasadasCount++
+                                    }
+                                }
+                                const totalAtrasados = analiseEstudante.diasAtrasados + provasAtrasadasCount
+                                const statusFinal = totalAtrasados > 0 ? 'atrasado' : analiseEstudante.status
+
+                                return (
+                                    <StatusFeedback
+                                        status={statusFinal}
+                                        diasAtrasados={totalAtrasados}
+                                        diasAdiantados={analiseEstudante.diasAdiantados}
+                                    />
+                                )
+                            })()}
                         </section>
 
                         {/* Today Focus Section */}
@@ -511,6 +540,26 @@ export default async function DashboardPage() {
 
                         {/* Streak Card */}
                         <Streak dias={stats.streakAtual} maiorStreak={stats.maiorStreak} />
+
+                        {/* Card de Revisões Pendentes */}
+                        {revisoesPendentesCount > 0 && (
+                            <Link href="/revisoes" className="block group">
+                                <div className="bg-amber-50 shadow-custom rounded-2xl p-5 border border-amber-200 hover:shadow-lg transition-all hover:border-amber-300">
+                                    <div className="flex items-center justify-between">
+                                        <div className="flex items-center gap-3">
+                                            <div className="bg-amber-100 p-2 rounded-full">
+                                                <span className="material-symbols-outlined text-2xl text-amber-600" style={{ fontFamily: 'Material Symbols Outlined' }}>auto_stories</span>
+                                            </div>
+                                            <div>
+                                                <p className="text-sm text-amber-700 font-medium">Revisões Pendentes</p>
+                                                <p className="text-2xl font-bold text-amber-800">{revisoesPendentesCount}</p>
+                                            </div>
+                                        </div>
+                                        <span className="material-symbols-outlined text-amber-400 group-hover:text-amber-600 transition-colors" style={{ fontFamily: 'Material Symbols Outlined' }}>chevron_right</span>
+                                    </div>
+                                </div>
+                            </Link>
+                        )}
 
 
                         {/* Visão Geral CTA */}

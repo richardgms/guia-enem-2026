@@ -34,4 +34,4 @@ export function getDomingoDaSemana(semana: number): Date {
 }
 
 // Constante para semanas com prova cadastrada
-export const SEMANAS_COM_PROVA = [1, 2] // Atualizar quando adicionar mais provas
+export const SEMANAS_COM_PROVA = [1, 2, 3, 4] // Atualizar quando adicionar mais provas

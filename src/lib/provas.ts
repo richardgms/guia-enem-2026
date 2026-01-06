@@ -87,7 +87,7 @@ export async function verificarElegibilidade(): Promise<ElegibilidadeProva> {
     const resultadoPadrao: ElegibilidadeProva = {
         elegivel: false,
         diasEstudados: 0,
-        diasNecessarios: 4,
+        diasNecessarios: 6,
         semanaAtual: 0,
         provaJaRealizada: false,
         provaEmAndamento: false,
@@ -110,11 +110,11 @@ export async function verificarElegibilidade(): Promise<ElegibilidadeProva> {
     const dentroDoHorario = diaSemana === 6 || diaSemana === 0
 
     // Buscar TODAS as provas do usuário para verificar atrasos
+    // Não filtramos por ano porque o cronograma atravessa 2025-2026
     const { data: todasProvas } = await supabase
         .from('provas_semanais')
         .select('semana, ano, status')
         .eq('user_id', user.id)
-        .eq('ano', anoAtual)
 
     const provasRealizadas = new Set(
         todasProvas?.filter(p => p.status === 'finalizada').map(p => p.semana) || []
@@ -138,7 +138,7 @@ export async function verificarElegibilidade(): Promise<ElegibilidadeProva> {
 
     // Verificar provas atrasadas (semanas anteriores sem prova finalizada)
     // IMPORTANTE: Só verificar semanas que TÊM questões cadastradas (por enquanto só semana 1)
-    const SEMANAS_COM_PROVA = [1, 2] // Atualizar quando adicionar mais provas
+    const SEMANAS_COM_PROVA = [1, 2, 3, 4] // Atualizar quando adicionar mais provas
 
     let semanaAtrasada: number | null = null
     for (const s of SEMANAS_COM_PROVA) {
@@ -157,7 +157,7 @@ export async function verificarElegibilidade(): Promise<ElegibilidadeProva> {
         return {
             ...resultadoPadrao,
             elegivel: true,
-            diasEstudados: 4, // Assume que estudou (prova atrasada)
+            diasEstudados: 6, // Assume que estudou (prova atrasada)
             semanaAtual,
             dentroDoHorario: true, // Pode fazer qualquer dia
             provaAtrasada: true,
@@ -206,7 +206,7 @@ export async function verificarElegibilidade(): Promise<ElegibilidadeProva> {
     })
 
     const diasEstudados = diasUnicos.size
-    const diasNecessarios = 4
+    const diasNecessarios = 6 // 6 dias de estudo por semana (segunda a sábado)
 
     if (diasEstudados < diasNecessarios) {
         return {

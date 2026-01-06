@@ -105,6 +105,49 @@ export async function getTodosProgressos(): Promise<Record<string, ProgressoDia>
     return progressos
 }
 
+// REVISÕES PENDENTES
+export interface RevisaoPendente {
+    dataId: string
+    autoAvaliacao: 'preciso_revisar' | 'nao_entendi'
+    dataRevisao: string
+    questoesAcertadas: number
+    questoesTotal: number
+}
+
+export async function getRevisoesPendentes(): Promise<RevisaoPendente[]> {
+    const supabase = createClient()
+    const { data: { user } } = await supabase.auth.getUser()
+
+    if (!user) return []
+
+    // Pegar data de hoje no fuso horário de São Paulo
+    const hoje = new Date().toLocaleDateString('pt-BR', {
+        timeZone: 'America/Sao_Paulo',
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit'
+    }).split('/').reverse().join('-')
+
+    const { data, error } = await supabase
+        .from('progresso')
+        .select('data_id, auto_avaliacao, data_revisao, questoes_acertadas, questoes_total')
+        .eq('user_id', user.id)
+        .eq('concluido', true)
+        .not('data_revisao', 'is', null)
+        .lte('data_revisao', hoje + 'T23:59:59')
+        .in('auto_avaliacao', ['preciso_revisar', 'nao_entendi'])
+
+    if (error || !data) return []
+
+    return data.map(item => ({
+        dataId: item.data_id,
+        autoAvaliacao: item.auto_avaliacao as 'preciso_revisar' | 'nao_entendi',
+        dataRevisao: item.data_revisao,
+        questoesAcertadas: item.questoes_acertadas,
+        questoesTotal: item.questoes_total
+    }))
+}
+
 // ESTATÍSTICAS
 export async function getEstatisticas(): Promise<Estatisticas> {
     const supabase = createClient()

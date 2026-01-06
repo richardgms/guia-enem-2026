@@ -65,7 +65,7 @@ export function CalendarioMensal({ conteudos, progressos, provasRealizadas = [] 
         if (!conteudo) return "bg-card"
 
         const progresso = progressos[conteudo.data]
-        if (progresso?.concluido) return "bg-green-100 dark:bg-green-900/30"
+        if (progresso?.concluido) return "bg-[#E8FFEF] dark:bg-green-900/30"
         if (progresso) return "bg-yellow-100 dark:bg-yellow-900/30"
 
         // Passado e não feito?
@@ -122,9 +122,14 @@ export function CalendarioMensal({ conteudos, progressos, provasRealizadas = [] 
                     const provaRealizada = semanaDaProva ? provasRealizadas.find(p => p.semana === semanaDaProva) : null
                     const foiProvaRealizada = !!provaRealizada
 
+                    // Verificar se é uma prova atrasada (domingo de prova já passou e não foi realizada)
+                    const isProvaAtrasada = semanaDaProva && !foiProvaRealizada && dateStr < todayStr
+
                     const colorClass = foiProvaRealizada
-                        ? "bg-green-100 dark:bg-green-900/30"
-                        : getStatusColor(conteudo)
+                        ? "bg-[#E8FFEF] dark:bg-green-900/30"
+                        : isProvaAtrasada
+                            ? "bg-red-50 dark:bg-red-950/30"
+                            : getStatusColor(conteudo)
 
                     return (
                         <div key={date.toISOString()} className={cn("min-h-[100px] p-2 relative group transition-colors", colorClass)}>
@@ -138,6 +143,12 @@ export function CalendarioMensal({ conteudos, progressos, provasRealizadas = [] 
                                 <div className="flex gap-1">
                                     {(progressos[conteudo?.data || '']?.concluido || foiProvaRealizada) && (
                                         <Check className="h-3 w-3 text-green-600" />
+                                    )}
+                                    {(conteudo && !progressos[conteudo.data]?.concluido && conteudo.data < todayStr) && (
+                                        <X className="h-3 w-3 text-red-500" />
+                                    )}
+                                    {isProvaAtrasada && (
+                                        <X className="h-3 w-3 text-red-500" />
                                     )}
                                 </div>
                             </div>

@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
+import { getDomingoDaSemana } from '@/lib/provas'
 import type { ProvaSemanal } from '@/types/provas'
 import Link from 'next/link'
 import { CheckCircle, Clock, Target, ChevronRight, Trophy, XCircle } from 'lucide-react'
@@ -61,6 +62,15 @@ export default function ProvasPage() {
     function formatarData(data?: Date): string {
         if (!data) return '-'
         return data.toLocaleDateString('pt-BR', {
+            day: '2-digit',
+            month: 'short',
+            year: 'numeric'
+        })
+    }
+
+    function formatarDomingoDaSemana(semana: number): string {
+        const domingo = getDomingoDaSemana(semana)
+        return domingo.toLocaleDateString('pt-BR', {
             day: '2-digit',
             month: 'short',
             year: 'numeric'
@@ -136,9 +146,10 @@ export default function ProvasPage() {
                                                 <h2 className="text-lg font-semibold text-primary">
                                                     Prova Semanal {prova.semana}
                                                 </h2>
-                                                <p className="text-sm text-text-secondary">
-                                                    {formatarData(prova.finalizadaEm)}
-                                                </p>
+                                                <div className="flex flex-col gap-0.5 text-sm text-text-secondary">
+                                                    <span>📅 Prova do dia: {formatarDomingoDaSemana(prova.semana)}</span>
+                                                    <span>✅ Realizada em: {formatarData(prova.finalizadaEm)}</span>
+                                                </div>
                                             </div>
                                         </div>
 

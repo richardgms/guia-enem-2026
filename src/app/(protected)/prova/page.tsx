@@ -51,9 +51,23 @@ export default function ProvaPage() {
                 </Link>
 
                 <h1 className="text-3xl font-bold text-primary mb-2">Prova Semanal</h1>
-                <p className="text-text-secondary mb-6">
+                <p className="text-text-secondary mb-4">
                     Teste seus conhecimentos da semana em condições reais de prova
                 </p>
+
+                {/* Indicador de Semana e Data */}
+                {elegibilidade && (
+                    <div className="flex flex-wrap gap-2 mb-6">
+                        <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-primary/10 text-primary rounded-full text-sm font-medium">
+                            📅 Semana {elegibilidade.semanaAtrasada || elegibilidade.semanaAtual}
+                        </span>
+                        {elegibilidade.provaAtrasada && (
+                            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-amber-100 text-amber-700 rounded-full text-sm font-medium">
+                                ⚠️ Prova Atrasada
+                            </span>
+                        )}
+                    </div>
+                )}
 
                 {/* Card Principal */}
                 <div className="bg-white shadow-custom rounded-2xl border border-card-border overflow-hidden">

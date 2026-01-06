@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
-import { ChevronLeft, ChevronRight, CheckCircle, Save } from "lucide-react"
+import { ChevronLeft, ChevronRight, CheckCircle, Save, Pencil, X } from "lucide-react"
 import type { ConteudoDia } from "@/types"
 import type { ProgressoDia } from "@/types/database"
 import { getProgresso, salvarProgresso } from "@/lib/database"
@@ -17,6 +17,14 @@ import { cn } from "@/lib/utils"
 import { VideoCard } from "@/components/VideoCard"
 import { QuestaoCard } from "@/components/QuestaoCard"
 import { useToast } from "@/hooks/use-toast"
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+} from "@/components/ui/dialog"
 
 interface DayContentProps {
     conteudo: ConteudoDia
@@ -31,6 +39,8 @@ export function DayContent({ conteudo }: DayContentProps) {
 
     const [loading, setLoading] = useState(true)
     const [saving, setSaving] = useState(false)
+    const [isEditing, setIsEditing] = useState(false)
+    const [showConfirmModal, setShowConfirmModal] = useState(false)
 
     // Verificar restrição de revisão
     const hoje = getHojeBrasil()
@@ -78,26 +88,29 @@ export function DayContent({ conteudo }: DayContentProps) {
         }
     }
 
-    const handleSalvar = async () => {
-        console.log('=== handleSalvar iniciado ===')
-        console.log('Progresso atual:', progresso)
-        console.log('Permissão:', permissaoTarefa)
+    const handleSalvar = () => {
+        // Abre modal de confirmação
+        setShowConfirmModal(true)
+    }
 
+    const handleConfirmSave = async () => {
+        console.log('=== handleConfirmSave iniciado ===')
+        console.log('Progresso atual:', progresso)
+
+        setShowConfirmModal(false)
         setSaving(true)
         try {
             const novoProgresso = {
                 ...progresso,
                 concluido: true,
-                dataRevisao: calculateReviewDate(progresso.autoAvaliacao)
+                dataRevisao: undefined
             }
-
-            console.log('Novo progresso a salvar:', novoProgresso)
-            console.log('Data ID:', conteudo.data)
 
             await salvarProgresso(conteudo.data, novoProgresso)
             console.log('Progresso salvo com sucesso!')
 
             setProgresso(novoProgresso)
+            setIsEditing(false)
 
             toast({
                 title: "Progresso salvo!",
@@ -106,8 +119,7 @@ export function DayContent({ conteudo }: DayContentProps) {
                 className: "bg-green-600 text-white"
             })
 
-            // Hard redirect para forçar atualização do layout e header
-            console.log('Redirecionando para /dashboard...')
+            // Redireciona para dashboard
             window.location.href = '/dashboard'
         } catch (error) {
             console.error("=== ERRO ao salvar progresso ===", error)
@@ -119,6 +131,13 @@ export function DayContent({ conteudo }: DayContentProps) {
         } finally {
             setSaving(false)
         }
+    }
+
+    const getAvaliacaoLabel = (avaliacao?: string) => {
+        if (avaliacao === 'entendi_bem') return { texto: 'Entendi bem', emoji: '✅', cor: 'text-green-600 bg-green-50' }
+        if (avaliacao === 'preciso_revisar') return { texto: 'Preciso revisar', emoji: '⚠️', cor: 'text-amber-600 bg-amber-50' }
+        if (avaliacao === 'nao_entendi') return { texto: 'Não entendi', emoji: '❌', cor: 'text-red-600 bg-red-50' }
+        return { texto: 'Não avaliado', emoji: '❓', cor: 'text-slate-500 bg-slate-50' }
     }
 
     const calculateReviewDate = (avaliacao?: string) => {
@@ -221,91 +240,241 @@ export function DayContent({ conteudo }: DayContentProps) {
             <Separator />
 
             {/* Autoavaliação e Conclusão */}
-            <section className="bg-slate-50 dark:bg-slate-900 p-6 rounded-xl border space-y-6">
-                <h2 className="text-xl font-bold">📊 Como foi seu estudo?</h2>
+            <section className="bg-white dark:bg-slate-900 p-6 rounded-xl border shadow-sm space-y-6">
+                <div className="flex items-center justify-between">
+                    <h2 className="text-xl font-bold text-primary">📊 Como foi seu estudo?</h2>
+                    {progresso.concluido && !isEditing && (
+                        <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => setIsEditing(true)}
+                            className="gap-2"
+                        >
+                            <Pencil className="h-4 w-4" />
+                            Editar
+                        </Button>
+                    )}
+                </div>
 
-                <div className="grid gap-6 md:grid-cols-2">
+                {/* Card Compacto - quando já avaliado e não está editando */}
+                {progresso.concluido && !isEditing ? (
                     <div className="space-y-4">
+                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                            {/* Acertos */}
+                            <div className="bg-slate-50 rounded-xl p-4 text-center">
+                                <p className="text-sm text-slate-500 mb-1">Acertos</p>
+                                <p className="text-2xl font-bold text-primary">
+                                    {progresso.questoesAcertadas}/{progresso.questoesTotal}
+                                </p>
+                            </div>
+                            {/* Status */}
+                            <div className={cn("rounded-xl p-4 text-center", getAvaliacaoLabel(progresso.autoAvaliacao).cor)}>
+                                <p className="text-sm opacity-70 mb-1">Status</p>
+                                <p className="text-lg font-bold flex items-center justify-center gap-2">
+                                    <span>{getAvaliacaoLabel(progresso.autoAvaliacao).emoji}</span>
+                                    {getAvaliacaoLabel(progresso.autoAvaliacao).texto}
+                                </p>
+                            </div>
+                            {/* Revisão */}
+                            <div className={cn(
+                                "rounded-xl p-4 text-center",
+                                progresso.autoAvaliacao === 'entendi_bem' ? 'bg-green-50' : 'bg-amber-50'
+                            )}>
+                                <p className="text-sm opacity-70 mb-1">Revisão</p>
+                                <p className="text-lg font-bold">
+                                    {progresso.autoAvaliacao === 'entendi_bem' ? '✓ Dominei' : '📚 Pendente'}
+                                </p>
+                            </div>
+                        </div>
+                        {progresso.anotacoes && (
+                            <div className="bg-slate-50 rounded-xl p-4">
+                                <p className="text-sm text-slate-500 mb-1">📝 Minhas Anotações</p>
+                                <p className="text-slate-700">{progresso.anotacoes}</p>
+                            </div>
+                        )}
+                    </div>
+                ) : (
+                    /* Formulário de Edição */
+                    <>
+                        {/* Acertos */}
                         <div>
-                            <Label className="text-base">Quantas questões você acertou?</Label>
-                            <div className="flex items-center gap-3 mt-2">
+                            <Label className="text-base font-medium text-slate-700">Quantas questões você acertou?</Label>
+                            <div className="flex items-center gap-3 mt-3">
                                 <Button
-                                    variant="outline" size="icon"
+                                    variant="outline"
+                                    size="icon"
+                                    className="h-10 w-10 rounded-full border-2 hover:bg-slate-100"
                                     onClick={() => setProgresso(p => ({ ...p, questoesAcertadas: Math.max(0, p.questoesAcertadas - 1) }))}
                                 >-</Button>
-                                <span className="text-2xl font-bold w-8 text-center">{progresso.questoesAcertadas}</span>
+                                <span className="text-3xl font-bold w-12 text-center text-primary">{progresso.questoesAcertadas}</span>
                                 <Button
-                                    variant="outline" size="icon"
+                                    variant="outline"
+                                    size="icon"
+                                    className="h-10 w-10 rounded-full border-2 hover:bg-slate-100"
                                     onClick={() => setProgresso(p => ({ ...p, questoesAcertadas: Math.min(p.questoesTotal, p.questoesAcertadas + 1) }))}
                                 >+</Button>
-                                <span className="text-muted-foreground ml-2">de {progresso.questoesTotal}</span>
+                                <span className="text-muted-foreground font-medium">de {progresso.questoesTotal}</span>
                             </div>
                         </div>
 
+                        {/* Avaliação - Cards Clicáveis */}
                         <div>
-                            <Label className="text-base mb-2 block">O que você achou do conteúdo?</Label>
-                            <RadioGroup
-                                value={progresso.autoAvaliacao || ""}
-                                onValueChange={(val: string) => setProgresso(p => ({ ...p, autoAvaliacao: val as any }))}
+                            <Label className="text-base font-medium text-slate-700 mb-3 block">O que você achou do conteúdo?</Label>
+                            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                                <button
+                                    type="button"
+                                    onClick={() => setProgresso(p => ({ ...p, autoAvaliacao: 'entendi_bem' }))}
+                                    className={cn(
+                                        "p-4 rounded-xl border-2 transition-all text-left",
+                                        progresso.autoAvaliacao === 'entendi_bem'
+                                            ? "border-green-500 bg-green-50 shadow-md ring-2 ring-green-200"
+                                            : "border-slate-200 hover:border-green-300 hover:bg-green-50/50"
+                                    )}
+                                >
+                                    <div className="text-2xl mb-1">✅</div>
+                                    <div className="font-semibold text-slate-800">Entendi bem</div>
+                                    <div className="text-xs text-slate-500 mt-1">Dominei o conteúdo</div>
+                                </button>
+                                <button
+                                    type="button"
+                                    onClick={() => setProgresso(p => ({ ...p, autoAvaliacao: 'preciso_revisar' }))}
+                                    className={cn(
+                                        "p-4 rounded-xl border-2 transition-all text-left",
+                                        progresso.autoAvaliacao === 'preciso_revisar'
+                                            ? "border-amber-500 bg-amber-50 shadow-md ring-2 ring-amber-200"
+                                            : "border-slate-200 hover:border-amber-300 hover:bg-amber-50/50"
+                                    )}
+                                >
+                                    <div className="text-2xl mb-1">⚠️</div>
+                                    <div className="font-semibold text-slate-800">Preciso revisar</div>
+                                    <div className="text-xs text-slate-500 mt-1">Entendi parcialmente</div>
+                                </button>
+                                <button
+                                    type="button"
+                                    onClick={() => setProgresso(p => ({ ...p, autoAvaliacao: 'nao_entendi' }))}
+                                    className={cn(
+                                        "p-4 rounded-xl border-2 transition-all text-left",
+                                        progresso.autoAvaliacao === 'nao_entendi'
+                                            ? "border-red-500 bg-red-50 shadow-md ring-2 ring-red-200"
+                                            : "border-slate-200 hover:border-red-300 hover:bg-red-50/50"
+                                    )}
+                                >
+                                    <div className="text-2xl mb-1">❌</div>
+                                    <div className="font-semibold text-slate-800">Não entendi</div>
+                                    <div className="text-xs text-slate-500 mt-1">Preciso estudar de novo</div>
+                                </button>
+                            </div>
+                        </div>
+
+                        {/* Anotações */}
+                        <div className="space-y-2">
+                            <Label htmlFor="notas" className="text-base font-medium text-slate-700">Minhas Anotações</Label>
+                            <Textarea
+                                id="notas"
+                                placeholder="Escreva aqui seus pontos principais, dúvidas ou o que precisa revisar..."
+                                className="h-28 resize-none"
+                                value={progresso.anotacoes || ""}
+                                onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setProgresso(p => ({ ...p, anotacoes: e.target.value }))}
+                            />
+                        </div>
+
+                        {/* Aviso de revisão bloqueada */}
+                        {!permissaoTarefa.permitido && (
+                            <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 flex items-start gap-3">
+                                <span className="text-amber-600 text-xl">🔒</span>
+                                <div>
+                                    <p className="font-medium text-amber-800">Revisão Bloqueada</p>
+                                    <p className="text-sm text-amber-700 mt-1">{permissaoTarefa.motivo}</p>
+                                </div>
+                            </div>
+                        )}
+
+                        {/* Botões */}
+                        <div className="flex gap-3">
+                            {isEditing && (
+                                <Button
+                                    variant="outline"
+                                    size="lg"
+                                    className="flex-1 h-14"
+                                    onClick={() => setIsEditing(false)}
+                                >
+                                    <X className="h-5 w-5 mr-2" />
+                                    Cancelar
+                                </Button>
+                            )}
+                            <Button
+                                size="lg"
+                                className={cn("h-14 gap-2", isEditing ? "flex-1" : "w-full")}
+                                onClick={handleSalvar}
+                                disabled={saving || !permissaoTarefa.permitido || !progresso.autoAvaliacao}
                             >
-                                <div className="flex items-center space-x-2">
-                                    <RadioGroupItem value="entendi_bem" id="r1" />
-                                    <Label htmlFor="r1">Entendi bem ✅</Label>
-                                </div>
-                                <div className="flex items-center space-x-2">
-                                    <RadioGroupItem value="preciso_revisar" id="r2" />
-                                    <Label htmlFor="r2">Preciso revisar ⚠️</Label>
-                                </div>
-                                <div className="flex items-center space-x-2">
-                                    <RadioGroupItem value="nao_entendi" id="r3" />
-                                    <Label htmlFor="r3">Não entendi nada ❌</Label>
-                                </div>
-                            </RadioGroup>
+                                {saving ? "Salvando..." : !permissaoTarefa.permitido ? (
+                                    <>
+                                        <span>🔒</span>
+                                        Aguarde o dia da revisão
+                                    </>
+                                ) : (
+                                    <>
+                                        <CheckCircle className="h-6 w-6" />
+                                        {progresso.concluido ? "Salvar Alterações" : "Marcar como Concluído"}
+                                    </>
+                                )}
+                            </Button>
                         </div>
-                    </div>
-
-                    <div className="space-y-2">
-                        <Label htmlFor="notas">Minhas Anotações</Label>
-                        <Textarea
-                            id="notas"
-                            placeholder="Escreva aqui seus pontos principais..."
-                            className="h-32"
-                            value={progresso.anotacoes || ""}
-                            onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setProgresso(p => ({ ...p, anotacoes: e.target.value }))}
-                        />
-                    </div>
-                </div>
-
-                {/* Aviso de revisão bloqueada */}
-                {!permissaoTarefa.permitido && (
-                    <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 flex items-start gap-3">
-                        <span className="text-amber-600 text-xl">🔒</span>
-                        <div>
-                            <p className="font-medium text-amber-800">Revisão Bloqueada</p>
-                            <p className="text-sm text-amber-700 mt-1">{permissaoTarefa.motivo}</p>
-                        </div>
-                    </div>
+                    </>
                 )}
-
-                <Button
-                    size="lg"
-                    className="w-full text-lg h-14 gap-2"
-                    onClick={handleSalvar}
-                    disabled={saving || !permissaoTarefa.permitido}
-                >
-                    {saving ? "Salvando..." : !permissaoTarefa.permitido ? (
-                        <>
-                            <span>🔒</span>
-                            Aguarde o dia da revisão
-                        </>
-                    ) : (
-                        <>
-                            <CheckCircle className="h-6 w-6" />
-                            {progresso.concluido ? "Atualizar Progresso" : "MARCAR COMO CONCLUÍDO"}
-                        </>
-                    )}
-                </Button>
             </section>
+
+            {/* Modal de Confirmação */}
+            <Dialog open={showConfirmModal} onOpenChange={setShowConfirmModal}>
+                <DialogContent className="sm:max-w-md">
+                    <DialogHeader>
+                        <DialogTitle className="text-xl">✓ Confirmar Avaliação</DialogTitle>
+                        <DialogDescription>
+                            Revise os dados antes de salvar
+                        </DialogDescription>
+                    </DialogHeader>
+                    <div className="space-y-4 py-4">
+                        <div className="grid grid-cols-2 gap-4">
+                            <div className="bg-slate-50 rounded-lg p-3 text-center">
+                                <p className="text-xs text-slate-500 mb-1">Acertos</p>
+                                <p className="text-xl font-bold text-primary">
+                                    {progresso.questoesAcertadas}/{progresso.questoesTotal}
+                                </p>
+                            </div>
+                            <div className={cn("rounded-lg p-3 text-center", getAvaliacaoLabel(progresso.autoAvaliacao).cor)}>
+                                <p className="text-xs opacity-70 mb-1">Status</p>
+                                <p className="font-bold flex items-center justify-center gap-1">
+                                    <span>{getAvaliacaoLabel(progresso.autoAvaliacao).emoji}</span>
+                                    {getAvaliacaoLabel(progresso.autoAvaliacao).texto}
+                                </p>
+                            </div>
+                        </div>
+                        {progresso.anotacoes && (
+                            <div className="bg-slate-50 rounded-lg p-3">
+                                <p className="text-xs text-slate-500 mb-1">Anotações</p>
+                                <p className="text-sm text-slate-700 line-clamp-2">{progresso.anotacoes}</p>
+                            </div>
+                        )}
+                        {progresso.autoAvaliacao !== 'entendi_bem' && (
+                            <div className="bg-amber-50 border border-amber-200 rounded-lg p-3 text-center">
+                                <p className="text-sm text-amber-700">
+                                    📚 Este conteúdo aparecerá na página de <strong>Revisões</strong>
+                                </p>
+                            </div>
+                        )}
+                    </div>
+                    <DialogFooter className="gap-2 sm:gap-0">
+                        <Button variant="outline" onClick={() => setShowConfirmModal(false)}>
+                            Voltar
+                        </Button>
+                        <Button onClick={handleConfirmSave} disabled={saving} className="gap-2">
+                            <CheckCircle className="h-4 w-4" />
+                            Confirmar
+                        </Button>
+                    </DialogFooter>
+                </DialogContent>
+            </Dialog>
         </div>
     )
 }
